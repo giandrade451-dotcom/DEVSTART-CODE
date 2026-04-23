@@ -194,8 +194,12 @@
       // Mark done
       document.getElementById("mark-done")?.addEventListener("click", () => {
         if (!user) { toast({ title: "Entre para salvar o progresso", type: "info" }); return; }
+        const beforeProg = progress.getCourseProgress(users.currentUser(), course);
+        const wasAlreadyDone = beforeProg.completedLessons.includes(lesson.id);
         progress.markLessonComplete(course.id, lesson.id);
-        try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
+        if (!wasAlreadyDone) {
+          try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
+        }
         maybeCompleteCourse();
         toast({ title: "Aula marcada como concluída", type: "success" });
         setTimeout(render, 400);
@@ -348,11 +352,23 @@
 
         const percent = Math.round((score / total) * 100);
         const result = { score, total, percent };
+
+        // Check prior state BEFORE saving so gamification hooks only fire on first completion.
+        const beforeProg = progress.getCourseProgress(users.currentUser(), course);
+        const lessonWasDone = beforeProg.completedLessons.includes(lesson.id);
+        const quizAwardedKey = `devstart.quizAwarded.${user.username}.${course.id}.${lesson.id}`;
+        const quizAlreadyAwarded = !!localStorage.getItem(quizAwardedKey);
+
         progress.saveQuizResult(course.id, lesson.id, result);
         progress.markLessonComplete(course.id, lesson.id);
 
-        try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
-        try { window.DevstartGame?.onQuizComplete(user.username, result); } catch (e) {}
+        if (!lessonWasDone) {
+          try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
+        }
+        if (!quizAlreadyAwarded) {
+          try { window.DevstartGame?.onQuizComplete(user.username, result); } catch (e) {}
+          try { localStorage.setItem(quizAwardedKey, String(Date.now())); } catch (e) {}
+        }
 
         toast({
           title: score === total ? "Nota máxima! 🎉" : "Quiz enviado",

@@ -174,7 +174,7 @@
 
       // Badges
       const allBadges = window.DevstartGame.BADGES || [];
-      const unlocked = new Set((game.badges || []).map(b => b.id));
+      const unlocked = new Set(game.badges || []);
       document.getElementById("badge-grid").innerHTML = allBadges.map(b => {
         const got = unlocked.has(b.id);
         return `<div class="badge-item ${got ? "got" : "locked"}" title="${escapeHtml(b.description || b.title)}">
