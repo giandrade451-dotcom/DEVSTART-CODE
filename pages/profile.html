@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <header class="dash-head reveal">
+      <div>
+        <h1>Profile</h1>
+        <div class="sub">Manage your account and password.</div>
+      </div>
+      <a class="btn danger" href="#" data-logout>Log out</a>
+    </header>
+
+    <div class="grid cols-2">
+      <section class="card reveal">
+        <h2>Account details</h2>
+        <div class="row" style="gap:14px; padding:16px 0;">
+          <div class="avatar" id="avatar" style="width:64px;height:64px;border-radius:50%;background:var(--gradient-brand);display:grid;place-items:center;font-weight:800;color:#fff;font-size:22px;">?</div>
+          <div>
+            <div id="username" style="font-size:1.3rem;font-weight:700;">—</div>
+            <div class="small text-muted" id="role">—</div>
+            <div class="small text-muted" id="created">—</div>
+          </div>
+        </div>
+        <form class="form" id="pw-form" style="margin-top:16px;">
+          <label for="current">Current password</label>
+          <input class="input" id="current" type="password" autocomplete="current-password" required />
+          <label for="next">New password</label>
+          <input class="input" id="next" type="password" autocomplete="new-password" required />
+          <button class="btn primary" type="submit">Update password</button>
+        </form>
+      </section>
+
+      <section class="card reveal delay-1">
+        <h2>Plan</h2>
+        <p id="plan-desc" class="text-muted"></p>
+        <div id="plan-action" class="mt-2"></div>
+        <hr style="border:none;border-top:1px solid var(--border);margin:24px 0;" />
+        <h3>Danger zone</h3>
+        <p class="small text-muted">Clearing local data removes your progress and quiz history on this device. Users in the admin panel are preserved.</p>
+        <button class="btn danger mt-1" id="wipe-progress">Clear my progress</button>
+      </section>
+    </div>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { users, toast, escapeHtml } = window.DevstartApp;
+      const user = users.currentUser();
+      if (!user) { window.location.href = "login.html"; return; }
+
+      document.getElementById("avatar").textContent = user.username.charAt(0).toUpperCase();
+      document.getElementById("username").textContent = user.username;
+      document.getElementById("role").textContent = user.vip ? "👑 VIP member" : "Free plan";
+      document.getElementById("created").textContent = "Joined " + new Date(user.createdAt).toLocaleDateString();
+
+      document.getElementById("plan-desc").textContent = user.vip
+        ? "You have full access to every course on Devstart UP. Lucky you 👑."
+        : "You're on the free plan — 4 full courses included. Upgrade to unlock the 4 VIP courses.";
+      document.getElementById("plan-action").innerHTML = user.vip
+        ? `<span class="badge vip">VIP active</span>`
+        : `<a class="btn vip" href="vip.html">Unlock VIP →</a>`;
+
+      document.getElementById("pw-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const cur = document.getElementById("current").value;
+        const next = document.getElementById("next").value;
+        const fresh = users.currentUser();
+        if (fresh.password !== cur) {
+          toast({ title: "Incorrect current password", type: "error" });
+          return;
+        }
+        if (next.length < 4) {
+          toast({ title: "Password too short", message: "Use at least 4 characters.", type: "error" });
+          return;
+        }
+        users.updateUser(fresh.username, { password: next });
+        document.getElementById("current").value = "";
+        document.getElementById("next").value = "";
+        toast({ title: "Password updated", message: "Use your new password next time you sign in.", type: "success" });
+      });
+
+      document.getElementById("wipe-progress").addEventListener("click", () => {
+        if (!confirm("This will erase all your lesson progress and quiz results. Continue?")) return;
+        const fresh = users.currentUser();
+        users.updateUser(fresh.username, { progress: {} });
+        toast({ title: "Progress cleared", message: "Fresh start — go finish a course!", type: "info" });
+        setTimeout(() => window.location.href = "dashboard.html", 600);
+      });
+    });
+  </script>
+</body>
+</html>

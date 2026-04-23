@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Devstart UP — Become a Developer from Zero to Pro</title>
+  <meta name="description" content="Devstart UP is a premium ed-tech platform that takes you from zero to professional developer with interactive lessons, real progress tracking, and a VIP track for advanced skills." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-orbs">
+      <div class="orb o1"></div>
+      <div class="orb o2"></div>
+      <div class="orb o3"></div>
+    </div>
+    <div class="container">
+      <div class="reveal"><span class="eyebrow">New cohort · Live now</span></div>
+      <h1 class="hero-title reveal delay-1">
+        Become a <span class="gradient-text">Developer</span><br/>
+        from Zero to Pro.
+      </h1>
+      <p class="hero-sub reveal delay-2">
+        Devstart UP is a modern learning platform with interactive lessons, real progress tracking,
+        and a VIP track that takes you from your first line of HTML all the way to shipping a full-stack SaaS.
+      </p>
+      <div class="hero-cta reveal delay-3">
+        <a class="btn primary lg" href="pages/register.html">
+          Start now — it's free
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a class="btn lg ghost" href="pages/login.html">Login</a>
+        <a class="btn lg" href="pages/courses.html">View courses</a>
+      </div>
+
+      <div class="stats reveal delay-4">
+        <div class="stat"><div class="num gradient-text">8</div><div class="lab">Courses</div></div>
+        <div class="stat"><div class="num gradient-text">90+</div><div class="lab">Lessons</div></div>
+        <div class="stat"><div class="num gradient-text">300+</div><div class="lab">Quizzes</div></div>
+        <div class="stat"><div class="num gradient-text">100%</div><div class="lab">Self-paced</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Why Devstart</span>
+        <h2>Built like a real product, not a PDF.</h2>
+        <p>Every feature you'd expect from a modern ed-tech platform, with a premium feel from the first second.</p>
+      </div>
+      <div class="grid cols-3">
+        <div class="card feature reveal">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20l9-5-9-5-9 5 9 5z"/><path d="M12 12V3"/><path d="M7 9l5-6 5 6"/></svg>
+          </div>
+          <h3>Interactive lessons</h3>
+          <p>Rich, in-depth lessons with code blocks, call-outs, and quizzes after every chapter — not video tutorials you watch and forget.</p>
+        </div>
+        <div class="card feature reveal delay-1">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><polyline points="7 15 12 10 16 14 21 9"/></svg>
+          </div>
+          <h3>Real progress tracking</h3>
+          <p>Every lesson you finish and every quiz you take is saved to your profile with accuracy metrics and a personal dashboard.</p>
+        </div>
+        <div class="card feature reveal delay-2">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18h18"/><path d="M3 8l4 6 5-8 5 8 4-6v10H3z"/></svg>
+          </div>
+          <h3>VIP advanced courses</h3>
+          <p>Unlock advanced JavaScript, Python Developer, Fullstack, and UI/UX — all taught as a coherent path, not scattered topics.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FREE COURSES PREVIEW -->
+  <section class="section" id="free-courses">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Free forever</span>
+        <h2>Start with our 4 free courses.</h2>
+        <p>No credit card. No catches. A real curriculum designed to get you from "never coded" to "shipping projects."</p>
+      </div>
+      <div class="grid cols-4" id="free-courses-grid"></div>
+    </div>
+  </section>
+
+  <!-- VIP SECTION -->
+  <section class="section">
+    <div class="container">
+      <div class="vip-banner reveal">
+        <span class="eyebrow" style="border-color: rgba(255, 211, 106, .4);">Devstart VIP</span>
+        <h2>Unlock the <span class="gradient-text">advanced track</span>.</h2>
+        <p style="max-width:640px;margin:0 auto 28px;">Go deeper with courses designed to take you from confident hobbyist to production-ready professional. Unlocked manually by our team — no monthly subscription.</p>
+        <a class="btn vip lg" href="pages/vip.html">Unlock VIP →</a>
+      </div>
+      <div class="grid cols-4 mt-4" id="vip-courses-grid"></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL / SOCIAL PROOF -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">From our community</span>
+        <h2>Students who made the leap.</h2>
+      </div>
+      <div class="grid cols-3">
+        <div class="card reveal">
+          <p style="font-size:1rem; color: var(--text);">"I went from 'what's a variable' to landing my first junior dev role in 5 months. The Fullstack VIP track was the missing piece."</p>
+          <div class="row mt-3">
+            <div class="sidebar-user" style="margin:0; padding:12px; background:var(--surface-2);">
+              <div class="avatar" style="width:36px;height:36px;font-size:14px;">C</div>
+              <div class="meta"><div class="name">Camila R.</div><div class="role">Jr. Developer @ startup</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card reveal delay-1">
+          <p style="font-size:1rem; color: var(--text);">"Best learning platform I've tried. The quizzes after every lesson actually make the content stick."</p>
+          <div class="row mt-3">
+            <div class="sidebar-user" style="margin:0; padding:12px; background:var(--surface-2);">
+              <div class="avatar" style="width:36px;height:36px;font-size:14px;">M</div>
+              <div class="meta"><div class="name">Matheus L.</div><div class="role">Career switcher</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card reveal delay-2">
+          <p style="font-size:1rem; color: var(--text);">"The VIP Python Developer course is gold — decorators and FastAPI finally clicked."</p>
+          <div class="row mt-3">
+            <div class="sidebar-user" style="margin:0; padding:12px; background:var(--surface-2);">
+              <div class="avatar" style="width:36px;height:36px;font-size:14px;">J</div>
+              <div class="meta"><div class="name">Julia P.</div><div class="role">Data engineer</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="foot-grid">
+        <div class="about">
+          <div class="brand" style="margin-bottom:14px;">
+            <span class="brand-mark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </span>
+            <span>Devstart <span class="gradient-text">UP</span></span>
+          </div>
+          <p>Premium ed-tech for developers. Interactive lessons, real progress tracking, and a VIP path to ship real products.</p>
+        </div>
+        <div>
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="pages/courses.html">All courses</a></li>
+            <li><a href="pages/vip.html">Get VIP</a></li>
+            <li><a href="pages/register.html">Sign up</a></li>
+            <li><a href="pages/login.html">Login</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul>
+            <li><a href="pages/dashboard.html">Dashboard</a></li>
+            <li><a href="pages/progress.html">My Progress</a></li>
+            <li><a href="pages/profile.html">Profile</a></li>
+            <li><a href="pages/admin.html">Admin</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Community</h4>
+          <ul>
+            <li><a href="https://discord.gg/devstartup" target="_blank" rel="noopener">Discord</a></li>
+            <li><a href="mailto:hello@devstart.up">Email us</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2025 Devstart UP · built with ❤️ for devs</span>
+        <span>Made by the Devstart team</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/courses-data.js"></script>
+  <script src="assets/js/courses-data-2.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/landing.js"></script>
+</body>
+</html>

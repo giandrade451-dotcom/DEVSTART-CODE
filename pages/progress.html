@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Progress · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <header class="dash-head reveal">
+      <div>
+        <h1>My Progress</h1>
+        <div class="sub">Every lesson and quiz you've taken — at a glance.</div>
+      </div>
+      <a class="btn" href="courses.html">Browse more courses</a>
+    </header>
+
+    <section class="dash-stats reveal" id="overall"></section>
+
+    <section id="per-course"></section>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { users, progress, escapeHtml } = window.DevstartApp;
+      const user = users.currentUser();
+      if (!user) { window.location.href = "login.html"; return; }
+      const courses = window.DevstartCourses || [];
+      const all = courses.map(c => ({ course: c, p: progress.getCourseProgress(user, c) }));
+
+      const totalLessons = courses.reduce((s, c) => s + c.lessons.length, 0);
+      const doneLessons = all.reduce((s, x) => s + x.p.completed, 0);
+      const quizEntries = all.flatMap(x => Object.values(x.p.quizzes || {}));
+      const avgAccuracy = quizEntries.length
+        ? Math.round(quizEntries.reduce((s, q) => s + q.percent, 0) / quizEntries.length) : 0;
+      const completedCourses = all.filter(x => x.p.percent === 100).length;
+
+      document.getElementById("overall").innerHTML = [
+        { lab: "Overall progress", num: Math.round((doneLessons / totalLessons) * 100) + "%", sub: `${doneLessons} of ${totalLessons} lessons` },
+        { lab: "Quizzes taken", num: quizEntries.length, sub: `Across ${all.filter(x => Object.keys(x.p.quizzes).length).length} courses` },
+        { lab: "Average accuracy", num: avgAccuracy + "%", sub: quizEntries.length ? "Keep it up!" : "Take a quiz to see this" },
+        { lab: "Courses completed", num: completedCourses, sub: completedCourses ? "🎉 Well done" : "Your first is close" },
+      ].map(s => `<div class="dash-stat"><div class="lab">${s.lab}</div><div class="num gradient-text">${s.num}</div><div class="sub2">${s.sub}</div></div>`).join("");
+
+      document.getElementById("per-course").innerHTML = all.map(({ course, p }) => {
+        const quizzes = Object.entries(p.quizzes || {});
+        return `
+          <div class="card mb-2 reveal">
+            <div class="row between" style="flex-wrap:wrap;gap:16px;">
+              <div>
+                <div class="row" style="gap:8px;">
+                  <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Free"}</span>
+                  <span class="badge">${course.lessons.length} lessons</span>
+                </div>
+                <h3 style="margin:10px 0 4px;">${escapeHtml(course.title)}</h3>
+                <div class="small text-muted">${escapeHtml(course.tagline)}</div>
+              </div>
+              <div style="min-width:260px;">
+                <div class="progress-label"><span>${p.completed}/${p.total}</span><span>${p.percent}%</span></div>
+                <div class="progress"><span style="width:${p.percent}%"></span></div>
+                <div class="row mt-2" style="gap:8px;">
+                  <a class="btn sm" href="course.html?id=${encodeURIComponent(course.id)}">Open course</a>
+                  ${p.completed > 0 ? `<a class="btn sm primary" href="course.html?id=${encodeURIComponent(course.id)}">Continue →</a>` : ""}
+                </div>
+              </div>
+            </div>
+            ${quizzes.length ? `
+              <details style="margin-top:14px;">
+                <summary class="small text-muted" style="cursor:pointer;">${quizzes.length} quiz result${quizzes.length === 1 ? "" : "s"}</summary>
+                <div class="table-wrap mt-2">
+                  <table class="table">
+                    <thead><tr><th>Lesson</th><th>Score</th><th>Accuracy</th><th>Date</th></tr></thead>
+                    <tbody>
+                      ${quizzes.map(([lid, q]) => {
+                        const lesson = course.lessons.find(l => l.id === lid);
+                        return `<tr>
+                          <td>${escapeHtml(lesson ? lesson.title : lid)}</td>
+                          <td>${q.score}/${q.total}</td>
+                          <td>${q.percent}%</td>
+                          <td>${new Date(q.at).toLocaleString()}</td>
+                        </tr>`;
+                      }).join("")}
+                    </tbody>
+                  </table>
+                </div>
+              </details>` : ""}
+          </div>
+        `;
+      }).join("");
+
+      window.DevstartApp.initReveal();
+    });
+  </script>
+</body>
+</html>
