@@ -283,7 +283,7 @@
       if (!user) return;
       const fresh = users.currentUser();
       const p = progress.getCourseProgress(fresh, course);
-      if (p.completedLessons.length === course.lessons.length) {
+      if (p.completed === course.lessons.length) {
         const cat = window.DevstartConfig?.getCategory(course.id) || "outros";
         // Emit course complete once per user per course
         const key = `devstart.courseCompleted.${user.username}.${course.id}`;

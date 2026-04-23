@@ -442,7 +442,7 @@
     const lvl = user && window.DevstartGame ? window.DevstartGame.levelFor(window.DevstartGame.get(user.username).xp) : null;
     const xpState = user && window.DevstartGame ? window.DevstartGame.get(user.username) : null;
     const avatarImg = user && user.avatar
-      ? `<img src="${user.avatar}" alt="avatar" />`
+      ? `<img src="${escapeHtml(user.avatar)}" alt="avatar" />`
       : escapeHtml(initial);
     return `
       <div class="sidebar-backdrop"></div>

@@ -102,7 +102,7 @@
           return `
             <div class="rank-row ${top} ${isMe}" style="${isMe ? "border-color:rgba(124,92,255,.5);box-shadow:var(--shadow-glow);" : ""}">
               <div class="rank-pos">#${i + 1}</div>
-              <div class="rank-avatar">${r.avatar ? `<img src="${r.avatar}" alt="avatar">` : escapeHtml(initial)}</div>
+              <div class="rank-avatar">${r.avatar ? `<img src="${escapeHtml(r.avatar)}" alt="avatar">` : escapeHtml(initial)}</div>
               <div>
                 <a href="profile.html?u=${encodeURIComponent(r.username)}"><strong>${escapeHtml(r.username)}</strong></a>
                 ${r.vip ? `<span class="badge vip" style="margin-left:6px;">👑</span>` : ""}
