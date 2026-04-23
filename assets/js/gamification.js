@@ -183,7 +183,15 @@
     s.xp += 15;
     s.coins += 1;
     s.history.unshift({ at: Date.now(), xp: 15, note: "Check-in diário" });
+    s.history = s.history.slice(0, 80);
+    const user = window.DevstartApp?.users.currentUser();
+    const { unlocked } = evaluateBadges(s, user);
     set(username, s);
+    if (window.DevstartApp?.toast) {
+      unlocked.forEach(b => {
+        window.DevstartApp.toast({ title: `Conquista desbloqueada ${b.emoji}`, message: b.title, type: "success", timeout: 4500 });
+      });
+    }
     return s;
   }
 
