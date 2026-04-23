@@ -910,6 +910,58 @@ p { margin: 0 0 1em; color: var(--text-muted); }
 .quiz-result h3 { margin-bottom: 6px; }
 .quiz-result .score { font-size: 2.4rem; font-weight: 800; font-family: var(--font-display); }
 
+/* Gate de tempo mínimo de leitura */
+.time-gate {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 181, 71, .4);
+  background: rgba(255, 181, 71, .08);
+  color: var(--text);
+  font-size: .95rem;
+}
+.time-gate.met {
+  border-color: rgba(52, 240, 199, .45);
+  background: rgba(52, 240, 199, .1);
+}
+.time-gate .progress { height: 6px; background: rgba(255,255,255,.08); }
+.time-gate .progress span { background: var(--gradient-brand); }
+
+/* Banner de status do quiz */
+.quiz-banner {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  font-size: .95rem;
+}
+.quiz-banner.info { border-color: rgba(124,92,255,.4); background: rgba(124,92,255,.1); }
+.quiz-banner.error { border-color: rgba(255,92,122,.5); background: rgba(255,92,122,.12); }
+.quiz-banner.hidden { display: none; }
+
+/* Pílula de tentativas por pergunta */
+.quiz .q-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.attempt-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.attempt-pill.ok { background: rgba(52, 240, 199, .15); border-color: rgba(52, 240, 199, .45); color: var(--success); }
+.attempt-pill.fail { background: rgba(255, 92, 122, .15); border-color: rgba(255, 92, 122, .45); color: var(--danger); }
+
+.q-block.locked-correct { opacity: .95; }
+.q-block.locked-failed { opacity: .8; }
+.q-block.locked-correct .opt,
+.q-block.locked-failed .opt { cursor: not-allowed; }
+
 /* =============================================================
    Tables (admin)
    ============================================================= */
