@@ -357,7 +357,7 @@
           ? `<div class="empty">Sem notificações por enquanto.</div>`
           : list.map(n => `
               <a class="notif-item ${n.read ? "" : "unread"}" ${n.href ? `href="${resolvePath(n.href)}"` : ""} data-id="${n.id}">
-                <span class="emoji">${n.emoji || "🔔"}</span>
+                <span class="emoji">${escapeHtml(n.emoji || "🔔")}</span>
                 <div class="flex1">
                   <div class="title">${escapeHtml(n.title)}</div>
                   <div class="body small text-muted">${escapeHtml(n.body || "")}</div>

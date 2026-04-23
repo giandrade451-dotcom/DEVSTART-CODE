@@ -140,10 +140,14 @@
     });
     if (claimed.length) {
       save(username, missions);
-      const totalXp = claimed.reduce((s, m) => s + m.xp, 0);
-      try {
-        window.DevstartGame?.grantXP?.(username, totalXp, `Missões: ${claimed.length} conquistada(s)`);
-      } catch (e) {}
+      // Concede por missão para que as moedas creditadas batam com o display do card
+      // (coins = Math.round(xp/10) por missão). Somar antes e arredondar uma vez só
+      // pode perder moedas por conta de arredondamento.
+      claimed.forEach(m => {
+        try {
+          window.DevstartGame?.grantXP?.(username, m.xp, `Missão: ${m.title}`);
+        } catch (e) {}
+      });
     }
     return claimed;
   }
