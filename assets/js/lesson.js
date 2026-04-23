@@ -212,6 +212,17 @@
               </div>
             </div>
 
+            <div class="lesson-warning" role="note" aria-label="Dica de tradução">
+              <span class="emoji" aria-hidden="true">🌐</span>
+              <div class="flex1">
+                <strong>Caso você não saiba ler inglês, use o tradutor do Chrome.</strong>
+                <div class="small text-muted">
+                  Clique com o botão direito na página e escolha
+                  <em>"Traduzir para o português"</em>, ou use o ícone 🌐 na barra de endereço.
+                </div>
+              </div>
+            </div>
+
             <div id="lesson-body" style="font-size:${Math.round(1 * parseFloat(speed) * 100)}%;">${lesson.content}</div>
 
             <section class="quiz" id="quiz">
