@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="auth-wrap">
+    <div class="auth-card reveal">
+      <h1>Welcome back 👋</h1>
+      <p class="sub">Sign in to continue your learning journey.</p>
+      <form class="form" id="login-form" autocomplete="on">
+        <div>
+          <label for="u">Username</label>
+          <input class="input" id="u" name="username" type="text" autocomplete="username" placeholder="your-username" required />
+        </div>
+        <div>
+          <label for="p">Password</label>
+          <input class="input" id="p" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+        </div>
+        <button class="btn primary block lg" type="submit" id="submit-btn">
+          <span id="submit-label">Sign in</span>
+        </button>
+      </form>
+      <div class="auth-alt">
+        Don't have an account? <a href="register.html">Create one</a>
+      </div>
+      <div class="auth-alt small" style="margin-top:8px;">
+        <a href="admin.html">Admin login →</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { users, toast, resolvePath } = window.DevstartApp;
+
+      // If already logged in, bounce to dashboard
+      if (users.currentUser()) {
+        window.location.href = "dashboard.html";
+        return;
+      }
+
+      const form = document.getElementById("login-form");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const btn = document.getElementById("submit-btn");
+        const label = document.getElementById("submit-label");
+        const data = new FormData(form);
+        btn.disabled = true;
+        label.innerHTML = '<span class="spinner"></span>';
+        setTimeout(() => {
+          try {
+            const u = users.login(data.get("username"), data.get("password"));
+            toast({ title: "Welcome back!", message: `Signed in as ${u.username}`, type: "success" });
+            setTimeout(() => { window.location.href = "dashboard.html"; }, 500);
+          } catch (err) {
+            toast({ title: "Sign-in failed", message: err.message, type: "error" });
+            btn.disabled = false;
+            label.textContent = "Sign in";
+          }
+        }, 400);
+      });
+    });
+  </script>
+</body>
+</html>

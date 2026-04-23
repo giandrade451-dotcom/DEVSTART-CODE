@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container" id="dash-root">
+    <header class="dash-head reveal">
+      <div>
+        <h1 id="greeting">Welcome back!</h1>
+        <div class="sub" id="sub-line">Pick up where you left off — your progress is saved.</div>
+      </div>
+      <div class="row">
+        <a class="btn" href="courses.html">Browse courses</a>
+        <a class="btn vip" href="vip.html">Get VIP</a>
+      </div>
+    </header>
+
+    <section class="dash-stats reveal" id="dash-stats"></section>
+
+    <section class="mb-3">
+      <div class="row between mb-2">
+        <h2 style="margin:0;">Active courses</h2>
+        <a class="small text-muted" href="progress.html">See full progress →</a>
+      </div>
+      <div class="grid cols-3" id="active-grid"></div>
+      <div id="empty-active" class="card reveal hidden" style="text-align:center;">
+        <h3>No active courses yet</h3>
+        <p>Start your first lesson to build momentum.</p>
+        <a class="btn primary" href="courses.html">Pick a course</a>
+      </div>
+    </section>
+
+    <section class="mb-3">
+      <h2>Keep going — free courses</h2>
+      <div class="grid cols-4" id="free-grid"></div>
+    </section>
+
+    <section class="mb-3">
+      <h2>VIP track</h2>
+      <div class="grid cols-4" id="vip-grid"></div>
+    </section>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+</body>
+</html>

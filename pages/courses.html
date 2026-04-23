@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Courses · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <header class="dash-head reveal">
+      <div>
+        <h1>All courses</h1>
+        <div class="sub">A complete curriculum from HTML basics to shipping a fullstack SaaS.</div>
+      </div>
+      <div class="row">
+        <input class="input" id="search" placeholder="Search courses…" style="min-width:240px;" />
+        <select class="select" id="filter" style="max-width:180px;">
+          <option value="all">All</option>
+          <option value="free">Free only</option>
+          <option value="vip">VIP only</option>
+        </select>
+      </div>
+    </header>
+
+    <section class="mb-3 reveal">
+      <h2>Free courses</h2>
+      <div class="grid cols-4" id="free-grid"></div>
+    </section>
+
+    <section class="mb-3 reveal delay-1">
+      <h2>VIP track</h2>
+      <div class="grid cols-4" id="vip-grid"></div>
+    </section>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { users, progress, escapeHtml, locks } = window.DevstartApp;
+      const user = users.currentUser();
+      const courses = window.DevstartCourses || [];
+
+      function render() {
+        const q = (document.getElementById("search").value || "").trim().toLowerCase();
+        const f = document.getElementById("filter").value;
+        const match = (c) => (
+          !q || c.title.toLowerCase().includes(q) || c.description.toLowerCase().includes(q) || c.tagline.toLowerCase().includes(q)
+        );
+        const free = courses.filter(c => !c.vip && match(c));
+        const vip = courses.filter(c => c.vip && match(c));
+
+        document.getElementById("free-grid").parentElement.classList.toggle("hidden", f === "vip");
+        document.getElementById("vip-grid").parentElement.classList.toggle("hidden", f === "free");
+
+        document.getElementById("free-grid").innerHTML = free.length
+          ? free.map(c => renderCard(c, user, progress, escapeHtml, locks)).join("")
+          : `<div class="card center"><p>No free courses match.</p></div>`;
+        document.getElementById("vip-grid").innerHTML = vip.length
+          ? vip.map(c => renderCard(c, user, progress, escapeHtml, locks, true)).join("")
+          : `<div class="card center"><p>No VIP courses match.</p></div>`;
+      }
+
+      document.getElementById("search").addEventListener("input", render);
+      document.getElementById("filter").addEventListener("change", render);
+      render();
+    });
+
+    function renderCard(course, user, progress, escapeHtml, locks, isVipGrid = false) {
+      const p = progress.getCourseProgress(user, course);
+      const lockedByAdmin = locks.isCourseLockedForAll(course.id);
+      const lockedByVIP = course.vip && (!user || !user.vip);
+      const locked = lockedByAdmin || lockedByVIP;
+      const label = locked
+        ? (lockedByVIP ? "Unlock VIP" : "Locked")
+        : (p.completed === 0 ? "Start" : (p.percent === 100 ? "Review" : "Continue"));
+      const href = locked
+        ? (lockedByVIP ? "vip.html" : "#")
+        : `course.html?id=${encodeURIComponent(course.id)}`;
+      return `
+        <a class="card course-card ${locked ? "locked" : ""}" href="${href}">
+          <div class="course-cover ${course.theme}"><span>${escapeHtml(course.cover)}</span></div>
+          <div class="course-head">
+            <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Free"}</span>
+            <span class="course-meta">${course.lessons.length} lessons · ${escapeHtml(course.level)}</span>
+          </div>
+          <h3>${escapeHtml(course.title)}</h3>
+          <p>${escapeHtml(course.tagline)}</p>
+          ${user && p.completed > 0 ? `
+            <div>
+              <div class="progress-label"><span>${p.completed}/${p.total}</span><span>${p.percent}%</span></div>
+              <div class="progress"><span style="width:${p.percent}%"></span></div>
+            </div>` : ""}
+          <div class="course-foot">
+            <span class="course-meta">⏱ ${escapeHtml(course.duration)}</span>
+            <span class="btn sm primary">${label} →</span>
+          </div>
+        </a>
+      `;
+    }
+  </script>
+</body>
+</html>
