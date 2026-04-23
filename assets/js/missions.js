@@ -9,15 +9,16 @@
 
   // Catálogo de missões — test(progress, state) e pool para sorteio diário.
   const CATALOG = [
-    { id: "m-lesson-1", emoji: "📚", title: "Conclua 1 aula hoje",     goal: 1, type: "lesson",    xp: 30, coins: 2 },
-    { id: "m-lesson-3", emoji: "🚀", title: "Conclua 3 aulas hoje",    goal: 3, type: "lesson",    xp: 80, coins: 5 },
-    { id: "m-quiz-1",   emoji: "🧠", title: "Faça 1 quiz",             goal: 1, type: "quiz",      xp: 25, coins: 2 },
-    { id: "m-quiz-3",   emoji: "🎯", title: "Faça 3 quizzes",          goal: 3, type: "quiz",      xp: 70, coins: 4 },
-    { id: "m-perfect",  emoji: "💯", title: "Tire 100% em 1 quiz",     goal: 1, type: "perfect",   xp: 50, coins: 3 },
-    { id: "m-comment",  emoji: "💬", title: "Comente em 1 aula",       goal: 1, type: "comment",   xp: 20, coins: 1 },
-    { id: "m-forum",    emoji: "🧵", title: "Publique ou responda no fórum", goal: 1, type: "forum", xp: 30, coins: 2 },
-    { id: "m-visit",    emoji: "📖", title: "Abra 2 aulas diferentes", goal: 2, type: "visit",     xp: 15, coins: 1 },
-    { id: "m-project",  emoji: "🧑‍💻", title: "Publique 1 projeto no portfólio", goal: 1, type: "project", xp: 40, coins: 3 },
+    // coins espelham Math.round(xp/10) de gamification.grantXP para o display bater com o valor real creditado.
+    { id: "m-lesson-1", emoji: "📚", title: "Conclua 1 aula hoje",     goal: 1, type: "lesson",    xp: 30, coins: 3 },
+    { id: "m-lesson-3", emoji: "🚀", title: "Conclua 3 aulas hoje",    goal: 3, type: "lesson",    xp: 80, coins: 8 },
+    { id: "m-quiz-1",   emoji: "🧠", title: "Faça 1 quiz",             goal: 1, type: "quiz",      xp: 25, coins: 3 },
+    { id: "m-quiz-3",   emoji: "🎯", title: "Faça 3 quizzes",          goal: 3, type: "quiz",      xp: 70, coins: 7 },
+    { id: "m-perfect",  emoji: "💯", title: "Tire 100% em 1 quiz",     goal: 1, type: "perfect",   xp: 50, coins: 5 },
+    { id: "m-comment",  emoji: "💬", title: "Comente em 1 aula",       goal: 1, type: "comment",   xp: 20, coins: 2 },
+    { id: "m-forum",    emoji: "🧵", title: "Publique ou responda no fórum", goal: 1, type: "forum", xp: 30, coins: 3 },
+    { id: "m-visit",    emoji: "📖", title: "Abra 2 aulas diferentes", goal: 2, type: "visit",     xp: 15, coins: 2 },
+    { id: "m-project",  emoji: "🧑‍💻", title: "Publique 1 projeto no portfólio", goal: 1, type: "project", xp: 40, coins: 4 },
     { id: "m-streak",   emoji: "🔥", title: "Mantenha a ofensiva hoje", goal: 1, type: "checkin",   xp: 10, coins: 1 },
   ];
 
@@ -84,7 +85,7 @@
     let changed = false;
     missions.forEach(m => {
       if (m.done) return;
-      if (m.type === type || (type === "perfect" && m.type === "quiz")) {
+      if (m.type === type) {
         m.progress = Math.min(m.goal, (m.progress || 0) + amount);
         if (m.progress >= m.goal) {
           m.done = true;

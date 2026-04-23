@@ -103,7 +103,7 @@
       actions.push({
         emoji: "▶️",
         title: best.progress?.percent > 0 ? "Continuar aprendendo" : "Começar próxima etapa",
-        sub: `${escapeHtmlLocal(best.course.title)} — ${escapeHtmlLocal(best.reason)}`,
+        sub: `${best.course.title} — ${best.reason}`,
         href,
         cta: best.progress?.percent > 0 ? "Continuar" : "Começar",
       });
