@@ -1,5 +1,12 @@
 /* Lesson viewer + quiz + notas + comentários + XP hooks */
 (function () {
+  const MIN_READ_MS = 3 * 60 * 1000;   // 3 min mínimos de leitura antes de validar
+  const MAX_ATTEMPTS = 3;              // tentativas por pergunta antes de travar
+
+  function localDayStr(d = new Date()) {
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     const App = window.DevstartApp;
     const { users, progress, escapeHtml, locks, toast } = App;
@@ -42,9 +49,10 @@
         u.lastSeenLesson = { courseId: course.id, lessonId: lesson.id, at: Date.now() };
         return u;
       });
-      // Missões diárias: contar visita em aulas distintas (1 vez por aula por dia)
+      // Missões diárias: contar visita em aulas distintas (1 vez por aula por dia).
+      // Usa data local (não UTC) para casar com o resto do app.
       try {
-        const today = new Date().toISOString().slice(0, 10);
+        const today = localDayStr();
         const visitKey = `devstart.visit.${user.username}.${today}.${course.id}.${lesson.id}`;
         if (!localStorage.getItem(visitKey)) {
           localStorage.setItem(visitKey, "1");
@@ -60,9 +68,104 @@
     }
     function setPrefs(p) { localStorage.setItem(PREF_KEY, JSON.stringify(p)); }
 
-    render();
+    // ---- Tempo de leitura persistido ----
+    const timeKey = user
+      ? `devstart.lessonTime.${user.username}.${course.id}.${lesson.id}`
+      : null;
+    function loadElapsed() {
+      if (!timeKey) return 0;
+      const n = parseInt(localStorage.getItem(timeKey) || "0", 10);
+      return Number.isFinite(n) && n >= 0 ? Math.min(n, MIN_READ_MS * 10) : 0;
+    }
+    function saveElapsed(ms) {
+      if (!timeKey) return;
+      try { localStorage.setItem(timeKey, String(Math.floor(ms))); } catch (e) {}
+    }
+    let elapsedMs = loadElapsed();
+    let lastTick = 0;
+    let timerHandle = null;
 
+    // ---- Estado do quiz (tentativas por pergunta) ----
+    let attempts = new Array(lesson.quiz.length).fill(0);
+    let correctLocked = new Set();
+    let failedLocked = new Set();
+
+    render();
+    setupTimer();
+
+    // =========================================================
+    function setupTimer() {
+      // Aula já concluída → não precisa de timer.
+      const p = user ? progress.getCourseProgress(user, course) : { completedLessons: [] };
+      if (p.completedLessons.includes(lesson.id)) return;
+
+      lastTick = performance.now();
+      document.addEventListener("visibilitychange", onVisibility);
+      window.addEventListener("beforeunload", onUnload);
+      startTick();
+      updateTimeGateUI();
+    }
+    function startTick() {
+      if (timerHandle) return;
+      timerHandle = setInterval(() => {
+        if (document.visibilityState !== "visible") { lastTick = performance.now(); return; }
+        const now = performance.now();
+        const delta = now - lastTick;
+        lastTick = now;
+        if (delta > 0 && delta < 60_000) {
+          elapsedMs = Math.min(MIN_READ_MS + 60_000, elapsedMs + delta);
+          saveElapsed(elapsedMs);
+          updateTimeGateUI();
+          if (elapsedMs >= MIN_READ_MS) { stopTick(); }
+        }
+      }, 1000);
+    }
+    function stopTick() {
+      if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+    }
+    function onVisibility() {
+      if (document.visibilityState === "visible") { lastTick = performance.now(); startTick(); }
+      else { saveElapsed(elapsedMs); }
+    }
+    function onUnload() { saveElapsed(elapsedMs); }
+
+    function timeGateMet() { return elapsedMs >= MIN_READ_MS; }
+    function remainingMs() { return Math.max(0, MIN_READ_MS - elapsedMs); }
+    function fmtMs(ms) {
+      const s = Math.ceil(ms / 1000);
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return `${m}:${String(r).padStart(2, "0")}`;
+    }
+    function updateTimeGateUI() {
+      const el = document.getElementById("time-gate");
+      if (!el) return;
+      if (timeGateMet()) {
+        el.className = "time-gate met";
+        el.innerHTML = `<span>✓ Tempo mínimo de leitura cumprido — o quiz agora vale pontos.</span>`;
+        return;
+      }
+      const pct = Math.min(100, Math.round((elapsedMs / MIN_READ_MS) * 100));
+      el.className = "time-gate";
+      el.innerHTML = `
+        <div class="row" style="justify-content:space-between;align-items:center;">
+          <span>⏱️ Leia com calma — o quiz só conta após <strong>3 min</strong>.</span>
+          <strong>${fmtMs(remainingMs())}</strong>
+        </div>
+        <div class="progress sm mt-1"><span style="width:${pct}%"></span></div>
+      `;
+    }
+
+    // =========================================================
     function render() {
+      // Estado do quiz é por ciclo de DOM: cada render reconstrói os radios, então
+      // precisamos zerar tentativas/travas aqui. Sem isso, após onQuizPassed → render()
+      // em modo revisão, correctLocked fica com os índices antigos e o "Checar respostas"
+      // tenta ler radios que não estão marcados (querySelector(...).value → TypeError).
+      attempts = new Array(lesson.quiz.length).fill(0);
+      correctLocked = new Set();
+      failedLocked = new Set();
+
       const p = user ? progress.getCourseProgress(user, course) : { completedLessons: [], quizzes: {} };
       const savedQuiz = p.quizzes[lesson.id];
       const isDone = p.completedLessons.includes(lesson.id);
@@ -70,6 +173,9 @@
       const savedNotes = localStorage.getItem(notesKey) || "";
       const prefs = getPrefs();
       const speed = prefs.speed || "1";
+
+      // Se a aula já está concluída, mostramos o quiz só como revisão (sem restrições).
+      const reviewMode = isDone;
 
       root.innerHTML = `
         <div class="lesson-layout">
@@ -109,10 +215,19 @@
                 </div>
               </div>
               <div class="row">
-                ${isDone
-                  ? `<span class="badge done">✓ Concluída</span>`
-                  : `<button class="btn sm" id="mark-done">Marcar como concluída</button>`}
+                ${isDone ? `<span class="badge done">✓ Concluída</span>` : ""}
                 <button class="btn sm ghost" id="copy-link" title="Copiar link da aula">Compartilhar</button>
+              </div>
+            </div>
+
+            <div class="lesson-warning" role="note" aria-label="Dica de tradução">
+              <span class="emoji" aria-hidden="true">🌐</span>
+              <div class="flex1">
+                <strong>Caso você não saiba ler inglês, use o tradutor do Chrome.</strong>
+                <div class="small text-muted">
+                  Clique com o botão direito na página e escolha
+                  <em>"Traduzir para o português"</em>, ou use o ícone 🌐 na barra de endereço.
+                </div>
               </div>
             </div>
 
@@ -120,29 +235,39 @@
 
             <section class="quiz" id="quiz">
               <h2>Teste seu conhecimento</h2>
-              <p class="text-muted" style="margin-bottom:12px;">Responda as ${lesson.quiz.length} questões para concluir a aula.</p>
+              <p class="text-muted" style="margin-bottom:12px;">
+                ${reviewMode
+                  ? "Quiz liberado para revisão — você já concluiu esta aula."
+                  : `Para concluir a aula você precisa <strong>acertar todas as ${lesson.quiz.length} questões</strong>. Cada pergunta tem até <strong>${MAX_ATTEMPTS} tentativas</strong>.`}
+              </p>
+              ${reviewMode ? "" : `<div id="time-gate" class="time-gate"></div>`}
+              <div id="quiz-banner" class="quiz-banner hidden"></div>
               <form id="quiz-form">
                 ${lesson.quiz.map((q, qi) => `
                   <div class="q-block" data-qi="${qi}">
-                    <div class="q-title">${qi + 1}. ${escapeHtml(q.prompt)}</div>
+                    <div class="q-title">
+                      ${qi + 1}. ${escapeHtml(q.prompt)}
+                      ${reviewMode ? "" : `<span class="attempt-pill" data-attempt-pill="${qi}">Tentativas: 0/${MAX_ATTEMPTS}</span>`}
+                    </div>
                     <div class="opts">
                       ${q.options.map((o, oi) => `
                         <label class="opt">
-                          <input type="radio" name="q${qi}" value="${oi}" ${savedQuiz ? "disabled" : ""} />
+                          <input type="radio" name="q${qi}" value="${oi}" />
                           <span>${escapeHtml(o)}</span>
                         </label>`).join("")}
                     </div>
                     <div class="q-feedback hidden"></div>
                   </div>
                 `).join("")}
-                ${savedQuiz ? `
+                ${reviewMode && savedQuiz ? `
                   <div class="quiz-result">
-                    <h3>Você acertou <span class="gradient-text">${savedQuiz.percent}%</span></h3>
-                    <p class="text-muted">${savedQuiz.score} de ${savedQuiz.total} corretas. Refaça abaixo para tentar de novo.</p>
-                    <button type="button" class="btn mt-2" id="retake">Refazer quiz</button>
-                  </div>` : `
-                  <button class="btn primary mt-3" type="submit">Enviar respostas</button>
-                `}
+                    <h3>Sua nota registrada: <span class="gradient-text">${savedQuiz.percent}%</span></h3>
+                    <p class="text-muted">${savedQuiz.score} de ${savedQuiz.total} corretas.</p>
+                  </div>` : ""}
+                <div class="row" style="gap:8px;margin-top:14px;">
+                  <button class="btn primary" type="submit" id="quiz-submit">${reviewMode ? "Checar respostas" : "Enviar respostas"}</button>
+                  <button class="btn ghost" type="button" id="quiz-reset">Reiniciar quiz</button>
+                </div>
               </form>
             </section>
 
@@ -181,14 +306,15 @@
         </div>
       `;
 
-      bindQuiz();
+      bindQuiz(reviewMode);
       bindExtras(notesKey);
       renderComments();
+      updateTimeGateUI();
       window.DevstartApp.initReveal();
     }
 
+    // =========================================================
     function bindExtras(notesKey) {
-      // Speed
       document.getElementById("speed-ctrl").querySelectorAll("button").forEach(b => {
         b.addEventListener("click", () => {
           const speed = b.dataset.speed;
@@ -200,22 +326,6 @@
         });
       });
 
-      // Mark done
-      document.getElementById("mark-done")?.addEventListener("click", () => {
-        if (!user) { toast({ title: "Entre para salvar o progresso", type: "info" }); return; }
-        const beforeProg = progress.getCourseProgress(users.currentUser(), course);
-        const wasAlreadyDone = beforeProg.completedLessons.includes(lesson.id);
-        progress.markLessonComplete(course.id, lesson.id);
-        if (!wasAlreadyDone) {
-          try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
-          try { window.DevstartMissions?.track(user.username, "lesson"); } catch (e) {}
-        }
-        maybeCompleteCourse();
-        toast({ title: "Aula marcada como concluída", type: "success" });
-        setTimeout(render, 400);
-      });
-
-      // Share
       document.getElementById("copy-link")?.addEventListener("click", async () => {
         try {
           await navigator.clipboard.writeText(window.location.href);
@@ -223,7 +333,6 @@
         } catch { toast({ title: "Não foi possível copiar", type: "error" }); }
       });
 
-      // Notes
       document.getElementById("notes-save")?.addEventListener("click", () => {
         const val = document.getElementById("notes-area").value;
         localStorage.setItem(notesKey, val);
@@ -235,7 +344,6 @@
         localStorage.removeItem(notesKey);
       });
 
-      // Comments form
       document.getElementById("comment-form")?.addEventListener("submit", (e) => {
         e.preventDefault();
         if (!user) return;
@@ -285,7 +393,6 @@
       const p = progress.getCourseProgress(fresh, course);
       if (p.completed === course.lessons.length) {
         const cat = window.DevstartConfig?.getCategory(course.id) || "outros";
-        // Emit course complete once per user per course
         const key = `devstart.courseCompleted.${user.username}.${course.id}`;
         if (!localStorage.getItem(key)) {
           localStorage.setItem(key, String(Date.now()));
@@ -303,98 +410,183 @@
       }
     }
 
-    function bindQuiz() {
+    // =========================================================
+    function attemptPill(qi) {
+      const el = document.querySelector(`[data-attempt-pill="${qi}"]`);
+      if (!el) return;
+      if (correctLocked.has(qi)) { el.textContent = "Correta ✓"; el.className = "attempt-pill ok"; return; }
+      if (failedLocked.has(qi)) { el.textContent = "Tentativas esgotadas"; el.className = "attempt-pill fail"; return; }
+      el.textContent = `Tentativas: ${attempts[qi]}/${MAX_ATTEMPTS}`;
+      el.className = "attempt-pill";
+    }
+
+    function setBlockState(qi, state, msg) {
+      const block = document.querySelector(`.q-block[data-qi="${qi}"]`);
+      if (!block) return;
+      const feedback = block.querySelector(".q-feedback");
+      const radios = block.querySelectorAll("input[type=radio]");
+      if (state === "correct") {
+        block.classList.add("locked-correct");
+        radios.forEach(r => { r.disabled = true; });
+        feedback.textContent = msg; feedback.classList.remove("hidden");
+      } else if (state === "failed") {
+        block.classList.add("locked-failed");
+        radios.forEach(r => { r.disabled = true; });
+        feedback.textContent = msg; feedback.classList.remove("hidden");
+      } else if (state === "retry") {
+        feedback.textContent = msg; feedback.classList.remove("hidden");
+      }
+      attemptPill(qi);
+    }
+
+    function bindQuiz(reviewMode) {
       const form = document.getElementById("quiz-form");
       if (!form) return;
+      lesson.quiz.forEach((_, qi) => attemptPill(qi));
 
-      const retake = document.getElementById("retake");
-      if (retake) {
-        retake.addEventListener("click", () => {
-          if (!user) return;
-          window.DevstartApp.users.updateUser(user.username, (u) => {
+      document.getElementById("quiz-reset")?.addEventListener("click", () => {
+        if (!confirm("Reiniciar quiz? As tentativas desta sessão serão zeradas.")) return;
+        attempts = new Array(lesson.quiz.length).fill(0);
+        correctLocked.clear();
+        failedLocked.clear();
+        // Limpa resultado persistido se não estiver em modo revisão.
+        if (!reviewMode && user) {
+          App.users.updateUser(user.username, (u) => {
             if (u.progress?.[course.id]?.quizzes?.[lesson.id]) {
               delete u.progress[course.id].quizzes[lesson.id];
             }
             return u;
           });
-          render();
-        });
-      }
+        }
+        render();
+      });
 
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        if (!user) {
+        if (!user && !reviewMode) {
           toast({ title: "É preciso entrar", message: "Crie uma conta gratuita para salvar seu progresso.", type: "info" });
           return;
         }
-        const total = lesson.quiz.length;
-        let score = 0;
-        const blocks = form.querySelectorAll(".q-block");
-        let allAnswered = true;
 
-        blocks.forEach((block, qi) => {
-          const q = lesson.quiz[qi];
-          const chosen = form.querySelector(`input[name="q${qi}"]:checked`);
-          const feedback = block.querySelector(".q-feedback");
-          const opts = block.querySelectorAll(".opt");
-          opts.forEach(o => o.classList.remove("correct", "wrong"));
-          if (!chosen) {
-            allAnswered = false;
-            feedback.textContent = "Escolha uma resposta.";
-            feedback.classList.remove("hidden");
-            return;
-          }
-          const picked = parseInt(chosen.value, 10);
-          opts[q.correct].classList.add("correct");
-          if (picked === q.correct) {
-            score++;
-            feedback.textContent = q.explain ? `✓ ${q.explain}` : "✓ Correto!";
-          } else {
-            opts[picked].classList.add("wrong");
-            feedback.textContent = q.explain ? `✗ ${q.explain}` : "✗ Quase lá.";
-          }
-          feedback.classList.remove("hidden");
-        });
+        // Questões abertas = nem travadas corretas nem travadas com falha.
+        const openQi = lesson.quiz.map((_, qi) => qi)
+          .filter(qi => !correctLocked.has(qi) && !failedLocked.has(qi));
 
-        if (!allAnswered) {
-          toast({ title: "Responda todas as questões", message: "Ainda tem questões em branco.", type: "error" });
+        // Todas as abertas precisam ter resposta marcada.
+        const unanswered = openQi.filter(qi => !form.querySelector(`input[name="q${qi}"]:checked`));
+        if (unanswered.length) {
+          unanswered.forEach(qi => setBlockState(qi, "retry", "Escolha uma resposta."));
+          toast({ title: "Responda todas as questões abertas", type: "error" });
           return;
         }
 
-        const percent = Math.round((score / total) * 100);
-        const result = { score, total, percent };
-
-        // Check prior state BEFORE saving so gamification hooks only fire on first completion.
-        const beforeProg = progress.getCourseProgress(users.currentUser(), course);
-        const lessonWasDone = beforeProg.completedLessons.includes(lesson.id);
-        const quizAwardedKey = `devstart.quizAwarded.${user.username}.${course.id}.${lesson.id}`;
-        const quizAlreadyAwarded = !!localStorage.getItem(quizAwardedKey);
-
-        progress.saveQuizResult(course.id, lesson.id, result);
-        progress.markLessonComplete(course.id, lesson.id);
-
-        if (!lessonWasDone) {
-          try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
-          try { window.DevstartMissions?.track(user.username, "lesson"); } catch (e) {}
+        // Modo revisão: só mostra resultado, nada grava / trava.
+        if (reviewMode) {
+          let score = 0;
+          lesson.quiz.forEach((q, qi) => {
+            const picked = parseInt(form.querySelector(`input[name="q${qi}"]:checked`).value, 10);
+            const block = document.querySelector(`.q-block[data-qi="${qi}"]`);
+            const opts = block.querySelectorAll(".opt");
+            opts.forEach(o => o.classList.remove("correct", "wrong"));
+            opts[q.correct].classList.add("correct");
+            if (picked === q.correct) { score++; }
+            else { opts[picked].classList.add("wrong"); }
+          });
+          toast({ title: `Revisão: ${score}/${lesson.quiz.length}`, type: "info" });
+          return;
         }
-        if (!quizAlreadyAwarded) {
-          try { window.DevstartGame?.onQuizComplete(user.username, result); } catch (e) {}
-          try { window.DevstartMissions?.track(user.username, "quiz"); } catch (e) {}
-          if (result.percent === 100) {
-            try { window.DevstartMissions?.track(user.username, "perfect"); } catch (e) {}
+
+        // Avalia cada questão aberta.
+        openQi.forEach(qi => {
+          const q = lesson.quiz[qi];
+          const picked = parseInt(form.querySelector(`input[name="q${qi}"]:checked`).value, 10);
+          const block = document.querySelector(`.q-block[data-qi="${qi}"]`);
+          const opts = block.querySelectorAll(".opt");
+          opts.forEach(o => o.classList.remove("correct", "wrong"));
+
+          if (picked === q.correct) {
+            opts[q.correct].classList.add("correct");
+            correctLocked.add(qi);
+            setBlockState(qi, "correct", q.explain ? `✓ ${q.explain}` : "✓ Correto!");
+          } else {
+            opts[picked].classList.add("wrong");
+            opts[q.correct].classList.add("correct");
+            attempts[qi] += 1;
+            if (attempts[qi] >= MAX_ATTEMPTS) {
+              failedLocked.add(qi);
+              setBlockState(qi, "failed",
+                `✗ Tentativas esgotadas. ${q.explain ? `Resposta correta: ${q.explain}` : "Revise a aula e reinicie o quiz."}`);
+            } else {
+              const left = MAX_ATTEMPTS - attempts[qi];
+              setBlockState(qi, "retry",
+                `✗ Resposta incorreta. Você tem ${left} tentativa${left > 1 ? "s" : ""} restante${left > 1 ? "s" : ""}.`);
+            }
           }
-          try { localStorage.setItem(quizAwardedKey, String(Date.now())); } catch (e) {}
-        }
-
-        toast({
-          title: score === total ? "Nota máxima! 🎉" : "Quiz enviado",
-          message: `${score}/${total} corretas (${percent}%)`,
-          type: score === total ? "success" : (percent >= 60 ? "success" : "info"),
         });
 
-        maybeCompleteCourse();
-        setTimeout(render, 1500);
+        const allCorrect = correctLocked.size === lesson.quiz.length;
+        const anyFailed = failedLocked.size > 0;
+
+        if (allCorrect) {
+          if (!timeGateMet()) {
+            showBanner(
+              `Você acertou tudo! 🎉 Mas ainda faltam <strong>${fmtMs(remainingMs())}</strong> de leitura para validar a conclusão.`,
+              "info"
+            );
+            toast({ title: "Leia por mais alguns instantes", message: `Faltam ${fmtMs(remainingMs())} para creditar.`, type: "info" });
+            return;
+          }
+          onQuizPassed();
+        } else if (anyFailed) {
+          showBanner(
+            `Você esgotou as tentativas em ${failedLocked.size} pergunta(s). Revise a aula e clique em <strong>Reiniciar quiz</strong>.`,
+            "error"
+          );
+          toast({ title: "Quiz reprovado — revise a aula", type: "error" });
+        } else {
+          // Ainda há perguntas abertas — deixa o aluno tentar de novo.
+          showBanner(
+            `Quase lá — ${correctLocked.size}/${lesson.quiz.length} corretas. Tente novamente as restantes.`,
+            "info"
+          );
+        }
       });
+    }
+
+    function showBanner(html, kind) {
+      const b = document.getElementById("quiz-banner");
+      if (!b) return;
+      b.innerHTML = html;
+      b.className = "quiz-banner " + (kind || "info");
+    }
+
+    function onQuizPassed() {
+      const total = lesson.quiz.length;
+      const result = { score: total, total, percent: 100 };
+
+      const beforeProg = progress.getCourseProgress(users.currentUser(), course);
+      const lessonWasDone = beforeProg.completedLessons.includes(lesson.id);
+      const quizAwardedKey = `devstart.quizAwarded.${user.username}.${course.id}.${lesson.id}`;
+      const quizAlreadyAwarded = !!localStorage.getItem(quizAwardedKey);
+
+      progress.saveQuizResult(course.id, lesson.id, result);
+      progress.markLessonComplete(course.id, lesson.id);
+
+      if (!lessonWasDone) {
+        try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
+        try { window.DevstartMissions?.track(user.username, "lesson"); } catch (e) {}
+      }
+      if (!quizAlreadyAwarded) {
+        try { window.DevstartGame?.onQuizComplete(user.username, result); } catch (e) {}
+        try { window.DevstartMissions?.track(user.username, "quiz"); } catch (e) {}
+        try { window.DevstartMissions?.track(user.username, "perfect"); } catch (e) {}
+        try { localStorage.setItem(quizAwardedKey, String(Date.now())); } catch (e) {}
+      }
+
+      maybeCompleteCourse();
+      toast({ title: "Aula concluída! 🎉", message: `${total}/${total} corretas.`, type: "success" });
+      stopTick();
+      setTimeout(render, 1500);
     }
 
     function errorCard(title, msg) {
