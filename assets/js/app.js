@@ -184,12 +184,35 @@
     els.forEach(e => obs.observe(e));
   }
 
+  // --------- Announcement banner ---------
+  function renderAnnouncement() {
+    try {
+      const list = storage.get("devstart.announcements", []);
+      const active = list.find(a => a.active);
+      if (!active) return;
+      const dismissed = storage.get("devstart.annDismissed", []);
+      if (dismissed.includes(active.id)) return;
+      if (document.querySelector(".announcement-banner")) return;
+      const div = document.createElement("div");
+      div.className = `announcement-banner type-${active.type || "info"}`;
+      div.innerHTML = `<span><strong>${escapeHtml(active.title)}</strong>${escapeHtml(active.body)}</span> <button class="ann-close" aria-label="Dispensar">×</button>`;
+      document.body.insertBefore(div, document.body.firstChild);
+      div.querySelector(".ann-close").addEventListener("click", () => {
+        dismissed.push(active.id);
+        storage.set("devstart.annDismissed", dismissed.slice(-50));
+        div.remove();
+      });
+    } catch (e) {}
+  }
+
   // --------- Sidebar ---------
   function initSidebar() {
     // Render header + sidebar scaffolding if placeholder present
     const headerMount = document.querySelector("[data-site-header]");
     const sidebarMount = document.querySelector("[data-site-sidebar]");
     const user = currentUser();
+
+    renderAnnouncement();
 
     if (headerMount && !headerMount.dataset.rendered) {
       headerMount.dataset.rendered = "1";
@@ -262,6 +285,7 @@
           <nav class="nav">
             <a href="${prefix}index.html">Início</a>
             <a href="${prefix}pages/courses.html">Cursos</a>
+            <a href="${prefix}pages/projects.html">Projetos</a>
             <a href="${prefix}pages/vip.html">VIP</a>
             <a href="${prefix}pages/dashboard.html">Painel</a>
           </nav>
@@ -316,6 +340,7 @@
         <nav class="sidebar-nav">
           <a href="${prefix}index.html">${icon("home")} Início</a>
           <a href="${prefix}pages/courses.html">${icon("book")} Cursos</a>
+          <a href="${prefix}pages/projects.html">${icon("rocket")} Projetos</a>
           <a href="${prefix}pages/progress.html">${icon("chart")} Meu Progresso</a>
           <a href="${prefix}pages/dashboard.html">${icon("grid")} Painel</a>
           <a href="${prefix}pages/profile.html">${icon("user")} Perfil</a>
@@ -342,6 +367,7 @@
       discord: '<path d="M19.5 5.5A17 17 0 0 0 15.7 4l-.2.4a12.6 12.6 0 0 1 3.4 1.8 11.9 11.9 0 0 0-13.8 0A12.6 12.6 0 0 1 8.5 4.4L8.3 4A17 17 0 0 0 4.5 5.5C2 9.8 1.5 14 1.8 18.1A16.9 16.9 0 0 0 6.7 20l.9-1.3a10.9 10.9 0 0 1-1.8-.9c.2-.2.3-.3.5-.5a11.7 11.7 0 0 0 11.4 0c.2.2.3.3.5.5a10.9 10.9 0 0 1-1.8.9l.9 1.3a16.9 16.9 0 0 0 4.9-1.9c.4-4.7-.6-8.8-2.7-12.6zM8.7 14.6c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/>',
       logout: '<path d="M15 12H3"/><polyline points="10 7 3 12 10 17"/><path d="M21 4v16"/>',
       login: '<path d="M3 12h12"/><polyline points="10 7 15 12 10 17"/><path d="M21 4v16"/>',
+      rocket: '<path d="M5 15c-1 3-1 5-1 5s2 0 5-1"/><path d="M9 19l-4-4"/><path d="M14 4c4 0 6 2 6 6 0 4-6 10-6 10S8 14 8 10c0-4 2-6 6-6z"/><circle cx="14" cy="10" r="1.6"/>',
     };
     return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name] || ""}</svg>`;
   }
