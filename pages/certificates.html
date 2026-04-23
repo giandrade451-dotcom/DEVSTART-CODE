@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meus Certificados · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🎓%3C/text%3E%3C/svg%3E" />
+  <script src="../assets/js/theme.js"></script>
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <header class="dash-head reveal">
+      <div>
+        <h1>Meus <span class="gradient-text">certificados</span></h1>
+        <div class="sub">Certificados gerados ao concluir 100% de um curso, com código de verificação único.</div>
+      </div>
+    </header>
+
+    <section class="cert-grid" id="cert-grid"></section>
+
+    <div class="card reveal mt-3" id="verify-card">
+      <h3 style="margin-top:0;">Verificar autenticidade</h3>
+      <p class="small text-muted">Tem um código de verificação? Cole abaixo para conferir.</p>
+      <form id="verify-form" class="row" style="gap:8px;align-items:flex-start;">
+        <input class="input" id="verify-code" placeholder="DSU-XXXX-XXXX-XXXX" style="flex:1;" />
+        <button class="btn primary" type="submit">Verificar</button>
+      </form>
+      <div id="verify-result" class="mt-2"></div>
+    </div>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/courses-data-3.js"></script>
+  <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/notifications.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { users, progress, escapeHtml, toast } = window.DevstartApp;
+      const user = users.currentUser();
+      const courses = window.DevstartCourses || [];
+
+      function codeFor(username, courseId) {
+        // Gera código estável por combinação user+course
+        const seed = (username + "|" + courseId).split("").reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+        const rnd = (seed % 0xffff).toString(16).toUpperCase().padStart(4, "0");
+        const rnd2 = (((seed / 7) | 0) % 0xffff).toString(16).toUpperCase().padStart(4, "0");
+        const rnd3 = (((seed / 11) | 0) % 0xffff).toString(16).toUpperCase().padStart(4, "0");
+        return `DSU-${rnd}-${rnd2}-${rnd3}`;
+      }
+
+      const grid = document.getElementById("cert-grid");
+
+      if (!user) {
+        grid.innerHTML = `<div class="card center">Entre para ver seus certificados. <a class="btn primary sm" href="login.html" style="margin-left:8px;">Entrar</a></div>`;
+      } else {
+        const completed = courses.filter(c => {
+          const p = progress.getCourseProgress(user, c);
+          return p.percent === 100;
+        });
+        if (completed.length === 0) {
+          grid.innerHTML = `<div class="card center">Nenhum certificado ainda. Conclua 100% de um curso para desbloquear. <a class="btn primary sm" href="courses.html" style="margin-left:8px;">Ver cursos</a></div>`;
+        } else {
+          grid.innerHTML = completed.map(c => {
+            const code = codeFor(user.username, c.id);
+            const completedAt = localStorage.getItem(`devstart.courseCompleted.${user.username}.${c.id}`);
+            const d = completedAt ? new Date(parseInt(completedAt, 10)) : new Date();
+            return `
+              <article class="cert-card reveal">
+                <span class="ribbon">🎓 CERTIFICADO</span>
+                <h3 style="margin:0;">${escapeHtml(c.title)}</h3>
+                <div class="small text-muted">Emitido em ${d.toLocaleDateString("pt-BR")}</div>
+                <div class="small" style="font-family:var(--font-mono);color:var(--text-muted);">${code}</div>
+                <div class="row" style="gap:8px;margin-top:auto;">
+                  <a class="btn primary sm" href="certificate.html?course=${encodeURIComponent(c.id)}">Ver certificado</a>
+                  <button class="btn sm ghost" data-code="${code}">Copiar código</button>
+                </div>
+              </article>`;
+          }).join("");
+          grid.querySelectorAll("[data-code]").forEach(btn => {
+            btn.addEventListener("click", async () => {
+              try { await navigator.clipboard.writeText(btn.dataset.code); toast({ title: "Código copiado", type: "success" }); } catch { toast({ title: "Falha ao copiar", type: "error" }); }
+            });
+          });
+        }
+      }
+
+      document.getElementById("verify-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const code = document.getElementById("verify-code").value.trim().toUpperCase();
+        const out = document.getElementById("verify-result");
+        if (!/^DSU-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}$/.test(code)) {
+          out.innerHTML = `<div class="badge" style="background:rgba(255,92,122,.15);color:#ff7089;">Código inválido</div>`;
+          return;
+        }
+        // Verifica se o código corresponde a algum par (usuario, curso)
+        const allUsers = users.getUsers();
+        for (const u of allUsers) {
+          for (const c of courses) {
+            if (codeFor(u.username, c.id) === code) {
+              out.innerHTML = `<div class="card" style="background:rgba(52,240,199,.1);border-color:rgba(52,240,199,.4);">
+                ✅ Certificado válido — <strong>${escapeHtml(u.username)}</strong> concluiu <strong>${escapeHtml(c.title)}</strong>.
+              </div>`;
+              return;
+            }
+          }
+        }
+        out.innerHTML = `<div class="badge" style="background:rgba(255,92,122,.15);color:#ff7089;">Código não encontrado na base local.</div>`;
+      });
+
+      window.DevstartApp.initReveal();
+    });
+  </script>
+</body>
+</html>

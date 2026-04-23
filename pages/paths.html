@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trilhas de Carreira · Devstart UP</title>
+  <meta name="description" content="Trilhas de carreira guiadas em pt-BR — Frontend, Backend, Fullstack, Python, Mobile e Carreira." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+  <script src="../assets/js/theme.js"></script>
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <header class="dash-head reveal">
+      <div>
+        <h1>Trilhas de <span class="gradient-text">carreira</span></h1>
+        <div class="sub">Siga uma sequência curada de cursos para chegar de verdade onde você quer chegar.</div>
+      </div>
+    </header>
+    <section class="path-list" id="path-list"></section>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/courses-data-3.js"></script>
+  <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/notifications.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { users, progress, escapeHtml } = window.DevstartApp;
+      const user = users.currentUser();
+      const courses = window.DevstartCourses || [];
+      const paths = window.DevstartConfig.pathsList();
+      const root = document.getElementById("path-list");
+      root.innerHTML = paths.map(path => {
+        const items = path.courses.map(id => courses.find(c => c.id === id)).filter(Boolean);
+        const perCourse = items.map(c => user ? progress.getCourseProgress(user, c) : { percent: 0, completed: 0, total: c.lessons.length });
+        const doneCount = perCourse.filter(p => p.percent === 100).length;
+        const overall = Math.round(perCourse.reduce((a, b) => a + b.percent, 0) / (items.length || 1));
+        const lockedCourses = path.vip && !(user && user.vip);
+        return `
+          <section class="path-card reveal">
+            <div class="row between" style="align-items:flex-start;">
+              <div class="row" style="gap:12px;align-items:center;">
+                <div class="path-emoji">${path.emoji}</div>
+                <div>
+                  <h3>${escapeHtml(path.title)}</h3>
+                  <div class="small text-muted">${escapeHtml(path.tagline)}</div>
+                </div>
+              </div>
+              ${path.vip ? `<span class="badge vip">👑 VIP</span>` : ""}
+            </div>
+            <p class="text-muted" style="margin-top:4px;">${escapeHtml(path.description)}</p>
+            <div class="row between small text-muted">
+              <span>${doneCount}/${items.length} cursos concluídos</span>
+              <span>${overall}% da trilha</span>
+            </div>
+            <div class="path-step-bar">
+              ${perCourse.map(p => `<div class="step ${p.percent === 100 ? "done" : ""}"></div>`).join("")}
+            </div>
+            <div class="path-courses">
+              ${items.map((c, i) => {
+                const p = perCourse[i];
+                const done = p.percent === 100;
+                const locked = lockedCourses || (c.vip && !(user && user.vip));
+                return `<a class="path-course-row ${done ? "done" : ""}" href="${locked ? "vip.html" : "course.html?id=" + encodeURIComponent(c.id)}">
+                  <div class="idx">${i + 1}</div>
+                  <div class="flex1">
+                    <strong>${escapeHtml(c.title)}</strong>
+                    <div class="small text-muted">${p.completed}/${p.total} aulas · ${p.percent}%</div>
+                  </div>
+                  ${done ? "✓" : locked ? "🔒" : "→"}
+                </a>`;
+              }).join("")}
+            </div>
+          </section>
+        `;
+      }).join("");
+      window.DevstartApp.initReveal();
+    });
+  </script>
+</body>
+</html>

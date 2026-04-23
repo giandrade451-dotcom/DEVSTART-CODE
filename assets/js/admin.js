@@ -41,7 +41,6 @@
               <input class="input" id="p" type="password" autocomplete="current-password" required />
               <button class="btn primary block lg" type="submit">Entrar</button>
             </form>
-            <div class="auth-alt small">Padrão: <code>admin</code> / <code>devstart2025</code></div>
           </div>
         </div>
       `;
@@ -141,6 +140,14 @@
 
       const logs = storage.get(KEY_ADMIN_LOGS, []).slice(0, 8);
 
+      // Gamificação — ranking de XP
+      let gameRows = [];
+      if (window.DevstartGame && typeof window.DevstartGame.leaderboard === "function") {
+        gameRows = window.DevstartGame.leaderboard(8);
+      }
+      const totalXP = gameRows.reduce((s, r) => s + r.xp, 0);
+      const activeStreaks = gameRows.filter(r => r.streak >= 2).length;
+
       panel.innerHTML = `
         <section class="dash-stats reveal" id="admin-stats" style="margin-bottom:18px;">
           ${[
@@ -174,6 +181,45 @@
                 <div><strong>${escapeHtml(l.action)}</strong> <span class="small text-muted">${fmtDate(l.at)}</span></div>
                 <div class="small text-muted">${escapeHtml(l.detail)}</div>
               </li>`).join("")}</ul>` : '<p class="text-muted">Ainda não há ações registradas.</p>'}
+          </section>
+        </div>
+
+        <div class="grid-2" style="margin-top:18px;">
+          <section class="card reveal">
+            <h2 style="margin-top:0;">🏅 Top XP (gamificação)</h2>
+            <div class="small text-muted mb-1">${fmtNum(totalXP)} XP distribuído · ${activeStreaks} ofensiva(s) ativa(s)</div>
+            ${gameRows.length ? gameRows.map((r,i) => `
+              <div class="row between" style="margin:8px 0;">
+                <span>#${i+1} <strong>${escapeHtml(r.username)}</strong> ${r.vip?'<span class="badge vip">VIP</span>':''}
+                  <small class="text-muted">Lv ${r.level.id} · ${escapeHtml(r.level.name)}</small>
+                </span>
+                <span class="small text-muted">${fmtNum(r.xp)} XP · 🔥 ${r.streak}d · 🏅 ${r.badges}</span>
+              </div>
+            `).join("") : '<p class="text-muted">Sem dados de gamificação ainda.</p>'}
+          </section>
+
+          <section class="card reveal">
+            <h2 style="margin-top:0;">📂 Catálogo por categoria</h2>
+            ${(() => {
+              const cfg = window.DevstartConfig;
+              if (!cfg) return '<p class="text-muted">Configuração de categorias não carregada.</p>';
+              const counts = {};
+              courses.forEach(c => {
+                const cat = cfg.getCategory(c.id);
+                counts[cat] = (counts[cat] || 0) + 1;
+              });
+              const max = Math.max(1, ...Object.values(counts));
+              return cfg.CATEGORIES.filter(c => c.id !== "all").map(c => {
+                const n = counts[c.id] || 0;
+                return `
+                  <div class="row between" style="margin:6px 0;">
+                    <span>${c.emoji} ${escapeHtml(c.label)}</span>
+                    <span class="small text-muted">${n} curso(s)</span>
+                  </div>
+                  <div class="progress-bar"><div class="progress" style="width:${(n/max)*100}%"></div></div>
+                `;
+              }).join("");
+            })()}
           </section>
         </div>
       `;

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Busca · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🔎%3C/text%3E%3C/svg%3E" />
+  <script src="../assets/js/theme.js"></script>
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <header class="dash-head reveal">
+      <div>
+        <h1>Busca <span class="gradient-text">global</span></h1>
+        <div class="sub">Encontre cursos, aulas, posts do fórum e projetos da comunidade.</div>
+      </div>
+    </header>
+
+    <div class="search-head mb-2">
+      <input class="input" id="q" placeholder="Pesquise por qualquer termo — ex.: react hooks, promise, trilha frontend" autocomplete="off" />
+    </div>
+
+    <div id="results" class="mt-2"></div>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/courses-data-3.js"></script>
+  <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/notifications.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/search.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { escapeHtml } = window.DevstartApp;
+      const input = document.getElementById("q");
+      const out = document.getElementById("results");
+      const params = new URLSearchParams(location.search);
+      const initial = params.get("q") || "";
+      input.value = initial;
+
+      function run() {
+        const q = input.value.trim();
+        if (!q) { out.innerHTML = `<p class="text-muted">Comece a digitar para buscar…</p>`; return; }
+        const r = window.DevstartSearch.search(q, { limit: 30 });
+        const total = r.courses.length + r.lessons.length + r.posts.length + r.projects.length;
+        if (total === 0) { out.innerHTML = `<div class="card center">Nenhum resultado para <strong>${escapeHtml(q)}</strong>.</div>`; return; }
+
+        out.innerHTML = `
+          ${group("Cursos", r.courses, x => `
+            <a class="search-item reveal" href="${x.href}">
+              <div><strong>${escapeHtml(x.title)}</strong> ${x.vip ? '<span class="badge vip">👑</span>' : ""}<br><small>${escapeHtml((x.description||"").slice(0,160))}</small></div>
+              <small>→</small>
+            </a>`)}
+          ${group("Aulas", r.lessons, x => `
+            <a class="search-item reveal" href="${x.href}">
+              <div><strong>${escapeHtml(x.title)}</strong><br><small>${escapeHtml(x.courseTitle)} · ${escapeHtml(x.summary || "")}</small></div>
+              <small>→</small>
+            </a>`)}
+          ${group("Fórum", r.posts, x => `
+            <a class="search-item reveal" href="forum.html">
+              <div><strong>${escapeHtml(x.title)}</strong><br><small>por ${escapeHtml(x.author)}</small></div>
+              <small>→</small>
+            </a>`)}
+          ${group("Projetos", r.projects, x => `
+            <a class="search-item reveal" href="projects.html">
+              <div><strong>${escapeHtml(x.title)}</strong><br><small>por ${escapeHtml(x.author)} · ${(x.techs || []).map(escapeHtml).join(", ")}</small></div>
+              <small>→</small>
+            </a>`)}
+        `;
+        window.DevstartApp.initReveal();
+      }
+      function group(title, list, tpl) {
+        if (!list.length) return "";
+        return `<section class="search-group mt-2"><h2>${title} · ${list.length}</h2>${list.map(tpl).join("")}</section>`;
+      }
+      input.addEventListener("input", run);
+      run();
+    });
+  </script>
+</body>
+</html>

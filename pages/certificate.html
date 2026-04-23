@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Certificado · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🎓%3C/text%3E%3C/svg%3E" />
+  <script src="../assets/js/theme.js"></script>
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <div class="row between mb-2 reveal">
+      <h1 style="margin:0;">Certificado de conclusão</h1>
+      <div class="row">
+        <button class="btn" id="print-btn">🖨️ Imprimir / PDF</button>
+        <a class="btn ghost" href="certificates.html">← Voltar</a>
+      </div>
+    </div>
+    <div id="cert-root"></div>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/courses-data-3.js"></script>
+  <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/notifications.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { users, progress, escapeHtml } = window.DevstartApp;
+      const params = new URLSearchParams(location.search);
+      const courseId = params.get("course");
+      const user = users.currentUser();
+      const root = document.getElementById("cert-root");
+      const courses = window.DevstartCourses || [];
+      const course = courses.find(c => c.id === courseId);
+
+      if (!user) { root.innerHTML = `<div class="card center">Entre para ver seu certificado. <a class="btn primary sm" href="login.html">Entrar</a></div>`; return; }
+      if (!course) { root.innerHTML = `<div class="card center">Curso não encontrado.</div>`; return; }
+
+      const p = progress.getCourseProgress(user, course);
+      if (p.percent < 100) { root.innerHTML = `<div class="card center">Você ainda não concluiu este curso. Conclua 100% para receber o certificado. <a class="btn primary sm" href="course.html?id=${encodeURIComponent(course.id)}">Ir ao curso</a></div>`; return; }
+
+      function codeFor(username, cid) {
+        const seed = (username + "|" + cid).split("").reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+        const rnd = (seed % 0xffff).toString(16).toUpperCase().padStart(4, "0");
+        const rnd2 = (((seed / 7) | 0) % 0xffff).toString(16).toUpperCase().padStart(4, "0");
+        const rnd3 = (((seed / 11) | 0) % 0xffff).toString(16).toUpperCase().padStart(4, "0");
+        return `DSU-${rnd}-${rnd2}-${rnd3}`;
+      }
+      const code = codeFor(user.username, course.id);
+      const completedAt = localStorage.getItem(`devstart.courseCompleted.${user.username}.${course.id}`);
+      const d = completedAt ? new Date(parseInt(completedAt, 10)) : new Date();
+
+      root.innerHTML = `
+        <div class="certificate reveal" id="cert-paper">
+          <div class="row between">
+            <div class="cert-logo">DEVSTART <span class="gradient-text">UP</span></div>
+            <div class="small" style="color:#b7b8d6;letter-spacing:.2em;text-transform:uppercase;">Plataforma de educação em tecnologia</div>
+          </div>
+          <div class="for">Certificamos que</div>
+          <div class="name">${escapeHtml(user.username)}</div>
+          <p style="color:#d5d6ed;">concluiu com aproveitamento o curso</p>
+          <div class="course gradient-text" style="font-family:var(--font-display);font-weight:800;">${escapeHtml(course.title)}</div>
+          <p style="color:#b7b8d6;max-width:620px;margin-top:12px;">
+            Carga horária estimada de ${course.lessons.length * 20} minutos, com ${course.lessons.length} aulas e ${course.lessons.reduce((a, l) => a + l.quiz.length, 0)} questões avaliativas.
+          </p>
+          <div class="footer">
+            <div>
+              <div class="sig">Devstart UP</div>
+              <div class="small" style="color:#b7b8d6;">Coordenação pedagógica</div>
+            </div>
+            <div style="text-align:right;">
+              <div class="small" style="color:#b7b8d6;">Emitido em</div>
+              <strong>${d.toLocaleDateString("pt-BR")}</strong>
+              <div class="code" style="margin-top:6px;">Código: ${code}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      document.getElementById("print-btn").addEventListener("click", () => window.print());
+      window.DevstartApp.initReveal();
+    });
+  </script>
+</body>
+</html>

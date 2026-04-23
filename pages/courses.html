@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+  <script src="../assets/js/theme.js"></script>
 </head>
 <body>
   <div data-site-sidebar></div>
@@ -17,26 +18,28 @@
   <main class="container">
     <header class="dash-head reveal">
       <div>
-        <h1>Todos os cursos</h1>
-        <div class="sub">Uma grade completa, do básico de HTML até publicar um SaaS fullstack.</div>
+        <h1>Todos os <span class="gradient-text">cursos</span></h1>
+        <div class="sub" id="catalog-sub">Uma grade completa, do básico de HTML até publicar um SaaS fullstack.</div>
       </div>
       <div class="row">
         <input class="input" id="search" placeholder="Buscar cursos…" style="min-width:240px;" />
         <select class="select" id="filter" style="max-width:180px;">
-          <option value="all">Todos</option>
+          <option value="all">Todos os planos</option>
           <option value="free">Só gratuitos</option>
           <option value="vip">Só VIP</option>
         </select>
       </div>
     </header>
 
+    <nav class="category-chips reveal" id="cats" aria-label="Categorias"></nav>
+
     <section class="mb-3 reveal">
-      <h2>Cursos gratuitos</h2>
+      <h2>Cursos gratuitos <small class="text-muted" id="free-count"></small></h2>
       <div class="grid cols-4" id="free-grid"></div>
     </section>
 
     <section class="mb-3 reveal delay-1">
-      <h2>Trilha VIP</h2>
+      <h2>Trilha VIP <small class="text-muted" id="vip-count"></small></h2>
       <div class="grid cols-4" id="vip-grid"></div>
     </section>
   </main>
@@ -45,31 +48,62 @@
   <script src="../assets/js/courses-data-2.js"></script>
   <script src="../assets/js/courses-data-3.js"></script>
   <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/notifications.js"></script>
   <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const { users, progress, escapeHtml, locks } = window.DevstartApp;
       const user = users.currentUser();
       const courses = window.DevstartCourses || [];
+      const cfg = window.DevstartConfig;
+      let activeCat = "all";
+
+      // Sub-headline mostra a contagem real
+      const total = courses.length;
+      const freeTotal = courses.filter(c => !c.vip).length;
+      const vipTotal = courses.filter(c => c.vip).length;
+      document.getElementById("catalog-sub").innerHTML =
+        `<strong>${total}</strong> cursos no total — <strong>${freeTotal}</strong> gratuitos e <strong>${vipTotal}</strong> VIP, em ${cfg.CATEGORIES.length - 1} categorias.`;
+
+      // Render chips de categoria
+      const cats = document.getElementById("cats");
+      cats.innerHTML = cfg.CATEGORIES.map(c =>
+        `<button class="chip${c.id === activeCat ? " active" : ""}" data-cat="${c.id}">${c.emoji} ${escapeHtml(c.label)}</button>`
+      ).join("");
+      cats.addEventListener("click", (e) => {
+        const b = e.target.closest(".chip"); if (!b) return;
+        activeCat = b.dataset.cat;
+        cats.querySelectorAll(".chip").forEach(x => x.classList.toggle("active", x.dataset.cat === activeCat));
+        render();
+      });
 
       function render() {
         const q = (document.getElementById("search").value || "").trim().toLowerCase();
         const f = document.getElementById("filter").value;
-        const match = (c) => (
-          !q || c.title.toLowerCase().includes(q) || c.description.toLowerCase().includes(q) || c.tagline.toLowerCase().includes(q)
-        );
+        const match = (c) => {
+          if (q && !(c.title.toLowerCase().includes(q) || c.description.toLowerCase().includes(q) || c.tagline.toLowerCase().includes(q))) return false;
+          if (activeCat !== "all" && cfg.getCategory(c.id) !== activeCat) return false;
+          return true;
+        };
         const free = courses.filter(c => !c.vip && match(c));
         const vip = courses.filter(c => c.vip && match(c));
 
         document.getElementById("free-grid").parentElement.classList.toggle("hidden", f === "vip");
         document.getElementById("vip-grid").parentElement.classList.toggle("hidden", f === "free");
+        document.getElementById("free-count").textContent = `· ${free.length} cursos`;
+        document.getElementById("vip-count").textContent = `· ${vip.length} cursos`;
 
         document.getElementById("free-grid").innerHTML = free.length
           ? free.map(c => renderCard(c, user, progress, escapeHtml, locks)).join("")
-          : `<div class="card center"><p>Nenhum curso gratuito encontrado.</p></div>`;
+          : `<div class="card center"><p>Nenhum curso gratuito encontrado nessa categoria.</p></div>`;
         document.getElementById("vip-grid").innerHTML = vip.length
           ? vip.map(c => renderCard(c, user, progress, escapeHtml, locks, true)).join("")
-          : `<div class="card center"><p>Nenhum curso VIP encontrado.</p></div>`;
+          : `<div class="card center"><p>Nenhum curso VIP encontrado nessa categoria.</p></div>`;
       }
 
       document.getElementById("search").addEventListener("input", render);
@@ -88,11 +122,14 @@
       const href = locked
         ? (lockedByVIP ? "vip.html" : "#")
         : `course.html?id=${encodeURIComponent(course.id)}`;
+      const catId = (window.DevstartConfig || {}).getCategory ? window.DevstartConfig.getCategory(course.id) : null;
+      const cat = catId ? (window.DevstartConfig.CATEGORIES.find(c => c.id === catId) || null) : null;
       return `
         <a class="card course-card ${locked ? "locked" : ""}" href="${href}">
-          <div class="course-cover ${course.theme}"><span>${escapeHtml(course.cover)}</span></div>
+          <div class="course-cover ${course.theme}"><span>${escapeHtml(course.cover || course.emoji || "📘")}</span></div>
           <div class="course-head">
             <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Grátis"}</span>
+            ${cat ? `<span class="badge" style="background:var(--bg-3);color:var(--text-muted);border:1px solid var(--border);">${cat.emoji} ${escapeHtml(cat.label)}</span>` : ""}
             <span class="course-meta">${course.lessons.length} aulas · ${escapeHtml(course.level)}</span>
           </div>
           <h3>${escapeHtml(course.title)}</h3>

@@ -9,48 +9,60 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+  <script src="../assets/js/theme.js"></script>
 </head>
 <body>
   <div data-site-sidebar></div>
   <div data-site-header></div>
 
   <main class="container">
-    <header class="dash-head reveal">
-      <div>
-        <h1>Perfil</h1>
-        <div class="sub">Gerencie sua conta e sua senha.</div>
-      </div>
-      <a class="btn danger" href="#" data-logout>Sair</a>
-    </header>
+    <section class="profile-hero reveal" id="profile-hero"></section>
 
-    <div class="grid cols-2">
+    <div class="grid cols-2 mt-2">
       <section class="card reveal">
-        <h2>Detalhes da conta</h2>
-        <div class="row" style="gap:14px; padding:16px 0;">
-          <div class="avatar" id="avatar" style="width:64px;height:64px;border-radius:50%;background:var(--gradient-brand);display:grid;place-items:center;font-weight:800;color:#fff;font-size:22px;">?</div>
-          <div>
-            <div id="username" style="font-size:1.3rem;font-weight:700;">—</div>
-            <div class="small text-muted" id="role">—</div>
-            <div class="small text-muted" id="created">—</div>
-          </div>
-        </div>
-        <form class="form" id="pw-form" style="margin-top:16px;">
+        <h2>Estatísticas</h2>
+        <div id="stats-grid" class="stats-grid mt-1"></div>
+        <div id="progress-list" class="mt-2"></div>
+      </section>
+
+      <section class="card reveal delay-1">
+        <h2>Conquistas</h2>
+        <p class="text-muted small">Badges desbloqueadas pelo seu progresso.</p>
+        <div id="badge-grid" class="badge-grid mt-1"></div>
+      </section>
+    </div>
+
+    <div class="grid cols-2 mt-2">
+      <section class="card reveal">
+        <h2>Certificados</h2>
+        <div id="cert-list" class="mt-1"></div>
+      </section>
+
+      <section class="card reveal delay-1" id="self-card">
+        <h2>Minha conta</h2>
+        <div id="plan-info" class="mt-1"></div>
+        <form class="form mt-2" id="bio-form">
+          <label for="bio">Bio</label>
+          <textarea class="input" id="bio" rows="3" placeholder="Conte em 1–2 frases o que você estuda e busca."></textarea>
+          <label for="links">Links (separe por vírgula)</label>
+          <input class="input" id="links" placeholder="https://github.com/seuuser, https://linkedin.com/in/seuuser" />
+          <button class="btn primary" type="submit">Salvar perfil</button>
+        </form>
+
+        <hr style="border:none;border-top:1px solid var(--border);margin:24px 0;" />
+
+        <form class="form" id="pw-form">
           <label for="current">Senha atual</label>
           <input class="input" id="current" type="password" autocomplete="current-password" required />
           <label for="next">Nova senha</label>
           <input class="input" id="next" type="password" autocomplete="new-password" required />
-          <button class="btn primary" type="submit">Atualizar senha</button>
+          <button class="btn" type="submit">Atualizar senha</button>
         </form>
-      </section>
 
-      <section class="card reveal delay-1">
-        <h2>Plano</h2>
-        <p id="plan-desc" class="text-muted"></p>
-        <div id="plan-action" class="mt-2"></div>
-        <hr style="border:none;border-top:1px solid var(--border);margin:24px 0;" />
-        <h3>Zona de perigo</h3>
-        <p class="small text-muted">Limpar os dados locais remove seu progresso e histórico de quizzes neste dispositivo. Os usuários do painel admin são preservados.</p>
-        <button class="btn danger mt-1" id="wipe-progress">Limpar meu progresso</button>
+        <div class="mt-2">
+          <button class="btn danger" id="wipe-progress">Limpar meu progresso</button>
+          <a class="btn ghost" href="#" data-logout>Sair</a>
+        </div>
       </section>
     </div>
   </main>
@@ -59,51 +71,172 @@
   <script src="../assets/js/courses-data-2.js"></script>
   <script src="../assets/js/courses-data-3.js"></script>
   <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/notifications.js"></script>
   <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const { users, toast, escapeHtml } = window.DevstartApp;
-      const user = users.currentUser();
-      if (!user) { window.location.href = "login.html"; return; }
+      const { users, toast, escapeHtml, progress } = window.DevstartApp;
 
-      document.getElementById("avatar").textContent = user.username.charAt(0).toUpperCase();
-      document.getElementById("username").textContent = user.username;
-      document.getElementById("role").textContent = user.vip ? "👑 Membro VIP" : "Plano gratuito";
-      document.getElementById("created").textContent = "Entrou em " + new Date(user.createdAt).toLocaleDateString("pt-BR");
+      const params = new URLSearchParams(location.search);
+      const viewingUsername = params.get("u");
+      const me = users.currentUser();
+      const allUsers = users.getUsers();
 
-      document.getElementById("plan-desc").textContent = user.vip
-        ? "Você tem acesso total a todos os cursos da Devstart UP. Aproveite 👑."
-        : "Você está no plano gratuito — 4 cursos completos incluídos. Faça upgrade para liberar os 4 cursos VIP.";
-      document.getElementById("plan-action").innerHTML = user.vip
-        ? `<span class="badge vip">VIP ativo</span>`
-        : `<a class="btn vip" href="vip.html">Desbloquear VIP →</a>`;
+      let target;
+      if (viewingUsername) {
+        target = allUsers.find(u => u.username.toLowerCase() === viewingUsername.toLowerCase());
+      } else {
+        target = me;
+      }
+      if (!target) {
+        document.querySelector("main").innerHTML = `<div class="card center">Usuário não encontrado. <a class="btn primary sm" href="ranking.html">Ver ranking</a></div>`;
+        return;
+      }
+      const isSelf = me && target.username === me.username;
+      if (!isSelf) document.getElementById("self-card").style.display = "none";
 
-      document.getElementById("pw-form").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const cur = document.getElementById("current").value;
-        const next = document.getElementById("next").value;
-        const fresh = users.currentUser();
-        if (fresh.password !== cur) {
-          toast({ title: "Senha atual incorreta", type: "error" });
-          return;
-        }
-        if (next.length < 4) {
-          toast({ title: "Senha muito curta", message: "Use ao menos 4 caracteres.", type: "error" });
-          return;
-        }
-        users.updateUser(fresh.username, { password: next });
-        document.getElementById("current").value = "";
-        document.getElementById("next").value = "";
-        toast({ title: "Senha atualizada", message: "Use sua nova senha na próxima vez que entrar.", type: "success" });
+      const courses = window.DevstartCourses || [];
+      const finished = [];
+      const inProgress = [];
+      courses.forEach(c => {
+        const p = progress.getCourseProgress(target, c);
+        if (p.percent >= 100) finished.push({ c, p });
+        else if (p.completed > 0) inProgress.push({ c, p });
       });
 
-      document.getElementById("wipe-progress").addEventListener("click", () => {
-        if (!confirm("Isto vai apagar todo o seu progresso de aulas e resultados de quizzes. Continuar?")) return;
-        const fresh = users.currentUser();
-        users.updateUser(fresh.username, { progress: {} });
-        toast({ title: "Progresso limpo", message: "Novo começo — vai lá concluir um curso!", type: "info" });
-        setTimeout(() => window.location.href = "dashboard.html", 600);
-      });
+      const game = window.DevstartGame.get(target.username);
+      const level = window.DevstartGame.levelFor(game.xp);
+
+      // Hero
+      const bio = localStorage.getItem(`devstart.bio.${target.username}`) || "";
+      const linksRaw = localStorage.getItem(`devstart.links.${target.username}`) || "";
+      // Segurança: apenas http(s) são aceitos — impede javascript:/data: URIs.
+      const links = linksRaw
+        .split(",")
+        .map(s => s.trim())
+        .filter(l => /^https?:\/\//i.test(l));
+
+      document.getElementById("profile-hero").innerHTML = `
+        <div class="profile-avatar">${escapeHtml(target.username.charAt(0).toUpperCase())}</div>
+        <div class="profile-info">
+          <div class="row" style="gap:10px;flex-wrap:wrap;">
+            <h1 style="margin:0;">${escapeHtml(target.username)}</h1>
+            ${target.vip ? `<span class="badge vip">👑 VIP</span>` : ""}
+            <span class="badge">Lv ${level.id} · ${escapeHtml(level.name)}</span>
+            <span class="badge">🔥 ${game.streak}d</span>
+          </div>
+          <div class="text-muted small">Entrou em ${new Date(target.createdAt).toLocaleDateString("pt-BR")}</div>
+          <p style="margin-top:10px;max-width:640px;">${escapeHtml(bio) || "<em class='text-muted'>Sem bio ainda.</em>"}</p>
+          <div class="row" style="gap:10px;flex-wrap:wrap;margin-top:8px;">
+            ${links.map(l => `<a class="btn ghost sm" href="${escapeHtml(l)}" target="_blank" rel="noreferrer">🔗 ${escapeHtml(l.replace(/^https?:\/\//,"").split("/")[0])}</a>`).join("")}
+          </div>
+        </div>
+      `;
+
+      // Stats
+      const totalLessons = courses.reduce((a, c) => a + c.lessons.length, 0);
+      const lessonsDone = game.lessonsDone || 0;
+      const statPairs = [
+        ["🎓", "Nível", `${level.id} · ${escapeHtml(level.name)}`],
+        ["⭐", "XP total", game.xp.toLocaleString("pt-BR")],
+        ["🪙", "Moedas", game.coins],
+        ["🔥", "Ofensiva", `${game.streak} dia${game.streak === 1 ? "" : "s"}`],
+        ["✅", "Aulas concluídas", `${lessonsDone} / ${totalLessons}`],
+        ["🏆", "Cursos finalizados", finished.length],
+        ["📝", "Quizzes feitos", game.quizzesDone || 0],
+        ["💯", "Quizzes perfeitos", game.perfectQuizzes || 0],
+      ];
+      document.getElementById("stats-grid").innerHTML = statPairs.map(([e,l,v]) =>
+        `<div class="stat-card"><div class="stat-emoji">${e}</div><div class="stat-label small text-muted">${l}</div><div class="stat-value">${v}</div></div>`
+      ).join("");
+
+      // Progress list — em andamento + finalizados
+      const progHtml = [];
+      progHtml.push(`<h3 class="mt-2">Em andamento</h3>`);
+      if (inProgress.length === 0) progHtml.push(`<p class="text-muted small">Nenhum curso em andamento.</p>`);
+      inProgress.slice(0, 6).forEach(({ c, p }) => progHtml.push(`
+        <div class="prog-row">
+          <div><a href="course.html?id=${encodeURIComponent(c.id)}">${escapeHtml(c.title)}</a> <small class="text-muted">${c.vip ? "👑 VIP" : ""}</small></div>
+          <div class="progress sm"><span style="width:${p.percent}%"></span></div>
+          <small class="text-muted">${p.percent}%</small>
+        </div>
+      `));
+      progHtml.push(`<h3 class="mt-2">Finalizados (${finished.length})</h3>`);
+      if (finished.length === 0) progHtml.push(`<p class="text-muted small">Nenhum curso finalizado ainda.</p>`);
+      finished.forEach(({ c }) => progHtml.push(`
+        <div class="prog-row">
+          <div>✅ <a href="course.html?id=${encodeURIComponent(c.id)}">${escapeHtml(c.title)}</a></div>
+          <a class="btn ghost sm" href="certificate.html?course=${encodeURIComponent(c.id)}">Certificado</a>
+        </div>
+      `));
+      document.getElementById("progress-list").innerHTML = progHtml.join("");
+
+      // Badges
+      const allBadges = window.DevstartGame.BADGES || [];
+      const unlocked = new Set(game.badges || []);
+      document.getElementById("badge-grid").innerHTML = allBadges.map(b => {
+        const got = unlocked.has(b.id);
+        return `<div class="badge-item ${got ? "got" : "locked"}" title="${escapeHtml(b.description || b.title)}">
+          <div class="badge-emoji">${b.emoji}</div>
+          <div class="badge-title">${escapeHtml(b.title)}</div>
+          ${got ? `<span class="badge" style="background:var(--gradient-brand);color:#fff;">Conquistada</span>` : `<span class="badge">Bloqueada</span>`}
+        </div>`;
+      }).join("");
+
+      // Certificates
+      const certs = finished;
+      document.getElementById("cert-list").innerHTML = certs.length
+        ? certs.map(({ c }) => `
+          <div class="search-item">
+            <div>📜 ${escapeHtml(c.title)} <small class="text-muted">· Concluído</small></div>
+            <a class="btn primary sm" href="certificate.html?course=${encodeURIComponent(c.id)}">Abrir</a>
+          </div>`).join("")
+        : `<p class="text-muted small">Nenhum certificado emitido ainda. Conclua 100% de um curso para liberar.</p>`;
+
+      // Self-only controls
+      if (isSelf) {
+        document.getElementById("plan-info").innerHTML = me.vip
+          ? `<span class="badge vip">VIP ativo</span> <span class="text-muted small">Acesso total aos 16 cursos VIP.</span>`
+          : `<div><span class="badge">Gratuito</span> <span class="text-muted small">16 cursos grátis liberados.</span></div>
+             <a class="btn vip mt-1" href="vip.html">👑 Desbloquear VIP</a>`;
+
+        document.getElementById("bio").value = bio;
+        document.getElementById("links").value = linksRaw;
+        document.getElementById("bio-form").addEventListener("submit", (e) => {
+          e.preventDefault();
+          localStorage.setItem(`devstart.bio.${target.username}`, document.getElementById("bio").value);
+          localStorage.setItem(`devstart.links.${target.username}`, document.getElementById("links").value);
+          toast({ title: "Perfil atualizado", type: "success" });
+          setTimeout(() => location.reload(), 500);
+        });
+
+        document.getElementById("pw-form").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const cur = document.getElementById("current").value;
+          const next = document.getElementById("next").value;
+          const fresh = users.currentUser();
+          if (fresh.password !== cur) { toast({ title: "Senha atual incorreta", type: "error" }); return; }
+          if (next.length < 4) { toast({ title: "Senha muito curta", type: "error" }); return; }
+          users.updateUser(fresh.username, { password: next });
+          document.getElementById("current").value = ""; document.getElementById("next").value = "";
+          toast({ title: "Senha atualizada", type: "success" });
+        });
+
+        document.getElementById("wipe-progress").addEventListener("click", () => {
+          if (!confirm("Isto vai apagar todo o seu progresso de aulas e resultados de quizzes. Continuar?")) return;
+          const fresh = users.currentUser();
+          users.updateUser(fresh.username, { progress: {} });
+          toast({ title: "Progresso limpo", type: "info" });
+          setTimeout(() => location.reload(), 600);
+        });
+      }
+
+      window.DevstartApp.initReveal();
     });
   </script>
 </body>

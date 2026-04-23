@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ranking · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🏆%3C/text%3E%3C/svg%3E" />
+  <script src="../assets/js/theme.js"></script>
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <header class="dash-head reveal">
+      <div>
+        <h1>Ranking global <span class="gradient-text">🏆</span></h1>
+        <div class="sub">Os devs mais dedicados da Devstart UP. Ganhe XP concluindo aulas, quizzes e ajudando na comunidade.</div>
+      </div>
+    </header>
+
+    <section class="rank-list" id="rank-list"></section>
+
+    <div class="card reveal mt-3">
+      <h3 style="margin-top:0;">Como ganhar XP</h3>
+      <ul class="small text-muted">
+        <li><strong>60 XP</strong> ao concluir uma aula</li>
+        <li><strong>30–50 XP</strong> por quiz (50 XP se tirar 100%)</li>
+        <li><strong>250 XP</strong> ao finalizar um curso inteiro</li>
+        <li><strong>15 XP</strong> pelo check-in diário (mantém o streak)</li>
+        <li><strong>20–40 XP</strong> ao publicar no fórum ou projetos</li>
+      </ul>
+    </div>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/courses-data-3.js"></script>
+  <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/notifications.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { users, escapeHtml } = window.DevstartApp;
+      const me = users.currentUser();
+      const rows = window.DevstartGame.leaderboard(50);
+
+      const usersMap = new Map(users.getUsers().map(u => [u.username, u]));
+      const el = document.getElementById("rank-list");
+
+      if (rows.length === 0) {
+        el.innerHTML = `<div class="card center">Nenhum dev pontuou ainda. Seja o primeiro!</div>`;
+        return;
+      }
+
+      el.innerHTML = rows.map((r, i) => {
+        const top = i === 0 ? "top1" : i === 1 ? "top2" : i === 2 ? "top3" : "";
+        const full = usersMap.get(r.username) || {};
+        const initial = r.username.charAt(0).toUpperCase();
+        const isMe = me && me.username === r.username ? "reveal-me" : "";
+        return `
+          <div class="rank-row ${top} ${isMe}" style="${isMe ? "border-color:rgba(124,92,255,.5);box-shadow:var(--shadow-glow);" : ""}">
+            <div class="rank-pos">#${i + 1}</div>
+            <div class="rank-avatar">${full.avatar ? `<img src="${full.avatar}" alt="avatar">` : escapeHtml(initial)}</div>
+            <div>
+              <a href="profile.html?u=${encodeURIComponent(r.username)}"><strong>${escapeHtml(r.username)}</strong></a>
+              ${r.vip ? `<span class="badge vip" style="margin-left:6px;">👑</span>` : ""}
+              <div class="small text-muted">Nv ${r.level.id} — ${escapeHtml(r.level.name)}</div>
+            </div>
+            <div><strong>${r.xp}</strong> XP</div>
+            <div class="small text-muted col-streak">🔥 ${r.streak}d</div>
+            <div class="small text-muted col-badges">🏅 ${r.badges}</div>
+          </div>
+        `;
+      }).join("");
+    });
+  </script>
+</body>
+</html>
