@@ -158,6 +158,14 @@
 
     // =========================================================
     function render() {
+      // Estado do quiz é por ciclo de DOM: cada render reconstrói os radios, então
+      // precisamos zerar tentativas/travas aqui. Sem isso, após onQuizPassed → render()
+      // em modo revisão, correctLocked fica com os índices antigos e o "Checar respostas"
+      // tenta ler radios que não estão marcados (querySelector(...).value → TypeError).
+      attempts = new Array(lesson.quiz.length).fill(0);
+      correctLocked = new Set();
+      failedLocked = new Set();
+
       const p = user ? progress.getCourseProgress(user, course) : { completedLessons: [], quizzes: {} };
       const savedQuiz = p.quizzes[lesson.id];
       const isDone = p.completedLessons.includes(lesson.id);
