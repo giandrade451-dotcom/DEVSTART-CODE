@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fórum · Devstart UP</title>
+  <meta name="description" content="Fórum da comunidade Devstart — tire dúvidas, compartilhe conhecimento e ajude outros alunos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+  <script src="../assets/js/theme.js"></script>
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <header class="dash-head reveal">
+      <div>
+        <h1>Fórum da <span class="gradient-text">comunidade</span></h1>
+        <div class="sub">Pergunte, responda, suba posts bons com voto positivo. Tudo em pt-BR.</div>
+      </div>
+      <button class="btn primary" id="new-post">+ Nova pergunta</button>
+    </header>
+
+    <div class="forum-layout">
+      <div>
+        <div class="row mb-2" style="gap:10px;flex-wrap:wrap;">
+          <input class="input" id="forum-search" placeholder="Buscar no fórum…" style="flex:1;min-width:240px;" />
+          <select class="select" id="forum-tag">
+            <option value="">Todas as tags</option>
+            <option value="javascript">javascript</option>
+            <option value="react">react</option>
+            <option value="python">python</option>
+            <option value="node">node</option>
+            <option value="sql">sql</option>
+            <option value="css">css</option>
+            <option value="carreira">carreira</option>
+            <option value="geral">geral</option>
+          </select>
+          <select class="select" id="forum-sort">
+            <option value="top">Mais votados</option>
+            <option value="recent">Mais recentes</option>
+            <option value="replies">Mais respostas</option>
+          </select>
+        </div>
+        <div class="forum-list" id="forum-list"></div>
+      </div>
+      <aside class="forum-sidebar">
+        <div class="card">
+          <h3 style="margin-top:0;">Como funciona</h3>
+          <ul class="small text-muted" style="padding-left:18px;">
+            <li>Descreva seu problema com contexto (versão, erro, tentativa).</li>
+            <li>Marque com 1–3 tags para facilitar achar.</li>
+            <li>Vote positivo em respostas úteis.</li>
+            <li>Use código entre crases: <code>\`código\`</code>.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;">Top contribuidores</h3>
+          <div id="forum-top"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- Modal de criação -->
+  <div class="modal-backdrop hidden" id="modal-backdrop">
+    <div class="modal card">
+      <h2 id="modal-title">Nova pergunta</h2>
+      <form id="post-form" class="form">
+        <label>Título</label>
+        <input class="input" id="p-title" required placeholder="Ex.: Como usar useEffect com fetch sem loop?" />
+        <label>Conteúdo</label>
+        <textarea class="input" id="p-body" rows="8" required placeholder="Conte o contexto, o que tentou, o erro, trechos de código…"></textarea>
+        <label>Tags (separadas por vírgula)</label>
+        <input class="input" id="p-tags" placeholder="react, hooks, javascript" />
+        <div class="row" style="justify-content:flex-end;gap:8px;margin-top:12px;">
+          <button type="button" class="btn ghost" id="p-cancel">Cancelar</button>
+          <button class="btn primary" type="submit">Publicar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal de detalhe -->
+  <div class="modal-backdrop hidden" id="detail-backdrop">
+    <div class="modal card" style="max-width:760px;">
+      <div id="detail-root"></div>
+      <div class="row" style="justify-content:flex-end;margin-top:8px;">
+        <button class="btn ghost" id="d-close">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/courses-data-3.js"></script>
+  <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/notifications.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
+  <script>
+    (function () {
+      const { users, toast, escapeHtml } = window.DevstartApp;
+      const KEY = "devstart.forum";
+      const user = users.currentUser();
+
+      function getPosts() { try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch { return []; } }
+      function savePosts(l) { localStorage.setItem(KEY, JSON.stringify(l)); }
+
+      // Seed the forum if empty
+      if (!getPosts().length) {
+        savePosts([
+          { id: "f1", author: "maria.dev", title: "Como organizar pastas em um projeto React?", body: "Estou começando um projeto novo e não sei se separo por 'features' ou por tipo (components, hooks, pages). O que vocês usam na prática?", tags: ["react","arquitetura"], votes: 8, voters: [], replies: [
+            { id: "r1", author: "lucas.mendes", at: Date.now() - 86400000, votes: 5, body: "Para projetos médios, gosto de separar por feature: uma pasta `/features/auth` com components, hooks e tests juntos. Fica muito mais fácil mover código depois." }
+          ], createdAt: Date.now() - 2*86400000 },
+          { id: "f2", author: "ana.ferreira", title: "Erro 'Cannot read properties of undefined' em async function", body: "Estou fazendo fetch e acessando `.data.items` mas dá esse erro. Pode ser que o fetch ainda não terminou?", tags: ["javascript","async"], votes: 4, voters: [], replies: [], createdAt: Date.now() - 86400000 },
+          { id: "f3", author: "ricardo.silva", title: "Roadmap para backend em Node — por onde começar?", body: "Já domino JS. Qual a ordem que vocês recomendam para entrar em backend com Node? Express? Prisma? Docker?", tags: ["node","backend","carreira"], votes: 12, voters: [], replies: [
+            { id: "r2", author: "dev.mentor", at: Date.now() - 3*86400000, votes: 9, body: "Começa com Express + Prisma + Postgres. Depois testes (Vitest) e só depois Docker. Evita 'tudo de uma vez' — entrega um CRUD real primeiro." }
+          ], createdAt: Date.now() - 5*86400000 },
+          { id: "f4", author: "clara.costa", title: "Diferença real entre let, const e var?", body: "Sei que var é antigo, mas qual problema exatamente ele causa?", tags: ["javascript"], votes: 3, voters: [], replies: [], createdAt: Date.now() - 3*3600000 },
+        ]);
+      }
+
+      const listEl = document.getElementById("forum-list");
+      const searchEl = document.getElementById("forum-search");
+      const tagEl = document.getElementById("forum-tag");
+      const sortEl = document.getElementById("forum-sort");
+      const topEl = document.getElementById("forum-top");
+
+      function render() {
+        let list = getPosts().slice();
+        const q = (searchEl.value || "").toLowerCase();
+        const tag = tagEl.value;
+        const sort = sortEl.value;
+        if (q) list = list.filter(p => (p.title + p.body + p.author).toLowerCase().includes(q));
+        if (tag) list = list.filter(p => (p.tags || []).includes(tag));
+        if (sort === "top") list.sort((a,b) => (b.votes||0) - (a.votes||0));
+        if (sort === "recent") list.sort((a,b) => b.createdAt - a.createdAt);
+        if (sort === "replies") list.sort((a,b) => (b.replies||[]).length - (a.replies||[]).length);
+
+        listEl.innerHTML = list.length === 0
+          ? `<div class="card center text-muted">Nenhum post encontrado.</div>`
+          : list.map(p => `
+              <article class="forum-item reveal" data-id="${p.id}">
+                <div class="forum-vote">
+                  <button data-up aria-label="Votar">▲</button>
+                  <span class="score">${p.votes || 0}</span>
+                </div>
+                <div class="flex1" data-open>
+                  <h3>${escapeHtml(p.title)}</h3>
+                  <div class="small text-muted">${escapeHtml(p.body).slice(0, 180)}${p.body.length > 180 ? "…" : ""}</div>
+                  <div class="forum-meta mt-1">
+                    <span>por <strong>${escapeHtml(p.author)}</strong></span>
+                    <span>·</span>
+                    <span>${new Date(p.createdAt).toLocaleString("pt-BR")}</span>
+                    <span>·</span>
+                    <span>${(p.replies||[]).length} respostas</span>
+                    ${(p.tags || []).map(t => `<span class="forum-tag">#${escapeHtml(t)}</span>`).join("")}
+                  </div>
+                </div>
+              </article>
+            `).join("");
+
+        listEl.querySelectorAll(".forum-item").forEach(el => {
+          el.querySelector("[data-up]").addEventListener("click", (e) => {
+            e.stopPropagation();
+            if (!user) { toast({ title: "Entre para votar", type: "info" }); return; }
+            const posts = getPosts();
+            const post = posts.find(x => x.id === el.dataset.id);
+            post.voters = post.voters || [];
+            if (post.voters.includes(user.username)) {
+              toast({ title: "Você já votou neste post", type: "info" });
+              return;
+            }
+            post.votes = (post.votes || 0) + 1;
+            post.voters.push(user.username);
+            savePosts(posts);
+            render();
+          });
+          el.querySelector("[data-open]").addEventListener("click", () => openDetail(el.dataset.id));
+        });
+
+        window.DevstartApp.initReveal();
+        renderTop();
+      }
+
+      function renderTop() {
+        const counts = {};
+        getPosts().forEach(p => { counts[p.author] = (counts[p.author] || 0) + 1 + (p.replies||[]).length; });
+        const top = Object.entries(counts).sort((a,b) => b[1] - a[1]).slice(0, 5);
+        topEl.innerHTML = top.length === 0
+          ? `<div class="small text-muted">Ainda sem destaques.</div>`
+          : top.map(([u, n]) => `<div class="row between small" style="padding:4px 0;"><span>👤 ${escapeHtml(u)}</span><span class="text-muted">${n} contribuições</span></div>`).join("");
+      }
+
+      // Modal de criação
+      const backdrop = document.getElementById("modal-backdrop");
+      document.getElementById("new-post").addEventListener("click", () => {
+        if (!user) { toast({ title: "Entre para publicar", type: "info" }); return; }
+        backdrop.classList.remove("hidden");
+      });
+      document.getElementById("p-cancel").addEventListener("click", () => backdrop.classList.add("hidden"));
+      document.getElementById("post-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const posts = getPosts();
+        const tags = document.getElementById("p-tags").value.split(",").map(s => s.trim().toLowerCase()).filter(Boolean).slice(0, 5);
+        const post = {
+          id: "f-" + Date.now(),
+          author: user.username,
+          title: document.getElementById("p-title").value.trim(),
+          body: document.getElementById("p-body").value.trim(),
+          tags,
+          votes: 0, voters: [], replies: [],
+          createdAt: Date.now(),
+        };
+        posts.unshift(post);
+        savePosts(posts);
+        backdrop.classList.add("hidden");
+        document.getElementById("post-form").reset();
+        try { window.DevstartGame?.onCommunityPost(user.username, "forum"); } catch (e) {}
+        toast({ title: "Post publicado 🎉", type: "success" });
+        render();
+      });
+
+      // Detail modal
+      const detail = document.getElementById("detail-backdrop");
+      const detailRoot = document.getElementById("detail-root");
+      document.getElementById("d-close").addEventListener("click", () => detail.classList.add("hidden"));
+
+      function openDetail(id) {
+        const posts = getPosts();
+        const post = posts.find(p => p.id === id);
+        if (!post) return;
+        detailRoot.innerHTML = `
+          <div class="row between" style="align-items:flex-start;">
+            <h2 style="margin:0;">${escapeHtml(post.title)}</h2>
+            <div class="forum-vote" style="min-width:60px;"><span class="score">${post.votes}</span></div>
+          </div>
+          <div class="small text-muted mb-2">por <strong>${escapeHtml(post.author)}</strong> · ${new Date(post.createdAt).toLocaleString("pt-BR")}
+            ${(post.tags || []).map(t => `<span class="forum-tag">#${escapeHtml(t)}</span>`).join(" ")}
+          </div>
+          <div style="white-space:pre-wrap;">${escapeHtml(post.body)}</div>
+
+          <h3 style="margin-top:20px;">Respostas (${(post.replies||[]).length})</h3>
+          <div id="replies">${(post.replies || []).map(r => `
+            <div class="comment">
+              <div class="meta"><strong>${escapeHtml(r.author)}</strong> · ${new Date(r.at).toLocaleString("pt-BR")} · ${r.votes || 0} votos
+                <button class="btn xs ghost" data-rup="${r.id}" style="margin-left:8px;">▲ votar</button>
+              </div>
+              <div style="white-space:pre-wrap;">${escapeHtml(r.body)}</div>
+            </div>`).join("")}</div>
+
+          ${user ? `
+            <form id="reply-form" class="mt-2">
+              <label>Sua resposta</label>
+              <textarea class="input" id="r-body" rows="4" placeholder="Seja útil e objetivo. Prefira exemplos práticos." required></textarea>
+              <div class="row" style="justify-content:flex-end;margin-top:8px;">
+                <button class="btn primary sm" type="submit">Publicar resposta</button>
+              </div>
+            </form>
+          ` : `<p class="small text-muted">Entre na sua conta para responder.</p>`}
+        `;
+        detail.classList.remove("hidden");
+
+        detailRoot.querySelectorAll("[data-rup]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            if (!user) return;
+            const posts2 = getPosts();
+            const post2 = posts2.find(p => p.id === post.id);
+            const r = post2.replies.find(r => r.id === btn.dataset.rup);
+            r.voters = r.voters || [];
+            if (r.voters.includes(user.username)) { toast({ title: "Você já votou nesta resposta", type: "info" }); return; }
+            r.votes = (r.votes || 0) + 1;
+            r.voters.push(user.username);
+            savePosts(posts2);
+            openDetail(post.id);
+          });
+        });
+        const rf = document.getElementById("reply-form");
+        rf?.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const body = document.getElementById("r-body").value.trim();
+          if (!body) return;
+          const posts2 = getPosts();
+          const post2 = posts2.find(p => p.id === post.id);
+          post2.replies = post2.replies || [];
+          post2.replies.push({ id: "r-" + Date.now(), author: user.username, body, votes: 0, voters: [], at: Date.now() });
+          savePosts(posts2);
+          try { window.DevstartGame?.onCommunityPost(user.username, "forum-reply"); } catch (e) {}
+          toast({ title: "Resposta enviada", type: "success" });
+          openDetail(post.id);
+          render();
+        });
+      }
+
+      searchEl.addEventListener("input", render);
+      tagEl.addEventListener("change", render);
+      sortEl.addEventListener("change", render);
+      render();
+    })();
+  </script>
+</body>
+</html>

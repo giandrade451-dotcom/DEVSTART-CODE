@@ -1,7 +1,8 @@
-/* Lesson viewer + quiz */
+/* Lesson viewer + quiz + notas + comentários + XP hooks */
 (function () {
   document.addEventListener("DOMContentLoaded", () => {
-    const { users, progress, escapeHtml, locks, toast } = window.DevstartApp;
+    const App = window.DevstartApp;
+    const { users, progress, escapeHtml, locks, toast } = App;
     const user = users.currentUser();
     const params = new URLSearchParams(window.location.search);
     const courseId = params.get("course");
@@ -28,7 +29,6 @@
 
     const idx = course.lessons.findIndex(l => l.id === lessonId);
     if (idx < 0) {
-      // default to first lesson
       window.location.replace(`lesson.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(course.lessons[0].id)}`);
       return;
     }
@@ -36,11 +36,31 @@
     const prev = course.lessons[idx - 1];
     const next = course.lessons[idx + 1];
 
+    // Salvar último acesso para "continuar de onde parou"
+    if (user) {
+      App.users.updateUser(user.username, (u) => {
+        u.lastSeenLesson = { courseId: course.id, lessonId: lesson.id, at: Date.now() };
+        return u;
+      });
+    }
+
+    // Speed / font-size preferences (aplica CSS ao conteúdo da aula)
+    const PREF_KEY = "devstart.lessonPrefs";
+    function getPrefs() {
+      try { return JSON.parse(localStorage.getItem(PREF_KEY)) || {}; } catch { return {}; }
+    }
+    function setPrefs(p) { localStorage.setItem(PREF_KEY, JSON.stringify(p)); }
+
     render();
 
     function render() {
       const p = user ? progress.getCourseProgress(user, course) : { completedLessons: [], quizzes: {} };
       const savedQuiz = p.quizzes[lesson.id];
+      const isDone = p.completedLessons.includes(lesson.id);
+      const notesKey = `devstart.notes.${user?.username || "_guest"}.${course.id}.${lesson.id}`;
+      const savedNotes = localStorage.getItem(notesKey) || "";
+      const prefs = getPrefs();
+      const speed = prefs.speed || "1";
 
       root.innerHTML = `
         <div class="lesson-layout">
@@ -66,11 +86,28 @@
             <div class="row" style="gap:8px;">
               <span class="badge">${escapeHtml(course.title)}</span>
               <span class="badge">Aula ${idx + 1} de ${course.lessons.length}</span>
-              ${p.completedLessons.includes(lesson.id) ? '<span class="badge done">Concluída</span>' : ""}
+              ${isDone ? '<span class="badge done">Concluída</span>' : ""}
             </div>
             <h1>${escapeHtml(lesson.title)}</h1>
             <p class="text-muted" style="font-size:1.05rem;">${escapeHtml(lesson.summary)}</p>
-            <div>${lesson.content}</div>
+
+            <div class="lesson-toolbar">
+              <div class="row">
+                <span class="small text-muted">Ritmo de leitura:</span>
+                <div class="speed-ctrl" id="speed-ctrl">
+                  ${["0.9","1","1.15","1.3"].map(v =>
+                    `<button class="btn sm ${speed===v?"active":""}" data-speed="${v}">${v==="1"?"Normal":v+"x"}</button>`).join("")}
+                </div>
+              </div>
+              <div class="row">
+                ${isDone
+                  ? `<span class="badge done">✓ Concluída</span>`
+                  : `<button class="btn sm" id="mark-done">Marcar como concluída</button>`}
+                <button class="btn sm ghost" id="copy-link" title="Copiar link da aula">Compartilhar</button>
+              </div>
+            </div>
+
+            <div id="lesson-body" style="font-size:${Math.round(1 * parseFloat(speed) * 100)}%;">${lesson.content}</div>
 
             <section class="quiz" id="quiz">
               <h2>Teste seu conhecimento</h2>
@@ -100,6 +137,28 @@
               </form>
             </section>
 
+            <section class="lesson-notes card mt-3">
+              <h3>📝 Minhas anotações</h3>
+              <p class="small text-muted">Suas anotações ficam salvas neste dispositivo, só para você.</p>
+              <textarea id="notes-area" placeholder="Escreva aqui o que você aprendeu, dúvidas e insights…">${escapeHtml(savedNotes)}</textarea>
+              <div class="row" style="justify-content:flex-end;gap:8px;margin-top:8px;">
+                <button class="btn sm ghost" id="notes-clear">Limpar</button>
+                <button class="btn sm primary" id="notes-save">Salvar anotação</button>
+              </div>
+            </section>
+
+            <section class="lesson-comments card mt-3" id="comments-section">
+              <h3>💬 Comentários da comunidade</h3>
+              <p class="small text-muted">Tire dúvidas com outros alunos sobre esta aula.</p>
+              <div id="comments-list" class="mt-2"></div>
+              <form class="comment-form mt-2" id="comment-form">
+                <textarea id="comment-text" placeholder="${user ? "Deixe um comentário ou pergunta…" : "Entre para comentar nesta aula."}" ${user ? "" : "disabled"}></textarea>
+                <div class="row" style="justify-content:flex-end;gap:8px;margin-top:8px;">
+                  <button class="btn sm primary" type="submit" ${user ? "" : "disabled"}>Publicar comentário</button>
+                </div>
+              </form>
+            </section>
+
             <nav class="lesson-nav">
               ${prev
                 ? `<a class="btn" href="lesson.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(prev.id)}">← ${escapeHtml(prev.title)}</a>`
@@ -114,7 +173,119 @@
       `;
 
       bindQuiz();
+      bindExtras(notesKey);
+      renderComments();
       window.DevstartApp.initReveal();
+    }
+
+    function bindExtras(notesKey) {
+      // Speed
+      document.getElementById("speed-ctrl").querySelectorAll("button").forEach(b => {
+        b.addEventListener("click", () => {
+          const speed = b.dataset.speed;
+          const prefs = getPrefs(); prefs.speed = speed; setPrefs(prefs);
+          document.querySelectorAll("#speed-ctrl .btn").forEach(x => x.classList.remove("active"));
+          b.classList.add("active");
+          const body = document.getElementById("lesson-body");
+          if (body) body.style.fontSize = Math.round(parseFloat(speed) * 100) + "%";
+        });
+      });
+
+      // Mark done
+      document.getElementById("mark-done")?.addEventListener("click", () => {
+        if (!user) { toast({ title: "Entre para salvar o progresso", type: "info" }); return; }
+        progress.markLessonComplete(course.id, lesson.id);
+        try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
+        maybeCompleteCourse();
+        toast({ title: "Aula marcada como concluída", type: "success" });
+        setTimeout(render, 400);
+      });
+
+      // Share
+      document.getElementById("copy-link")?.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          toast({ title: "Link copiado!", message: "Compartilhe com seus colegas.", type: "success" });
+        } catch { toast({ title: "Não foi possível copiar", type: "error" }); }
+      });
+
+      // Notes
+      document.getElementById("notes-save")?.addEventListener("click", () => {
+        const val = document.getElementById("notes-area").value;
+        localStorage.setItem(notesKey, val);
+        toast({ title: "Anotação salva!", type: "success" });
+      });
+      document.getElementById("notes-clear")?.addEventListener("click", () => {
+        if (!confirm("Apagar sua anotação desta aula?")) return;
+        document.getElementById("notes-area").value = "";
+        localStorage.removeItem(notesKey);
+      });
+
+      // Comments form
+      document.getElementById("comment-form")?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (!user) return;
+        const txt = document.getElementById("comment-text").value.trim();
+        if (!txt) return;
+        const key = `devstart.lessonComments.${course.id}.${lesson.id}`;
+        const list = JSON.parse(localStorage.getItem(key) || "[]");
+        list.unshift({ id: "c-" + Date.now(), author: user.username, text: txt, at: Date.now() });
+        localStorage.setItem(key, JSON.stringify(list));
+        document.getElementById("comment-text").value = "";
+        renderComments();
+        toast({ title: "Comentário publicado", type: "success" });
+      });
+    }
+
+    function renderComments() {
+      const box = document.getElementById("comments-list");
+      if (!box) return;
+      const key = `devstart.lessonComments.${course.id}.${lesson.id}`;
+      const list = JSON.parse(localStorage.getItem(key) || "[]");
+      if (!list.length) {
+        box.innerHTML = `<div class="text-muted small">Seja o primeiro a comentar nesta aula.</div>`;
+        return;
+      }
+      box.innerHTML = list.map(c => `
+        <div class="comment">
+          <div class="meta"><strong>${escapeHtml(c.author)}</strong> · ${new Date(c.at).toLocaleString("pt-BR")}
+            ${user && user.username === c.author ? `<a href="#" data-del="${c.id}" style="margin-left:8px;">remover</a>` : ""}
+          </div>
+          <div>${escapeHtml(c.text)}</div>
+        </div>
+      `).join("");
+      box.querySelectorAll("a[data-del]").forEach(a => {
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          const list2 = list.filter(x => x.id !== a.dataset.del);
+          localStorage.setItem(key, JSON.stringify(list2));
+          renderComments();
+        });
+      });
+    }
+
+    function maybeCompleteCourse() {
+      if (!user) return;
+      const fresh = users.currentUser();
+      const p = progress.getCourseProgress(fresh, course);
+      if (p.completedLessons.length === course.lessons.length) {
+        const cat = window.DevstartConfig?.getCategory(course.id) || "outros";
+        // Emit course complete once per user per course
+        const key = `devstart.courseCompleted.${user.username}.${course.id}`;
+        if (!localStorage.getItem(key)) {
+          localStorage.setItem(key, String(Date.now()));
+          try { window.DevstartGame?.onCourseComplete(user.username, cat); } catch (e) {}
+          try {
+            window.DevstartNotify?.push(user.username, {
+              emoji: "🎓",
+              title: `Curso concluído: ${course.title}`,
+              body: "Parabéns! Seu certificado já está disponível.",
+              href: `pages/certificate.html?course=${encodeURIComponent(course.id)}`
+            });
+          } catch (e) {}
+          toast({ title: "Curso concluído! 🎓", message: "Certificado gerado — veja em Certificados.", type: "success", timeout: 5000 });
+        }
+      }
     }
 
     function bindQuiz() {
@@ -125,8 +296,7 @@
       if (retake) {
         retake.addEventListener("click", () => {
           if (!user) return;
-          // wipe saved quiz
-          const updated = window.DevstartApp.users.updateUser(user.username, (u) => {
+          window.DevstartApp.users.updateUser(user.username, (u) => {
             if (u.progress?.[course.id]?.quizzes?.[lesson.id]) {
               delete u.progress[course.id].quizzes[lesson.id];
             }
@@ -152,7 +322,6 @@
           const chosen = form.querySelector(`input[name="q${qi}"]:checked`);
           const feedback = block.querySelector(".q-feedback");
           const opts = block.querySelectorAll(".opt");
-          // reset states
           opts.forEach(o => o.classList.remove("correct", "wrong"));
           if (!chosen) {
             allAnswered = false;
@@ -178,8 +347,12 @@
         }
 
         const percent = Math.round((score / total) * 100);
-        progress.saveQuizResult(course.id, lesson.id, { score, total, percent });
-        const updated = progress.markLessonComplete(course.id, lesson.id);
+        const result = { score, total, percent };
+        progress.saveQuizResult(course.id, lesson.id, result);
+        progress.markLessonComplete(course.id, lesson.id);
+
+        try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
+        try { window.DevstartGame?.onQuizComplete(user.username, result); } catch (e) {}
 
         toast({
           title: score === total ? "Nota máxima! 🎉" : "Quiz enviado",
@@ -187,7 +360,7 @@
           type: score === total ? "success" : (percent >= 60 ? "success" : "info"),
         });
 
-        // Re-render after short delay to show updated state
+        maybeCompleteCourse();
         setTimeout(render, 1500);
       });
     }

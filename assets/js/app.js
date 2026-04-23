@@ -256,12 +256,97 @@
 
     // Mark active link based on current page
     const path = window.location.pathname.split("/").pop() || "index.html";
-    document.querySelectorAll(".sidebar-nav a").forEach(a => {
+    document.querySelectorAll(".sidebar-nav a, .header .nav a").forEach(a => {
       const href = a.getAttribute("href") || "";
       if (href.endsWith(path) || (path === "index.html" && href.endsWith("/"))) {
         a.classList.add("active");
       }
     });
+
+    // Theme toggle
+    const themeBtn = document.getElementById("theme-toggle");
+    themeBtn?.addEventListener("click", () => window.DevstartTheme?.toggle());
+
+    // Header search
+    const hs = document.getElementById("header-search");
+    if (hs) {
+      hs.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          const q = hs.value.trim();
+          if (!q) return;
+          window.location.href = resolvePath("pages/search.html?q=" + encodeURIComponent(q));
+        }
+      });
+    }
+
+    // Notifications panel
+    const notifBtn = document.getElementById("notif-btn");
+    if (notifBtn && user) {
+      const refreshDot = () => {
+        const count = window.DevstartNotify?.unreadCount(user.username) || 0;
+        const dot = document.getElementById("notif-dot");
+        if (dot) dot.style.display = count > 0 ? "inline-block" : "none";
+      };
+      refreshDot();
+      window.addEventListener("devstart:notify", refreshDot);
+      notifBtn.addEventListener("click", () => {
+        openNotificationsPanel(user.username, refreshDot);
+      });
+    }
+
+    // Daily check-in grants small XP + streak once per day
+    if (user && window.DevstartGame) {
+      try { window.DevstartGame.dailyCheckIn(user.username); } catch (e) {}
+    }
+    if (user && window.DevstartNotify) {
+      try { window.DevstartNotify.seedIfEmpty(user.username); } catch (e) {}
+    }
+  }
+
+  function openNotificationsPanel(username, onChange) {
+    document.querySelector(".notif-panel")?.remove();
+    const panel = document.createElement("div");
+    panel.className = "notif-panel";
+    const list = (window.DevstartNotify?.all(username) || []);
+    panel.innerHTML = `
+      <div class="notif-head">
+        <strong>Notificações</strong>
+        <div class="row" style="gap:8px;">
+          <button class="btn ghost sm" id="np-mark">Marcar como lidas</button>
+          <button class="btn ghost sm" id="np-clear">Limpar</button>
+        </div>
+      </div>
+      <div class="notif-list">
+        ${list.length === 0
+          ? `<div class="empty">Sem notificações por enquanto.</div>`
+          : list.map(n => `
+              <a class="notif-item ${n.read ? "" : "unread"}" ${n.href ? `href="${resolvePath(n.href)}"` : ""} data-id="${n.id}">
+                <span class="emoji">${n.emoji || "🔔"}</span>
+                <div class="flex1">
+                  <div class="title">${escapeHtml(n.title)}</div>
+                  <div class="body small text-muted">${escapeHtml(n.body || "")}</div>
+                </div>
+              </a>`).join("")}
+      </div>
+    `;
+    document.body.appendChild(panel);
+    panel.querySelector("#np-mark").addEventListener("click", () => {
+      window.DevstartNotify.markAllRead(username);
+      onChange?.();
+      panel.remove();
+    });
+    panel.querySelector("#np-clear").addEventListener("click", () => {
+      window.DevstartNotify.clear(username);
+      onChange?.();
+      panel.remove();
+    });
+    const close = (e) => {
+      if (!panel.contains(e.target) && e.target.id !== "notif-btn" && !document.getElementById("notif-btn")?.contains(e.target)) {
+        panel.remove();
+        document.removeEventListener("click", close);
+      }
+    };
+    setTimeout(() => document.addEventListener("click", close), 10);
   }
 
   function renderHeaderHTML(user) {
@@ -285,13 +370,25 @@
           <nav class="nav">
             <a href="${prefix}index.html">Início</a>
             <a href="${prefix}pages/courses.html">Cursos</a>
+            <a href="${prefix}pages/paths.html">Trilhas</a>
             <a href="${prefix}pages/projects.html">Projetos</a>
+            <a href="${prefix}pages/forum.html">Fórum</a>
+            <a href="${prefix}pages/ranking.html">Ranking</a>
             <a href="${prefix}pages/vip.html">VIP</a>
-            <a href="${prefix}pages/dashboard.html">Painel</a>
           </nav>
+          <div class="header-search">
+            <input class="input sm" id="header-search" placeholder="Buscar cursos, aulas, fórum…" autocomplete="off" />
+          </div>
           <div class="header-actions">
+            <button class="icon-btn" id="theme-toggle" title="Alternar tema (claro/escuro)" aria-label="Alternar tema">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            </button>
             ${user
-              ? `<a class="btn sm ghost" href="${prefix}pages/dashboard.html">Olá, ${escapeHtml(user.username)}</a>
+              ? `<button class="icon-btn notif-btn" id="notif-btn" title="Notificações" aria-label="Notificações">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>
+                  <span class="notif-dot" id="notif-dot" style="display:none;"></span>
+                </button>
+                 <a class="btn sm ghost" href="${prefix}pages/dashboard.html">Olá, ${escapeHtml(user.username)}</a>
                  <a class="btn sm vip" href="${prefix}pages/vip.html">${user.vip ? "VIP ativo" : "Obter VIP"}</a>`
               : `<a class="btn sm ghost" href="${prefix}pages/login.html">Entrar</a>
                  <a class="btn sm primary" href="${prefix}pages/register.html">Começar grátis</a>`
@@ -305,6 +402,11 @@
   function renderSidebarHTML(user) {
     const prefix = pathPrefix();
     const initial = (user?.username || "?").charAt(0).toUpperCase();
+    const lvl = user && window.DevstartGame ? window.DevstartGame.levelFor(window.DevstartGame.get(user.username).xp) : null;
+    const xpState = user && window.DevstartGame ? window.DevstartGame.get(user.username) : null;
+    const avatarImg = user && user.avatar
+      ? `<img src="${user.avatar}" alt="avatar" />`
+      : escapeHtml(initial);
     return `
       <div class="sidebar-backdrop"></div>
       <aside class="sidebar" aria-label="Side menu">
@@ -323,10 +425,11 @@
         </div>
         ${user ? `
           <div class="sidebar-user">
-            <div class="avatar">${escapeHtml(initial)}</div>
+            <div class="avatar ${user.avatar ? "img" : ""}">${avatarImg}</div>
             <div class="meta">
               <div class="name">${escapeHtml(user.username)}</div>
               <div class="role">${user.vip ? "Membro VIP 👑" : "Plano gratuito"}</div>
+              ${lvl ? `<div class="small text-muted" style="margin-top:4px;">Lv ${lvl.id} · ${escapeHtml(lvl.name)} · ${xpState.xp} XP · 🔥 ${xpState.streak}d</div>` : ""}
             </div>
           </div>` : `
           <div class="sidebar-user">
@@ -340,9 +443,13 @@
         <nav class="sidebar-nav">
           <a href="${prefix}index.html">${icon("home")} Início</a>
           <a href="${prefix}pages/courses.html">${icon("book")} Cursos</a>
+          <a href="${prefix}pages/paths.html">${icon("path")} Trilhas</a>
           <a href="${prefix}pages/projects.html">${icon("rocket")} Projetos</a>
+          <a href="${prefix}pages/forum.html">${icon("chat")} Fórum</a>
           <a href="${prefix}pages/progress.html">${icon("chart")} Meu Progresso</a>
           <a href="${prefix}pages/dashboard.html">${icon("grid")} Painel</a>
+          <a href="${prefix}pages/ranking.html">${icon("trophy")} Ranking</a>
+          <a href="${prefix}pages/certificates.html">${icon("medal")} Certificados</a>
           <a href="${prefix}pages/profile.html">${icon("user")} Perfil</a>
           <a href="${prefix}pages/vip.html">${icon("crown")} VIP</a>
           <a href="${DISCORD_URL}" target="_blank" rel="noopener">${icon("discord")} Discord</a>
@@ -368,6 +475,10 @@
       logout: '<path d="M15 12H3"/><polyline points="10 7 3 12 10 17"/><path d="M21 4v16"/>',
       login: '<path d="M3 12h12"/><polyline points="10 7 15 12 10 17"/><path d="M21 4v16"/>',
       rocket: '<path d="M5 15c-1 3-1 5-1 5s2 0 5-1"/><path d="M9 19l-4-4"/><path d="M14 4c4 0 6 2 6 6 0 4-6 10-6 10S8 14 8 10c0-4 2-6 6-6z"/><circle cx="14" cy="10" r="1.6"/>',
+      chat: '<path d="M21 12a8 8 0 0 1-12 6.9L3 21l2.1-6A8 8 0 1 1 21 12z"/>',
+      path: '<path d="M6 4v4a4 4 0 0 0 4 4h4a4 4 0 0 1 4 4v4"/><circle cx="6" cy="4" r="2"/><circle cx="18" cy="20" r="2"/>',
+      trophy: '<path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 6h3a3 3 0 0 1-3 5"/><path d="M7 6H4a3 3 0 0 0 3 5"/>',
+      medal: '<circle cx="12" cy="15" r="5"/><path d="M8 10l-3-7h4l3 5"/><path d="M16 10l3-7h-4l-3 5"/>',
     };
     return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name] || ""}</svg>`;
   }
