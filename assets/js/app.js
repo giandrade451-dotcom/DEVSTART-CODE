@@ -124,12 +124,15 @@
     return updateUser(user.username, next);
   }
   function getCourseProgress(user, course) {
-    if (!user || !course) return { completed: 0, total: course ? course.lessons.length : 0, percent: 0 };
-    const entry = (user.progress && user.progress[course.id]) || { completedLessons: [] };
-    const total = course.lessons.length;
-    const completed = entry.completedLessons.filter(id => course.lessons.some(l => l.id === id)).length;
+    const total = course ? course.lessons.length : 0;
+    if (!user || !course) {
+      return { completed: 0, total, percent: 0, completedLessons: [], quizzes: {} };
+    }
+    const entry = (user.progress && user.progress[course.id]) || { completedLessons: [], quizzes: {} };
+    const completedLessons = entry.completedLessons || [];
+    const completed = completedLessons.filter(id => course.lessons.some(l => l.id === id)).length;
     const percent = total ? Math.round((completed / total) * 100) : 0;
-    return { completed, total, percent, completedLessons: entry.completedLessons || [], quizzes: entry.quizzes || {} };
+    return { completed, total, percent, completedLessons, quizzes: entry.quizzes || {} };
   }
 
   // --------- Toasts ---------

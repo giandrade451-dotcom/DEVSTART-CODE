@@ -115,7 +115,11 @@
       // Hero
       const bio = localStorage.getItem(`devstart.bio.${target.username}`) || "";
       const linksRaw = localStorage.getItem(`devstart.links.${target.username}`) || "";
-      const links = linksRaw.split(",").map(s => s.trim()).filter(Boolean);
+      // Segurança: apenas http(s) são aceitos — impede javascript:/data: URIs.
+      const links = linksRaw
+        .split(",")
+        .map(s => s.trim())
+        .filter(l => /^https?:\/\//i.test(l));
 
       document.getElementById("profile-hero").innerHTML = `
         <div class="profile-avatar">${escapeHtml(target.username.charAt(0).toUpperCase())}</div>
