@@ -52,6 +52,9 @@
   <script src="../assets/js/courses-data-6.js"></script>
   <script src="../assets/js/site-config.js"></script>
   <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/missions.js"></script>
+  <script src="../assets/js/recommendations.js"></script>
+  <script src="../assets/js/analytics.js"></script>
   <script src="../assets/js/notifications.js"></script>
   <script src="../assets/js/app.js"></script>
   <script src="../assets/js/ai-assistant.js"></script>
@@ -126,7 +129,7 @@
       const cat = catId ? (window.DevstartConfig.CATEGORIES.find(c => c.id === catId) || null) : null;
       return `
         <a class="card course-card ${locked ? "locked" : ""}" href="${href}">
-          <div class="course-cover ${course.theme}"><span>${escapeHtml(course.cover || course.emoji || "📘")}</span></div>
+          <div class="course-cover ${course.theme || ""}"><span>${escapeHtml(course.cover || course.emoji || "📘")}</span></div>
           <div class="course-head">
             <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Grátis"}</span>
             ${cat ? `<span class="badge" style="background:var(--bg-3);color:var(--text-muted);border:1px solid var(--border);">${cat.emoji} ${escapeHtml(cat.label)}</span>` : ""}

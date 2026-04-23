@@ -18,8 +18,12 @@
   <main class="container">
     <header class="dash-head reveal">
       <div>
-        <h1>Ranking global <span class="gradient-text">🏆</span></h1>
-        <div class="sub">Os devs mais dedicados da Devstart UP. Ganhe XP concluindo aulas, quizzes e ajudando na comunidade.</div>
+        <h1>Ranking <span class="gradient-text">🏆</span></h1>
+        <div class="sub">Os devs mais dedicados da Devstart UP. Troque entre o ranking global e o semanal.</div>
+      </div>
+      <div class="row chips" id="rank-tabs" style="gap:8px;">
+        <button class="chip active" data-tab="global">Global</button>
+        <button class="chip" data-tab="weekly">Últimos 7 dias</button>
       </div>
     </header>
 
@@ -33,6 +37,7 @@
         <li><strong>250 XP</strong> ao finalizar um curso inteiro</li>
         <li><strong>15 XP</strong> pelo check-in diário (mantém o streak)</li>
         <li><strong>20–40 XP</strong> ao publicar no fórum ou projetos</li>
+        <li><strong>+10 a +80 XP</strong> pelas missões diárias reivindicadas</li>
       </ul>
     </div>
   </main>
@@ -45,6 +50,9 @@
   <script src="../assets/js/courses-data-6.js"></script>
   <script src="../assets/js/site-config.js"></script>
   <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/missions.js"></script>
+  <script src="../assets/js/recommendations.js"></script>
+  <script src="../assets/js/analytics.js"></script>
   <script src="../assets/js/notifications.js"></script>
   <script src="../assets/js/app.js"></script>
   <script src="../assets/js/ai-assistant.js"></script>
@@ -52,36 +60,70 @@
     document.addEventListener("DOMContentLoaded", () => {
       const { users, escapeHtml } = window.DevstartApp;
       const me = users.currentUser();
-      const rows = window.DevstartGame.leaderboard(50);
+      const allUsers = users.getUsers();
 
-      const usersMap = new Map(users.getUsers().map(u => [u.username, u]));
-      const el = document.getElementById("rank-list");
-
-      if (rows.length === 0) {
-        el.innerHTML = `<div class="card center">Nenhum dev pontuou ainda. Seja o primeiro!</div>`;
-        return;
+      function buildRows(scope) {
+        const now = Date.now();
+        const weekMs = 7 * 24 * 60 * 60 * 1000;
+        return allUsers.map(u => {
+          const s = window.DevstartGame.get(u.username);
+          const level = window.DevstartGame.levelFor(s.xp || 0);
+          let xp = s.xp || 0;
+          if (scope === "weekly") {
+            xp = (s.history || [])
+              .filter(h => now - h.at < weekMs)
+              .reduce((acc, h) => acc + (h.xp || 0), 0);
+          }
+          return {
+            username: u.username,
+            xp,
+            vip: !!u.vip,
+            level,
+            streak: s.streak || 0,
+            badges: (s.badges || []).length,
+            avatar: u.avatar,
+          };
+        }).filter(r => r.xp > 0)
+          .sort((a, b) => b.xp - a.xp)
+          .slice(0, 50);
       }
 
-      el.innerHTML = rows.map((r, i) => {
-        const top = i === 0 ? "top1" : i === 1 ? "top2" : i === 2 ? "top3" : "";
-        const full = usersMap.get(r.username) || {};
-        const initial = r.username.charAt(0).toUpperCase();
-        const isMe = me && me.username === r.username ? "reveal-me" : "";
-        return `
-          <div class="rank-row ${top} ${isMe}" style="${isMe ? "border-color:rgba(124,92,255,.5);box-shadow:var(--shadow-glow);" : ""}">
-            <div class="rank-pos">#${i + 1}</div>
-            <div class="rank-avatar">${full.avatar ? `<img src="${full.avatar}" alt="avatar">` : escapeHtml(initial)}</div>
-            <div>
-              <a href="profile.html?u=${encodeURIComponent(r.username)}"><strong>${escapeHtml(r.username)}</strong></a>
-              ${r.vip ? `<span class="badge vip" style="margin-left:6px;">👑</span>` : ""}
-              <div class="small text-muted">Nv ${r.level.id} — ${escapeHtml(r.level.name)}</div>
+      function render(scope) {
+        const rows = buildRows(scope);
+        const el = document.getElementById("rank-list");
+        if (!rows.length) {
+          el.innerHTML = `<div class="card center">Ninguém pontuou ${scope === "weekly" ? "nesta semana" : "ainda"}. Seja o primeiro!</div>`;
+          return;
+        }
+        el.innerHTML = rows.map((r, i) => {
+          const top = i === 0 ? "top1" : i === 1 ? "top2" : i === 2 ? "top3" : "";
+          const initial = r.username.charAt(0).toUpperCase();
+          const isMe = me && me.username === r.username ? "reveal-me" : "";
+          return `
+            <div class="rank-row ${top} ${isMe}" style="${isMe ? "border-color:rgba(124,92,255,.5);box-shadow:var(--shadow-glow);" : ""}">
+              <div class="rank-pos">#${i + 1}</div>
+              <div class="rank-avatar">${r.avatar ? `<img src="${escapeHtml(r.avatar)}" alt="avatar">` : escapeHtml(initial)}</div>
+              <div>
+                <a href="profile.html?u=${encodeURIComponent(r.username)}"><strong>${escapeHtml(r.username)}</strong></a>
+                ${r.vip ? `<span class="badge vip" style="margin-left:6px;">👑</span>` : ""}
+                <div class="small text-muted">Nv ${r.level.id} — ${escapeHtml(r.level.name)}</div>
+              </div>
+              <div><strong>${r.xp}</strong> XP${scope === "weekly" ? " <span class='small text-muted'>/7d</span>" : ""}</div>
+              <div class="small text-muted col-streak">🔥 ${r.streak}d</div>
+              <div class="small text-muted col-badges">🏅 ${r.badges}</div>
             </div>
-            <div><strong>${r.xp}</strong> XP</div>
-            <div class="small text-muted col-streak">🔥 ${r.streak}d</div>
-            <div class="small text-muted col-badges">🏅 ${r.badges}</div>
-          </div>
-        `;
-      }).join("");
+          `;
+        }).join("");
+      }
+
+      document.querySelectorAll("#rank-tabs .chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll("#rank-tabs .chip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          render(chip.dataset.tab);
+        });
+      });
+      render("global");
     });
   </script>
 </body>

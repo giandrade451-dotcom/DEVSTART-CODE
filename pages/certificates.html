@@ -26,9 +26,14 @@
     <section class="cert-grid" id="cert-grid"></section>
 
     <div class="card reveal mt-3" id="verify-card">
-      <h3 style="margin-top:0;">Verificar autenticidade</h3>
-      <p class="small text-muted">Tem um código de verificação? Cole abaixo para conferir.</p>
-      <form id="verify-form" class="row" style="gap:8px;align-items:flex-start;">
+      <div class="row between" style="flex-wrap:wrap;gap:12px;">
+        <div>
+          <h3 style="margin-top:0;">Verificar autenticidade</h3>
+          <p class="small text-muted" style="margin:0;">Tem um código de verificação? Cole abaixo ou use a página dedicada.</p>
+        </div>
+        <a class="btn ghost sm" href="verify.html">Abrir verificador →</a>
+      </div>
+      <form id="verify-form" class="row mt-2" style="gap:8px;align-items:flex-start;">
         <input class="input" id="verify-code" placeholder="DSU-XXXX-XXXX-XXXX" style="flex:1;" />
         <button class="btn primary" type="submit">Verificar</button>
       </form>
@@ -44,6 +49,9 @@
   <script src="../assets/js/courses-data-6.js"></script>
   <script src="../assets/js/site-config.js"></script>
   <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/missions.js"></script>
+  <script src="../assets/js/recommendations.js"></script>
+  <script src="../assets/js/analytics.js"></script>
   <script src="../assets/js/notifications.js"></script>
   <script src="../assets/js/app.js"></script>
   <script src="../assets/js/ai-assistant.js"></script>

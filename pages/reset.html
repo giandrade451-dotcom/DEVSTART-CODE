@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recuperar senha · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🔑%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="auth-wrap">
+    <div class="auth-card reveal">
+      <h1>Recuperar senha 🔑</h1>
+      <p class="sub">Fluxo local simulado — não enviamos e-mails reais. Informe seu usuário e o e-mail cadastrado para receber um código de reset aqui mesmo.</p>
+
+      <!-- Passo 1: solicitar código -->
+      <form class="form" id="req-form">
+        <div>
+          <label for="u">Usuário</label>
+          <input class="input" id="u" name="username" type="text" autocomplete="username" required />
+        </div>
+        <div>
+          <label for="e">E-mail cadastrado</label>
+          <input class="input" id="e" name="email" type="email" autocomplete="email" required />
+        </div>
+        <button class="btn primary block lg" type="submit">Gerar código de reset</button>
+      </form>
+
+      <!-- Passo 2: confirmar com código + nova senha -->
+      <form class="form" id="conf-form" style="display:none;margin-top:16px;">
+        <div class="card" id="code-box" style="margin:0 0 12px;"></div>
+        <div>
+          <label for="c">Código</label>
+          <input class="input" id="c" name="code" type="text" required />
+        </div>
+        <div>
+          <label for="np">Nova senha</label>
+          <input class="input" id="np" name="newPassword" type="password" required minlength="4" />
+        </div>
+        <button class="btn primary block lg" type="submit">Redefinir senha</button>
+      </form>
+
+      <div class="auth-alt" style="margin-top:12px;">
+        Lembrou? <a href="login.html">Voltar ao login</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/courses-data-3.js"></script>
+  <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/missions.js"></script>
+  <script src="../assets/js/recommendations.js"></script>
+  <script src="../assets/js/analytics.js"></script>
+  <script src="../assets/js/notifications.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { users, toast, escapeHtml } = window.DevstartApp;
+      const reqForm = document.getElementById("req-form");
+      const confForm = document.getElementById("conf-form");
+      const codeBox = document.getElementById("code-box");
+      let username = "";
+
+      reqForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = new FormData(reqForm);
+        try {
+          const code = users.requestPasswordReset({
+            username: data.get("username"),
+            email: data.get("email"),
+          });
+          username = (data.get("username") || "").toString().trim();
+          codeBox.innerHTML = `Seu código de reset é <strong>${escapeHtml(code)}</strong>. Copie-o e cole abaixo — em produção ele chegaria por e-mail.`;
+          reqForm.style.display = "none";
+          confForm.style.display = "";
+          toast({ title: "Código gerado", type: "success" });
+        } catch (err) {
+          toast({ title: "Não foi possível gerar o código", message: err.message, type: "error" });
+        }
+      });
+
+      confForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = new FormData(confForm);
+        try {
+          users.confirmPasswordReset({
+            username,
+            code: data.get("code"),
+            newPassword: data.get("newPassword"),
+          });
+          toast({ title: "Senha redefinida!", message: "Use a nova senha para entrar.", type: "success" });
+          setTimeout(() => { window.location.href = "login.html"; }, 700);
+        } catch (err) {
+          toast({ title: "Falha", message: err.message, type: "error" });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
