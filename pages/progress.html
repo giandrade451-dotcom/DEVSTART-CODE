@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My Progress · Devstart UP</title>
+  <title>Meu Progresso · Devstart UP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -17,10 +17,10 @@
   <main class="container">
     <header class="dash-head reveal">
       <div>
-        <h1>My Progress</h1>
-        <div class="sub">Every lesson and quiz you've taken — at a glance.</div>
+        <h1>Meu Progresso</h1>
+        <div class="sub">Todas as aulas e quizzes que você fez — em um só lugar.</div>
       </div>
-      <a class="btn" href="courses.html">Browse more courses</a>
+      <a class="btn" href="courses.html">Ver mais cursos</a>
     </header>
 
     <section class="dash-stats reveal" id="overall"></section>
@@ -47,10 +47,10 @@
       const completedCourses = all.filter(x => x.p.percent === 100).length;
 
       document.getElementById("overall").innerHTML = [
-        { lab: "Overall progress", num: Math.round((doneLessons / totalLessons) * 100) + "%", sub: `${doneLessons} of ${totalLessons} lessons` },
-        { lab: "Quizzes taken", num: quizEntries.length, sub: `Across ${all.filter(x => Object.keys(x.p.quizzes).length).length} courses` },
-        { lab: "Average accuracy", num: avgAccuracy + "%", sub: quizEntries.length ? "Keep it up!" : "Take a quiz to see this" },
-        { lab: "Courses completed", num: completedCourses, sub: completedCourses ? "🎉 Well done" : "Your first is close" },
+        { lab: "Progresso geral", num: Math.round((doneLessons / totalLessons) * 100) + "%", sub: `${doneLessons} de ${totalLessons} aulas` },
+        { lab: "Quizzes feitos", num: quizEntries.length, sub: `Em ${all.filter(x => Object.keys(x.p.quizzes).length).length} cursos` },
+        { lab: "Acerto médio", num: avgAccuracy + "%", sub: quizEntries.length ? "Continue assim!" : "Faça um quiz para ver aqui" },
+        { lab: "Cursos concluídos", num: completedCourses, sub: completedCourses ? "🎉 Muito bem" : "O primeiro está próximo" },
       ].map(s => `<div class="dash-stat"><div class="lab">${s.lab}</div><div class="num gradient-text">${s.num}</div><div class="sub2">${s.sub}</div></div>`).join("");
 
       document.getElementById("per-course").innerHTML = all.map(({ course, p }) => {
@@ -60,8 +60,8 @@
             <div class="row between" style="flex-wrap:wrap;gap:16px;">
               <div>
                 <div class="row" style="gap:8px;">
-                  <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Free"}</span>
-                  <span class="badge">${course.lessons.length} lessons</span>
+                  <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Grátis"}</span>
+                  <span class="badge">${course.lessons.length} aulas</span>
                 </div>
                 <h3 style="margin:10px 0 4px;">${escapeHtml(course.title)}</h3>
                 <div class="small text-muted">${escapeHtml(course.tagline)}</div>
@@ -70,17 +70,17 @@
                 <div class="progress-label"><span>${p.completed}/${p.total}</span><span>${p.percent}%</span></div>
                 <div class="progress"><span style="width:${p.percent}%"></span></div>
                 <div class="row mt-2" style="gap:8px;">
-                  <a class="btn sm" href="course.html?id=${encodeURIComponent(course.id)}">Open course</a>
-                  ${p.completed > 0 ? `<a class="btn sm primary" href="course.html?id=${encodeURIComponent(course.id)}">Continue →</a>` : ""}
+                  <a class="btn sm" href="course.html?id=${encodeURIComponent(course.id)}">Abrir curso</a>
+                  ${p.completed > 0 ? `<a class="btn sm primary" href="course.html?id=${encodeURIComponent(course.id)}">Continuar →</a>` : ""}
                 </div>
               </div>
             </div>
             ${quizzes.length ? `
               <details style="margin-top:14px;">
-                <summary class="small text-muted" style="cursor:pointer;">${quizzes.length} quiz result${quizzes.length === 1 ? "" : "s"}</summary>
+                <summary class="small text-muted" style="cursor:pointer;">${quizzes.length} ${quizzes.length === 1 ? "resultado de quiz" : "resultados de quiz"}</summary>
                 <div class="table-wrap mt-2">
                   <table class="table">
-                    <thead><tr><th>Lesson</th><th>Score</th><th>Accuracy</th><th>Date</th></tr></thead>
+                    <thead><tr><th>Aula</th><th>Pontos</th><th>Acerto</th><th>Data</th></tr></thead>
                     <tbody>
                       ${quizzes.map(([lid, q]) => {
                         const lesson = course.lessons.find(l => l.id === lid);

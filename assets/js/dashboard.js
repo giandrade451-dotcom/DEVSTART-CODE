@@ -10,7 +10,7 @@
     const courses = window.DevstartCourses || [];
 
     document.getElementById("greeting").innerHTML =
-      `Welcome back, <span class="gradient-text">${escapeHtml(user.username)}</span> 👋`;
+      `Bem-vindo de volta, <span class="gradient-text">${escapeHtml(user.username)}</span> 👋`;
 
     const all = courses.map(c => ({ course: c, p: progress.getCourseProgress(user, c) }));
     const active = all.filter(x => x.p.completed > 0 && x.p.percent < 100);
@@ -20,10 +20,10 @@
 
     // Stats
     const stats = [
-      { lab: "Lessons completed", num: totalLessonsDone, sub: `of ${courses.reduce((s,c) => s + c.lessons.length, 0)} total` },
-      { lab: "Courses in progress", num: active.length, sub: active.length ? "Keep the streak alive" : "Start a course below" },
-      { lab: "Courses completed", num: completed.length, sub: completed.length ? "🎉 Amazing" : "Your first one is near" },
-      { lab: "Quizzes taken", num: totalQuizzes, sub: user.vip ? "VIP member 👑" : "Free plan" },
+      { lab: "Aulas concluídas", num: totalLessonsDone, sub: `de ${courses.reduce((s,c) => s + c.lessons.length, 0)} no total` },
+      { lab: "Cursos em andamento", num: active.length, sub: active.length ? "Mantenha o ritmo" : "Comece um curso abaixo" },
+      { lab: "Cursos concluídos", num: completed.length, sub: completed.length ? "🎉 Incrível" : "O primeiro está perto" },
+      { lab: "Quizzes feitos", num: totalQuizzes, sub: user.vip ? "Membro VIP 👑" : "Plano gratuito" },
     ];
     document.getElementById("dash-stats").innerHTML = stats.map(s => `
       <div class="dash-stat">
@@ -58,8 +58,8 @@
     const lockedByVIP = course.vip && !user.vip;
     const locked = lockedByAdmin || lockedByVIP;
     const label = locked
-      ? (lockedByVIP ? "Unlock VIP" : "Locked")
-      : (p.completed === 0 ? "Start course" : (p.percent === 100 ? "Review" : "Continue"));
+      ? (lockedByVIP ? "Desbloquear VIP" : "Bloqueado")
+      : (p.completed === 0 ? "Iniciar curso" : (p.percent === 100 ? "Revisar" : "Continuar"));
     const href = locked
       ? (lockedByVIP ? "vip.html" : "#")
       : `course.html?id=${encodeURIComponent(course.id)}`;
@@ -67,8 +67,8 @@
       <a class="card course-card ${locked ? "locked" : ""}" href="${href}">
         <div class="course-cover ${course.theme}"><span>${escapeHtml(course.cover)}</span></div>
         <div class="course-head">
-          <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Free"}</span>
-          <span class="course-meta">${course.lessons.length} lessons</span>
+          <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Grátis"}</span>
+          <span class="course-meta">${course.lessons.length} aulas</span>
         </div>
         <h3>${escapeHtml(course.title)}</h3>
         <p>${escapeHtml(course.tagline)}</p>

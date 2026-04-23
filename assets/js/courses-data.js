@@ -1,223 +1,212 @@
 /* =============================================================
-   Devstart UP — Courses data
+   Devstart UP — Dados dos cursos
    ============================================================= */
 (function () {
   const q = (prompt, options, correct, explain) => ({ prompt, options, correct, explain });
-
-  // Helper to wrap lesson HTML content
   const L = (id, title, summary, contentHTML, quiz) => ({ id, title, summary, content: contentHTML, quiz });
 
   const courses = [
     // =================================================================
-    // 1. HTML & CSS Basics (FREE)
+    // 1. HTML & CSS Básico (GRÁTIS)
     // =================================================================
     {
       id: "html-css-basics",
-      title: "HTML & CSS Basics",
-      tagline: "Build your first real web pages from scratch.",
-      description: "Learn the two core languages of the web. Build clean, accessible pages with modern HTML semantics and style them beautifully with CSS.",
-      level: "Beginner",
+      title: "HTML & CSS Básico",
+      tagline: "Construa suas primeiras páginas web do zero.",
+      description: "Aprenda as duas linguagens essenciais da web. Crie páginas acessíveis e organizadas com HTML semântico moderno e estilize tudo com CSS.",
+      level: "Iniciante",
       duration: "6h",
       theme: "theme-html",
       cover: "HTML/CSS",
       vip: false,
       instructor: "Ana Ribeiro",
       lessons: [
-        L("welcome", "Welcome to the Web",
-          "How the web works and why HTML + CSS matter.",
-          `<p>The web is the largest public network humans have ever built. Every page you visit — a news article, a video site, a banking dashboard — is built on the same foundation: <strong>HTML</strong> for structure, <strong>CSS</strong> for presentation, and <strong>JavaScript</strong> for behavior. Mastering these three technologies is the single most valuable skill in modern software.</p>
-<p>In this course we focus on the first two. HTML (HyperText Markup Language) describes <em>what</em> is on a page: headings, paragraphs, lists, images, links, forms. CSS (Cascading Style Sheets) describes <em>how</em> it looks: colors, spacing, typography, layout, animations.</p>
-<h2>How a browser renders a page</h2>
-<p>When you type a URL, the browser makes an HTTP request to a server. The server responds with an HTML document. The browser parses that HTML into a tree of nodes called the DOM (Document Object Model). Then it loads any CSS the HTML references, applies the styles, and paints pixels on the screen.</p>
-<div class="callout"><div class="ico">💡</div><p>Every web page you'll ever build is a combination of these three languages running inside a browser. Your first goal is to read HTML fluently.</p></div>
-<h2>What you'll build</h2>
-<p>By the end of this course you will be able to build a personal portfolio page from an empty file: semantic HTML, responsive CSS with Flexbox, clean typography, and a polished dark theme. More importantly, you'll understand <em>why</em> each piece is there.</p>`,
+        L("welcome", "Bem-vindo à Web",
+          "Como a web funciona e por que HTML + CSS importam.",
+          `<p>A web é a maior rede pública que a humanidade já construiu. Cada página que você visita — uma notícia, um site de vídeos, um internet banking — é feita na mesma base: <strong>HTML</strong> para estrutura, <strong>CSS</strong> para apresentação e <strong>JavaScript</strong> para comportamento. Dominar essas três tecnologias é a habilidade mais valiosa do desenvolvimento moderno.</p>
+<p>Neste curso focamos nas duas primeiras. HTML (HyperText Markup Language) descreve <em>o que</em> tem na página: títulos, parágrafos, listas, imagens, links, formulários. CSS (Cascading Style Sheets) descreve <em>como</em> tudo aparece: cores, espaçamentos, tipografia, layout, animações.</p>
+<h2>Como o navegador renderiza uma página</h2>
+<p>Quando você digita uma URL, o navegador faz uma requisição HTTP para um servidor. O servidor responde com um documento HTML. O navegador monta uma árvore de nós chamada DOM (Document Object Model). Depois ele carrega o CSS, aplica os estilos e pinta os pixels na tela.</p>
+<div class="callout"><div class="ico">💡</div><p>Toda página web que você vai construir é uma combinação dessas três linguagens rodando num navegador. Seu primeiro objetivo é ler HTML com fluência.</p></div>
+<h2>O que você vai construir</h2>
+<p>Ao final deste curso você vai saber montar uma página de portfólio partindo de um arquivo em branco: HTML semântico, CSS responsivo com Flexbox, tipografia limpa e um tema escuro elegante. Mais importante: você vai entender <em>por que</em> cada peça está ali.</p>`,
           [
-            q("What does HTML stand for?", ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlink Machine Language", "High Template Markup Language"], 0, "HTML = HyperText Markup Language."),
-            q("Which of the three languages controls how a page looks?", ["HTML", "CSS", "JavaScript", "HTTP"], 1, "CSS handles presentation."),
-            q("What tree does a browser build from the HTML document?", ["DOM", "JSON", "SQL", "API"], 0, "DOM = Document Object Model."),
+            q("O que significa HTML?", ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlink Machine Language", "High Template Markup Language"], 0, "HTML = HyperText Markup Language."),
+            q("Qual das três linguagens controla a aparência da página?", ["HTML", "CSS", "JavaScript", "HTTP"], 1, "CSS cuida da apresentação."),
+            q("Que árvore o navegador monta a partir do HTML?", ["DOM", "JSON", "SQL", "API"], 0, "DOM = Document Object Model."),
           ]
         ),
-        L("structure", "HTML Document Structure",
-          "Every web page starts with the same boilerplate.",
-          `<p>Every HTML document follows a predictable shape. Understanding this shape lets you start any project in seconds:</p>
+        L("structure", "Estrutura de um documento HTML",
+          "Toda página começa com o mesmo esqueleto.",
+          `<p>Todo documento HTML segue um formato previsível. Entender esse formato deixa você começar qualquer projeto em segundos:</p>
 <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
+&lt;html lang="pt-BR"&gt;
   &lt;head&gt;
     &lt;meta charset="UTF-8" /&gt;
     &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
-    &lt;title&gt;My Page&lt;/title&gt;
+    &lt;title&gt;Minha página&lt;/title&gt;
   &lt;/head&gt;
   &lt;body&gt;
-    &lt;h1&gt;Hello, web!&lt;/h1&gt;
+    &lt;h1&gt;Olá, web!&lt;/h1&gt;
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
 <h2>Head vs body</h2>
-<p>The <code>&lt;head&gt;</code> holds metadata — the title shown in the browser tab, character encoding, viewport hints for mobile, links to stylesheets, and SEO tags. Nothing inside <code>&lt;head&gt;</code> appears directly on the page.</p>
-<p>The <code>&lt;body&gt;</code> holds every visible element: text, images, buttons, forms. When people say "the page," they usually mean the body.</p>
-<h2>Tags, elements, attributes</h2>
-<p>A <strong>tag</strong> is a keyword wrapped in angle brackets, like <code>&lt;p&gt;</code>. Most tags come in pairs — an opening <code>&lt;p&gt;</code> and a closing <code>&lt;/p&gt;</code>. The opening tag, content, and closing tag together form an <strong>element</strong>. Elements can carry <strong>attributes</strong> that configure them: <code>&lt;a href="/about"&gt;About&lt;/a&gt;</code>.</p>
-<div class="callout"><div class="ico">⚡</div><p>Indent your HTML consistently. Your future self will read it more than anyone else.</p></div>`,
+<p>O <code>&lt;head&gt;</code> guarda metadados — o título da aba, a codificação de caracteres, dicas de viewport para mobile, links para folhas de estilo e tags de SEO. Nada dentro do <code>&lt;head&gt;</code> aparece diretamente na página.</p>
+<p>O <code>&lt;body&gt;</code> guarda todos os elementos visíveis: textos, imagens, botões, formulários. Quando as pessoas falam "a página", normalmente estão falando do body.</p>
+<h2>Tags, elementos e atributos</h2>
+<p>Uma <strong>tag</strong> é uma palavra-chave entre sinais de menor e maior, como <code>&lt;p&gt;</code>. A maioria vem em par — uma tag de abertura <code>&lt;p&gt;</code> e uma de fechamento <code>&lt;/p&gt;</code>. A tag de abertura, o conteúdo e a de fechamento formam juntos um <strong>elemento</strong>. Elementos podem carregar <strong>atributos</strong> que os configuram: <code>&lt;a href="/sobre"&gt;Sobre&lt;/a&gt;</code>.</p>
+<div class="callout"><div class="ico">⚡</div><p>Indente seu HTML de forma consistente. Quem mais vai ler esse código é você mesmo, no futuro.</p></div>`,
           [
-            q("Which tag contains the visible content of a page?", ["<head>", "<body>", "<title>", "<meta>"], 1, "<body> holds all visible content."),
-            q("What does the viewport meta tag help with?", ["SEO", "Mobile responsiveness", "Animations", "Security"], 1, "It configures scaling on mobile devices."),
-            q("Which of these is an attribute?", ["<a>", "href", "</a>", "body"], 1, "href is an attribute of <a>."),
+            q("Qual tag guarda o conteúdo visível da página?", ["<head>", "<body>", "<title>", "<meta>"], 1, "<body> guarda todo o conteúdo visível."),
+            q("Onde fica o título da aba?", ["Dentro de <body>", "Dentro de <title> no <head>", "Num arquivo .css", "No rodapé"], 1, "<title> vive dentro do <head>."),
+            q("Uma tag de abertura, o conteúdo e a de fechamento formam…", ["Um atributo", "Um elemento", "Um documento", "Uma folha de estilo"], 1, "O conjunto é chamado elemento."),
           ]
         ),
-        L("text", "Text, Headings & Paragraphs",
-          "Structure content semantically with headings and paragraphs.",
-          `<p>Text is the backbone of most web pages. HTML gives you six heading levels (<code>&lt;h1&gt;</code> through <code>&lt;h6&gt;</code>) plus the paragraph tag <code>&lt;p&gt;</code>. Use them in order of importance — <code>&lt;h1&gt;</code> for the page's main title, <code>&lt;h2&gt;</code> for major sections, <code>&lt;h3&gt;</code> for subsections.</p>
-<h2>Why semantic order matters</h2>
-<p>Search engines, screen readers, and developer tools all rely on heading structure to understand your page. Skipping from <code>h1</code> to <code>h4</code> breaks that outline. Treat headings like a table of contents: hierarchical, consistent, meaningful.</p>
-<h2>Inline formatting</h2>
-<p>Inside a paragraph you can highlight text with <code>&lt;strong&gt;</code> (important), <code>&lt;em&gt;</code> (emphasis), <code>&lt;code&gt;</code> (inline code), and <code>&lt;br&gt;</code> for a line break. Avoid <code>&lt;b&gt;</code> and <code>&lt;i&gt;</code> — they used to mean "bold" and "italic" visually; modern HTML wants you to describe meaning, not looks.</p>
-<pre><code>&lt;h1&gt;My Portfolio&lt;/h1&gt;
-&lt;p&gt;I'm &lt;strong&gt;Alex&lt;/strong&gt;, a &lt;em&gt;self-taught&lt;/em&gt; developer.&lt;/p&gt;</code></pre>`,
-          [
-            q("What's the highest-level heading?", ["<h6>", "<h1>", "<h0>", "<header>"], 1, "<h1> is the most important."),
-            q("Which tag means semantically important text?", ["<b>", "<strong>", "<big>", "<u>"], 1, "<strong> communicates importance."),
-            q("How many heading levels does HTML have?", ["3", "5", "6", "9"], 2, "h1 through h6."),
-          ]
-        ),
-        L("links-images", "Links & Images",
-          "Connect pages and bring them to life with images.",
-          `<p>Links are what make the web a web. The anchor tag <code>&lt;a&gt;</code> takes an <code>href</code> attribute pointing to a URL:</p>
-<pre><code>&lt;a href="https://devstart.up"&gt;Visit Devstart&lt;/a&gt;
-&lt;a href="/about"&gt;About&lt;/a&gt;
-&lt;a href="mailto:hi@devstart.up"&gt;Email us&lt;/a&gt;</code></pre>
-<p>Use <code>target="_blank"</code> to open the link in a new tab. Always pair it with <code>rel="noopener"</code> for security.</p>
-<h2>Images</h2>
-<p>The <code>&lt;img&gt;</code> element is self-closing — no closing tag. It must have a <code>src</code> (the URL) and an <code>alt</code> (short description for accessibility and SEO):</p>
-<pre><code>&lt;img src="/logo.svg" alt="Devstart UP logo" width="120" /&gt;</code></pre>
-<div class="callout"><div class="ico">♿</div><p><strong>alt text is not optional.</strong> Screen reader users depend on it. If the image is purely decorative, use an empty <code>alt=""</code>.</p></div>`,
-          [
-            q("Which attribute sets a link's destination?", ["src", "href", "url", "link"], 1, "href = hypertext reference."),
-            q("Why is alt text important?", ["SEO", "Accessibility", "Fallback if image fails", "All of the above"], 3, "All three."),
-            q("What pairs with target='_blank' for security?", ["rel='external'", "rel='noopener'", "rel='safe'", "defer"], 1, "noopener prevents tab-hijack attacks."),
-          ]
-        ),
-        L("lists-tables", "Lists & Tables",
-          "Present structured data with lists and tables.",
-          `<p>Three kinds of lists exist:</p>
+        L("text-elements", "Elementos de texto",
+          "Títulos, parágrafos, links e mais.",
+          `<p>O HTML tem dezenas de elementos para texto. Os mais usados:</p>
 <ul>
-  <li><strong>Unordered</strong> — <code>&lt;ul&gt;</code> with bullets.</li>
-  <li><strong>Ordered</strong> — <code>&lt;ol&gt;</code> with numbers.</li>
-  <li><strong>Description</strong> — <code>&lt;dl&gt;</code> for term/definition pairs.</li>
+  <li><code>&lt;h1&gt;</code> até <code>&lt;h6&gt;</code> — títulos, do mais importante ao mais discreto.</li>
+  <li><code>&lt;p&gt;</code> — parágrafos.</li>
+  <li><code>&lt;a href="..."&gt;</code> — links para outras páginas ou âncoras.</li>
+  <li><code>&lt;strong&gt;</code> e <code>&lt;em&gt;</code> — ênfase forte e leve (bold/itálico com semântica).</li>
+  <li><code>&lt;br&gt;</code> — quebra de linha (evite abusar).</li>
+  <li><code>&lt;hr&gt;</code> — linha horizontal de separação.</li>
 </ul>
+<h2>HTML semântico</h2>
+<p>Prefira tags que descrevem significado em vez de só a aparência. <code>&lt;nav&gt;</code>, <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code> ajudam acessibilidade e SEO. Screen readers e motores de busca entendem melhor uma página semântica.</p>
+<h2>Imagens</h2>
+<pre><code>&lt;img src="/fotos/perfil.jpg" alt="Foto de perfil do Devin" /&gt;</code></pre>
+<p>Sempre escreva um <code>alt</code> descritivo — é o que o leitor de tela vai anunciar, e é o que aparece se a imagem falhar em carregar.</p>`,
+          [
+            q("Qual é o título de maior prioridade?", ["<h6>", "<h1>", "<title>", "<strong>"], 1, "<h1> é o mais alto; use um por página."),
+            q("Para que serve o atributo alt da imagem?", ["Estilo", "Descrição acessível se a imagem falhar", "URL da imagem", "Largura"], 1, "Texto alternativo para acessibilidade."),
+            q("Qual tag representa um parágrafo?", ["<para>", "<p>", "<text>", "<span>"], 1, "<p> de paragraph."),
+          ]
+        ),
+        L("lists-tables", "Listas e Tabelas",
+          "Organize informação em estrutura.",
+          `<p>Listas e tabelas são formas de organizar conteúdo. Quase toda interface web as usa.</p>
+<h2>Listas</h2>
 <pre><code>&lt;ul&gt;
-  &lt;li&gt;HTML&lt;/li&gt;
-  &lt;li&gt;CSS&lt;/li&gt;
-  &lt;li&gt;JavaScript&lt;/li&gt;
-&lt;/ul&gt;</code></pre>
-<h2>Tables</h2>
-<p>Use tables <em>only for tabular data</em> — not for layout. A table has a <code>&lt;thead&gt;</code>, a <code>&lt;tbody&gt;</code>, rows <code>&lt;tr&gt;</code>, header cells <code>&lt;th&gt;</code>, and data cells <code>&lt;td&gt;</code>:</p>
+  &lt;li&gt;Café&lt;/li&gt;
+  &lt;li&gt;Chá&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Primeiro&lt;/li&gt;
+  &lt;li&gt;Segundo&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+<p><code>&lt;ul&gt;</code> é uma lista não ordenada (bolinhas). <code>&lt;ol&gt;</code> é ordenada (números). Em ambas, <code>&lt;li&gt;</code> é cada item.</p>
+<h2>Tabelas</h2>
 <pre><code>&lt;table&gt;
-  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Course&lt;/th&gt;&lt;th&gt;Hours&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Nome&lt;/th&gt;&lt;th&gt;Idade&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
   &lt;tbody&gt;
-    &lt;tr&gt;&lt;td&gt;HTML&lt;/td&gt;&lt;td&gt;6&lt;/td&gt;&lt;/tr&gt;
-    &lt;tr&gt;&lt;td&gt;CSS&lt;/td&gt;&lt;td&gt;8&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Ana&lt;/td&gt;&lt;td&gt;30&lt;/td&gt;&lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;</code></pre>`,
           [
-            q("Which tag makes a numbered list?", ["<ul>", "<ol>", "<li>", "<dl>"], 1, "ol = ordered list."),
-            q("What goes inside a <tr>?", ["<section>", "<td> or <th>", "<ul>", "<head>"], 1, "Table cells live inside rows."),
-            q("Should you use tables for layout?", ["Yes always", "Only for data", "Only with CSS", "Only in emails"], 1, "Data only. Use CSS for layout."),
+            q("Qual tag cria uma lista numerada?", ["<ul>", "<ol>", "<li>", "<dl>"], 1, "ol = ordered list (ordenada)."),
+            q("O que vai dentro de um <tr>?", ["<section>", "<td> ou <th>", "<ul>", "<head>"], 1, "Células ficam dentro de linhas."),
+            q("Tabelas servem para layout?", ["Sim, sempre", "Apenas para dados", "Só com CSS", "Só em e-mails"], 1, "Use tabelas só para dados. Layout é com CSS."),
           ]
         ),
-        L("forms", "Forms & Inputs",
-          "Collect input from real users.",
-          `<p>Forms are how the web captures user input — sign-ups, searches, checkout flows. A form starts with <code>&lt;form&gt;</code> and wraps a set of <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code>, and <code>&lt;button&gt;</code> elements.</p>
-<pre><code>&lt;form action="/signup" method="post"&gt;
-  &lt;label for="u"&gt;Username&lt;/label&gt;
+        L("forms", "Formulários e inputs",
+          "Coletar dados de usuários reais.",
+          `<p>Formulários são como a web recebe dados do usuário — cadastros, buscas, checkout. Um formulário começa com <code>&lt;form&gt;</code> e envolve <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code> e <code>&lt;button&gt;</code>.</p>
+<pre><code>&lt;form action="/cadastro" method="post"&gt;
+  &lt;label for="u"&gt;Usuário&lt;/label&gt;
   &lt;input id="u" name="username" type="text" required /&gt;
 
-  &lt;label for="p"&gt;Password&lt;/label&gt;
+  &lt;label for="p"&gt;Senha&lt;/label&gt;
   &lt;input id="p" name="password" type="password" required /&gt;
 
-  &lt;button type="submit"&gt;Create account&lt;/button&gt;
+  &lt;button type="submit"&gt;Criar conta&lt;/button&gt;
 &lt;/form&gt;</code></pre>
-<h2>Input types</h2>
-<p>The <code>type</code> attribute unlocks specialized keyboards on mobile and built-in validation: <code>email</code>, <code>number</code>, <code>tel</code>, <code>date</code>, <code>url</code>, <code>password</code>, <code>checkbox</code>, <code>radio</code>, <code>file</code>, <code>color</code>.</p>
-<h2>Accessibility</h2>
-<p>Every input should have a <code>&lt;label&gt;</code> with a matching <code>for</code>/<code>id</code> pair. This lets users tap the label to focus the field and lets screen readers announce the purpose correctly.</p>`,
+<h2>Tipos de input</h2>
+<p>O atributo <code>type</code> libera teclados especializados em mobile e validação embutida: <code>email</code>, <code>number</code>, <code>tel</code>, <code>date</code>, <code>url</code>, <code>password</code>, <code>checkbox</code>, <code>radio</code>, <code>file</code>, <code>color</code>.</p>
+<h2>Acessibilidade</h2>
+<p>Todo input deve ter um <code>&lt;label&gt;</code> com <code>for</code>/<code>id</code> combinando. Isso permite tocar o label para focar o campo e deixa leitores de tela anunciarem o propósito corretamente.</p>`,
           [
-            q("Which attribute marks a required field?", ["needed", "must", "required", "validate"], 2, "The <code>required</code> attribute."),
-            q("What type gives you a calendar picker?", ["text", "date", "time", "day"], 1, "type='date'."),
-            q("How do you associate a label with an input?", ["for + id", "href + src", "class + name", "alt + title"], 0, "<label for='x'> + <input id='x'>."),
+            q("Qual atributo marca um campo obrigatório?", ["needed", "must", "required", "validate"], 2, "O atributo <code>required</code>."),
+            q("Qual type abre um seletor de data?", ["text", "date", "time", "day"], 1, "type='date'."),
+            q("Como associar label a input?", ["for + id", "href + src", "class + name", "alt + title"], 0, "<label for='x'> + <input id='x'>."),
           ]
         ),
-        L("css-intro", "Intro to CSS",
-          "The three ways to style a page — and which to use.",
-          `<p>CSS takes your raw HTML and makes it beautiful. There are three ways to apply it:</p>
+        L("css-intro", "Introdução ao CSS",
+          "Os três jeitos de estilizar uma página — e qual usar.",
+          `<p>O CSS pega seu HTML cru e deixa ele bonito. Existem três formas de aplicar:</p>
 <ol>
-  <li><strong>Inline</strong> — <code>style="color:red"</code> on an element. Avoid except for quick debugging.</li>
-  <li><strong>Internal</strong> — a <code>&lt;style&gt;</code> block in the <code>&lt;head&gt;</code>. Useful for single-file demos.</li>
-  <li><strong>External</strong> — a separate <code>.css</code> file linked in the head. The correct choice for real projects.</li>
+  <li><strong>Inline</strong> — <code>style="color:red"</code> direto no elemento. Evite, exceto para debug rápido.</li>
+  <li><strong>Interno</strong> — um bloco <code>&lt;style&gt;</code> dentro do <code>&lt;head&gt;</code>. Útil em demos de arquivo único.</li>
+  <li><strong>Externo</strong> — um arquivo <code>.css</code> separado, linkado no head. A escolha correta para projetos reais.</li>
 </ol>
 <pre><code>&lt;link rel="stylesheet" href="/styles.css" /&gt;</code></pre>
-<h2>A CSS rule</h2>
+<h2>Uma regra CSS</h2>
 <pre><code>h1 {
   color: #7c5cff;
   font-size: 2rem;
   letter-spacing: -0.02em;
 }</code></pre>
-<p>It has three parts: a <strong>selector</strong> (<code>h1</code>), a brace-wrapped block of <strong>declarations</strong>, and each declaration is a <strong>property: value</strong> pair. Semicolons end each line — forgetting one silently breaks the next rule.</p>`,
+<p>Ela tem três partes: um <strong>seletor</strong> (<code>h1</code>), um bloco de <strong>declarações</strong> entre chaves, e cada declaração é um par <strong>propriedade: valor</strong>. Ponto e vírgula termina cada linha — esquecer um quebra silenciosamente a regra seguinte.</p>`,
           [
-            q("Best way to style a real site?", ["Inline styles", "Internal <style>", "External .css file", "Hand-written SVG"], 2, "External files scale."),
-            q("What's a selector?", ["A color", "A thing you target", "A property", "An attribute"], 1, "It tells CSS which elements to style."),
-            q("What separates declarations?", ["Commas", "Semicolons", "Periods", "Nothing"], 1, "Semicolons end each declaration."),
+            q("Melhor forma de estilizar um site real?", ["Inline", "<style> interno", "Arquivo .css externo", "SVG escrito à mão"], 2, "Arquivos externos escalam melhor."),
+            q("O que é um seletor?", ["Uma cor", "Aquilo que você mira no HTML", "Uma propriedade", "Um atributo"], 1, "Diz ao CSS quais elementos estilizar."),
+            q("O que separa declarações?", ["Vírgulas", "Ponto e vírgula", "Pontos", "Nada"], 1, "Ponto e vírgula termina cada declaração."),
           ]
         ),
-        L("selectors", "Selectors & the Cascade",
-          "How CSS decides which rule wins.",
-          `<p>CSS is called <em>Cascading</em> Style Sheets because multiple rules can target the same element. When they conflict, specificity and order decide the winner.</p>
-<h2>Common selectors</h2>
+        L("selectors", "Seletores e a cascata",
+          "Como o CSS decide qual regra vence.",
+          `<p>CSS se chama <em>Cascading</em> Style Sheets porque várias regras podem mirar o mesmo elemento. Quando elas conflitam, especificidade e ordem decidem o vencedor.</p>
+<h2>Seletores comuns</h2>
 <ul>
-  <li><code>p</code> — every paragraph.</li>
-  <li><code>.card</code> — every element with class="card".</li>
-  <li><code>#hero</code> — the element with id="hero".</li>
-  <li><code>a:hover</code> — links being hovered.</li>
-  <li><code>.btn.primary</code> — elements with both classes.</li>
-  <li><code>nav a</code> — every link inside a nav.</li>
+  <li><code>p</code> — todo parágrafo.</li>
+  <li><code>.card</code> — todo elemento com class="card".</li>
+  <li><code>#hero</code> — o elemento com id="hero".</li>
+  <li><code>a:hover</code> — links com mouse em cima.</li>
+  <li><code>.btn.primary</code> — elementos com as duas classes.</li>
+  <li><code>nav a</code> — todo link dentro de um nav.</li>
 </ul>
-<h2>Specificity cheat sheet</h2>
-<p>Inline style &gt; ID &gt; class/attribute/pseudo-class &gt; tag. When two rules tie, the one that appears later in the stylesheet wins.</p>
-<div class="callout"><div class="ico">🧠</div><p>Prefer classes over IDs for styling. IDs are too specific and make overrides painful.</p></div>`,
+<h2>Cola de especificidade</h2>
+<p>Estilo inline &gt; ID &gt; classe/atributo/pseudo-classe &gt; tag. Quando duas regras empatam, vence a que aparece depois na folha de estilo.</p>
+<div class="callout"><div class="ico">🧠</div><p>Prefira classes a IDs para estilizar. IDs são muito específicos e dificultam sobrescritas.</p></div>`,
           [
-            q("Which selects all .btn elements?", ["#btn", ".btn", "btn", "*btn"], 1, "Dot for class."),
-            q("Highest specificity?", ["Tag", "Class", "ID", "Universal"], 2, "IDs are more specific than classes."),
-            q("What does 'nav a' mean?", ["nav OR a", "Links inside nav", "An element with id='nav a'", "a nav attribute"], 1, "Descendant selector."),
+            q("Qual seleciona todos os elementos .btn?", ["#btn", ".btn", "btn", "*btn"], 1, "Ponto é para classe."),
+            q("Maior especificidade?", ["Tag", "Classe", "ID", "Universal"], 2, "IDs são mais específicos que classes."),
+            q("O que significa 'nav a'?", ["nav OU a", "Links dentro de nav", "Elemento com id='nav a'", "Um atributo nav"], 1, "Seletor descendente."),
           ]
         ),
-        L("box-model", "The Box Model",
-          "Every element is a box — understanding its anatomy unlocks layout.",
-          `<p>Every HTML element renders as a rectangular box with four concentric layers:</p>
+        L("box-model", "Box Model",
+          "Todo elemento é uma caixa — entender sua anatomia libera o layout.",
+          `<p>Todo elemento HTML renderiza como uma caixa retangular com quatro camadas concêntricas:</p>
 <ol>
-  <li><strong>Content</strong> — the text/images inside.</li>
-  <li><strong>Padding</strong> — space between content and border.</li>
-  <li><strong>Border</strong> — the visible edge.</li>
-  <li><strong>Margin</strong> — space between this box and its neighbors.</li>
+  <li><strong>Conteúdo</strong> — o texto/imagens dentro.</li>
+  <li><strong>Padding</strong> — espaço entre conteúdo e borda.</li>
+  <li><strong>Border</strong> — a borda visível.</li>
+  <li><strong>Margin</strong> — espaço entre essa caixa e as vizinhas.</li>
 </ol>
-<h2>Control it with CSS</h2>
+<h2>Controle com CSS</h2>
 <pre><code>.card {
   padding: 24px;
   border: 1px solid #333;
   border-radius: 16px;
   margin: 20px;
 }</code></pre>
-<h2>Box-sizing — the most important CSS rule you'll ever learn</h2>
-<p>By default, <code>width: 300px</code> measures only the content. Add padding and the box overflows. The fix:</p>
+<h2>Box-sizing — a regra CSS mais importante que você vai aprender</h2>
+<p>Por padrão, <code>width: 300px</code> conta só o conteúdo. Adicione padding e a caixa estoura. O reset:</p>
 <pre><code>* { box-sizing: border-box; }</code></pre>
-<p>Now width includes padding and border. Every modern project uses this reset.</p>`,
+<p>Agora a largura inclui padding e borda. Todo projeto moderno usa esse reset.</p>`,
           [
-            q("What's between border and content?", ["Margin", "Padding", "Outline", "Gap"], 1, "Padding is inside the border."),
-            q("Which property rounds corners?", ["corner-radius", "border-radius", "round", "radius"], 1, "border-radius."),
-            q("box-sizing: border-box makes width include?", ["Just content", "Content + padding + border", "Content + margin", "Everything"], 1, "Padding and border, not margin."),
+            q("O que fica entre borda e conteúdo?", ["Margin", "Padding", "Outline", "Gap"], 1, "Padding fica dentro da borda."),
+            q("Qual propriedade arredonda cantos?", ["corner-radius", "border-radius", "round", "radius"], 1, "border-radius."),
+            q("box-sizing: border-box faz a largura incluir?", ["Só o conteúdo", "Conteúdo + padding + borda", "Conteúdo + margin", "Tudo"], 1, "Padding e borda, mas não margin."),
           ]
         ),
-        L("typography", "Colors, Fonts & Typography",
-          "Typography is 90% of visual design.",
-          `<p>Good typography transforms a plain page into a premium experience. Focus on four things: font family, size, weight, and line height.</p>
+        L("typography", "Cores, fontes e tipografia",
+          "Tipografia é 90% do design visual.",
+          `<p>Boa tipografia transforma uma página comum em uma experiência premium. Foque em quatro coisas: família, tamanho, peso e altura de linha.</p>
 <pre><code>body {
   font-family: "Inter", system-ui, sans-serif;
   font-size: 16px;
@@ -225,218 +214,218 @@
   color: #eef1ff;
 }</code></pre>
 <h2>Webfonts</h2>
-<p>Google Fonts is the simplest way to load custom fonts:</p>
+<p>Google Fonts é o jeito mais simples de carregar fontes customizadas:</p>
 <pre><code>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"&gt;</code></pre>
-<h2>Colors</h2>
-<p>Use hex (<code>#7c5cff</code>), rgb (<code>rgb(124 92 255)</code>), or hsl (<code>hsl(252 100% 68%)</code>). Define brand colors as CSS variables so you can change them in one place:</p>
+<h2>Cores</h2>
+<p>Use hex (<code>#7c5cff</code>), rgb (<code>rgb(124 92 255)</code>) ou hsl (<code>hsl(252 100% 68%)</code>). Defina cores da marca como variáveis CSS para trocar tudo num só lugar:</p>
 <pre><code>:root { --primary: #7c5cff; }
 .btn { background: var(--primary); }</code></pre>`,
           [
-            q("Which unit scales with root font-size?", ["px", "rem", "pt", "cm"], 1, "rem = root em."),
-            q("Best line-height for body text?", ["1", "1.2", "1.5–1.7", "3"], 2, "Around 1.5–1.7 reads best."),
-            q("CSS variables are declared with?", ["@var", "--name", "$name", "var()"], 1, "-- declares, var() reads."),
+            q("Qual unidade escala com o font-size da raiz?", ["px", "rem", "pt", "cm"], 1, "rem = root em."),
+            q("Melhor altura de linha para texto corrido?", ["1", "1.2", "1.5–1.7", "3"], 2, "Entre 1.5 e 1.7 lê melhor."),
+            q("Variáveis CSS são declaradas com?", ["@var", "--nome", "$nome", "var()"], 1, "-- declara, var() lê."),
           ]
         ),
-        L("flexbox", "Flexbox Layouts",
-          "One-dimensional layout, done right.",
-          `<p>Flexbox is the modern way to arrange items in a row or column. Put <code>display: flex</code> on a parent and its children automatically line up.</p>
+        L("flexbox", "Layouts com Flexbox",
+          "Layout unidimensional, feito do jeito certo.",
+          `<p>Flexbox é o jeito moderno de organizar itens em linha ou coluna. Ponha <code>display: flex</code> no pai e os filhos se alinham automaticamente.</p>
 <pre><code>.nav {
   display: flex;
   gap: 20px;
   justify-content: space-between;
   align-items: center;
 }</code></pre>
-<h2>Key properties</h2>
+<h2>Propriedades-chave</h2>
 <ul>
-  <li><code>flex-direction</code>: <code>row</code> (default) or <code>column</code>.</li>
-  <li><code>justify-content</code>: main-axis alignment — <code>flex-start</code>, <code>center</code>, <code>space-between</code>, <code>space-around</code>.</li>
-  <li><code>align-items</code>: cross-axis — <code>center</code>, <code>stretch</code>, <code>flex-start</code>.</li>
-  <li><code>gap</code>: space between items — no more margin hacks.</li>
-  <li><code>flex: 1</code> on a child makes it grow to fill remaining space.</li>
+  <li><code>flex-direction</code>: <code>row</code> (padrão) ou <code>column</code>.</li>
+  <li><code>justify-content</code>: alinhamento no eixo principal — <code>flex-start</code>, <code>center</code>, <code>space-between</code>, <code>space-around</code>.</li>
+  <li><code>align-items</code>: eixo transversal — <code>center</code>, <code>stretch</code>, <code>flex-start</code>.</li>
+  <li><code>gap</code>: espaçamento entre itens — chega de gambiarra com margin.</li>
+  <li><code>flex: 1</code> em um filho faz ele crescer para ocupar o espaço livre.</li>
 </ul>
-<div class="callout"><div class="ico">🎯</div><p>Flexbox is for 1D layouts. For grids, use CSS Grid. Both are standard and well-supported.</p></div>`,
+<div class="callout"><div class="ico">🎯</div><p>Flexbox é para layout 1D. Para grids, use CSS Grid. Os dois são padrão e têm suporte excelente.</p></div>`,
           [
-            q("Which property turns on Flexbox?", ["flex: on", "display: flex", "layout: flex", "type: flex"], 1, "display: flex on the parent."),
-            q("Center items on the main axis?", ["align-items: center", "justify-content: center", "text-align: center", "flex-center"], 1, "justify-content controls main-axis alignment."),
-            q("flex: 1 makes a child…", ["shrink", "grow to fill space", "disappear", "rotate"], 1, "It grows to consume available space."),
+            q("Qual propriedade liga o Flexbox?", ["flex: on", "display: flex", "layout: flex", "type: flex"], 1, "display: flex no pai."),
+            q("Centralizar itens no eixo principal?", ["align-items: center", "justify-content: center", "text-align: center", "flex-center"], 1, "justify-content controla o eixo principal."),
+            q("flex: 1 faz o filho…", ["encolher", "crescer para ocupar o espaço", "sumir", "girar"], 1, "Ele cresce para consumir o espaço disponível."),
           ]
         ),
-        L("first-website", "Your First Website",
-          "Put it all together — build a polished landing page.",
-          `<p>Let's combine everything. Create <code>index.html</code>, a <code>styles.css</code> file, and build a one-page portfolio.</p>
+        L("first-website", "Seu primeiro site",
+          "Junte tudo — crie uma landing page polida.",
+          `<p>Vamos combinar tudo. Crie <code>index.html</code>, um arquivo <code>styles.css</code> e monte um portfólio de uma página.</p>
 <pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
+&lt;html lang="pt-BR"&gt;
 &lt;head&gt;
   &lt;meta charset="UTF-8" /&gt;
-  &lt;title&gt;Alex — Web Developer&lt;/title&gt;
+  &lt;title&gt;Alex — Desenvolvedor Web&lt;/title&gt;
   &lt;link rel="stylesheet" href="styles.css" /&gt;
 &lt;/head&gt;
 &lt;body&gt;
   &lt;header&gt;
     &lt;nav&gt;
       &lt;strong&gt;Alex&lt;/strong&gt;
-      &lt;div&gt;&lt;a href="#work"&gt;Work&lt;/a&gt; &lt;a href="#contact"&gt;Contact&lt;/a&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;a href="#projetos"&gt;Projetos&lt;/a&gt; &lt;a href="#contato"&gt;Contato&lt;/a&gt;&lt;/div&gt;
     &lt;/nav&gt;
   &lt;/header&gt;
   &lt;section class="hero"&gt;
-    &lt;h1&gt;Hi, I'm Alex — I build beautiful web apps.&lt;/h1&gt;
-    &lt;a class="btn" href="#work"&gt;See my work&lt;/a&gt;
+    &lt;h1&gt;Oi, sou Alex — crio apps web bonitos.&lt;/h1&gt;
+    &lt;a class="btn" href="#projetos"&gt;Ver meus projetos&lt;/a&gt;
   &lt;/section&gt;
 &lt;/body&gt;&lt;/html&gt;</code></pre>
-<h2>Polish it</h2>
-<p>Add a dark background, a gradient brand color, generous spacing, and a clean font. The exact same pieces you'll use to build real products for the rest of your career.</p>
-<div class="callout"><div class="ico">🚀</div><p>Congrats — you can now read and write HTML + CSS. Next up: bring it to life with JavaScript.</p></div>`,
+<h2>Polir</h2>
+<p>Adicione fundo escuro, uma cor de marca em gradiente, espaçamento generoso e uma fonte limpa. Exatamente os mesmos ingredientes que você vai usar para criar produtos reais pelo resto da carreira.</p>
+<div class="callout"><div class="ico">🚀</div><p>Parabéns — você já consegue ler e escrever HTML + CSS. Próximo passo: dar vida às páginas com JavaScript.</p></div>`,
           [
-            q("Where do you link your CSS file?", ["<body>", "<head>", "<footer>", "<script>"], 1, "Inside <head> via <link>."),
-            q("What makes a website 'responsive'?", ["Dark mode", "Adapts to screen size", "Uses JavaScript", "Uses Flash"], 1, "Fluid layouts and media queries."),
-            q("Best next skill after HTML/CSS?", ["Rust", "JavaScript", "Java", "SQL"], 1, "JavaScript runs in the browser."),
+            q("Onde você linka seu arquivo CSS?", ["<body>", "<head>", "<footer>", "<script>"], 1, "Dentro do <head> via <link>."),
+            q("O que torna um site 'responsivo'?", ["Modo escuro", "Adapta-se ao tamanho da tela", "Usa JavaScript", "Usa Flash"], 1, "Layouts fluidos e media queries."),
+            q("Melhor próxima habilidade após HTML/CSS?", ["Rust", "JavaScript", "Java", "SQL"], 1, "JavaScript roda no navegador."),
           ]
         ),
       ],
     },
 
     // =================================================================
-    // 2. JavaScript Fundamentals (FREE)
+    // 2. Fundamentos de JavaScript (GRÁTIS)
     // =================================================================
     {
       id: "js-fundamentals",
-      title: "JavaScript Fundamentals",
-      tagline: "The language of the web — from zero to confident.",
-      description: "Write your first JavaScript programs. Master variables, functions, arrays, objects, and the DOM so you can make any web page interactive.",
-      level: "Beginner",
+      title: "Fundamentos de JavaScript",
+      tagline: "A linguagem da web — do zero ao confiante.",
+      description: "Escreva seus primeiros programas em JavaScript. Domine variáveis, funções, arrays, objetos e o DOM para deixar qualquer página interativa.",
+      level: "Iniciante",
       duration: "8h",
       theme: "theme-js",
       cover: "JS",
       vip: false,
       instructor: "Caio Mendes",
       lessons: [
-        L("what-is-js", "What is JavaScript?",
-          "The history and role of the world's most popular language.",
-          `<p>JavaScript was invented in 1995 by Brendan Eich in ten days. It was meant to be a simple scripting language for Netscape Navigator. Thirty years later it powers every website on Earth, runs servers (Node.js), builds mobile apps (React Native), and even runs space telescopes.</p>
-<h2>Where JavaScript runs</h2>
+        L("what-is-js", "O que é JavaScript?",
+          "A história e o papel da linguagem mais popular do mundo.",
+          `<p>O JavaScript foi inventado em 1995 por Brendan Eich em dez dias. A ideia era ser uma linguagem de script simples para o Netscape Navigator. Trinta anos depois ela move todo site da Terra, roda servidores (Node.js), monta apps móveis (React Native) e até controla telescópios espaciais.</p>
+<h2>Onde o JavaScript roda</h2>
 <ul>
-  <li><strong>Browsers</strong> — Chrome, Firefox, Safari. Every site uses it.</li>
-  <li><strong>Servers</strong> — via Node.js, handling APIs and databases.</li>
-  <li><strong>Desktop apps</strong> — VS Code, Slack, Discord are all JavaScript under the hood.</li>
+  <li><strong>Navegadores</strong> — Chrome, Firefox, Safari. Todo site usa.</li>
+  <li><strong>Servidores</strong> — via Node.js, cuidando de APIs e bancos de dados.</li>
+  <li><strong>Apps desktop</strong> — VS Code, Slack e Discord são JavaScript por baixo.</li>
   <li><strong>Mobile</strong> — React Native, Ionic, Capacitor.</li>
 </ul>
-<h2>Modern JavaScript (ES2015+)</h2>
-<p>The language has evolved enormously. In this course we use modern syntax: <code>let</code>/<code>const</code>, arrow functions, template literals, destructuring. Forget the old <code>var</code> — you won't need it.</p>
-<pre><code>const name = "Devstart";
-console.log(\`Welcome to \${name} UP!\`);</code></pre>`,
+<h2>JavaScript moderno (ES2015+)</h2>
+<p>A linguagem evoluiu muito. Neste curso usamos sintaxe moderna: <code>let</code>/<code>const</code>, arrow functions, template literals, desestruturação. Esqueça o velho <code>var</code> — você não vai precisar.</p>
+<pre><code>const nome = "Devstart";
+console.log(\`Bem-vindo à \${nome} UP!\`);</code></pre>`,
           [
-            q("Who invented JavaScript?", ["James Gosling", "Brendan Eich", "Guido van Rossum", "Tim Berners-Lee"], 1, "Brendan Eich, at Netscape in 1995."),
-            q("Which runtime lets JS run on servers?", ["Rails", "Node.js", "Flask", "Spring"], 1, "Node.js."),
-            q("Modern variable keyword preferred over var?", ["let", "const", "Both let and const", "global"], 2, "Prefer const, use let when you must reassign."),
+            q("Quem inventou o JavaScript?", ["James Gosling", "Brendan Eich", "Guido van Rossum", "Tim Berners-Lee"], 1, "Brendan Eich, na Netscape em 1995."),
+            q("Qual runtime permite rodar JS no servidor?", ["Rails", "Node.js", "Flask", "Spring"], 1, "Node.js."),
+            q("Palavra-chave moderna preferida no lugar de var?", ["let", "const", "Tanto let quanto const", "global"], 2, "Prefira const; use let só quando precisar reatribuir."),
           ]
         ),
-        L("variables", "Variables & Data Types",
-          "Name things so your code means something.",
-          `<p>A variable is a named box that holds a value. In modern JavaScript there are two keywords to create one:</p>
-<pre><code>const age = 25;      // cannot be reassigned
-let score = 0;       // can be reassigned
-score = score + 10;</code></pre>
-<p>Use <code>const</code> by default. Only switch to <code>let</code> when you actually need to change the value.</p>
-<h2>Primitive types</h2>
+        L("variables", "Variáveis e tipos de dado",
+          "Nomeie as coisas para que seu código faça sentido.",
+          `<p>Uma variável é uma caixa nomeada que guarda um valor. Em JavaScript moderno há duas palavras-chave para criar uma:</p>
+<pre><code>const idade = 25;    // não pode ser reatribuída
+let pontos = 0;      // pode ser reatribuída
+pontos = pontos + 10;</code></pre>
+<p>Use <code>const</code> por padrão. Só mude para <code>let</code> quando realmente precisar alterar o valor.</p>
+<h2>Tipos primitivos</h2>
 <ul>
   <li><strong>Number</strong> — <code>42</code>, <code>3.14</code>, <code>-1</code>.</li>
-  <li><strong>String</strong> — <code>"hello"</code>, <code>'world'</code>, <code>\`template\`</code>.</li>
-  <li><strong>Boolean</strong> — <code>true</code> or <code>false</code>.</li>
-  <li><strong>null</strong> — "intentionally empty."</li>
-  <li><strong>undefined</strong> — "not yet defined."</li>
+  <li><strong>String</strong> — <code>"olá"</code>, <code>'mundo'</code>, <code>\`template\`</code>.</li>
+  <li><strong>Boolean</strong> — <code>true</code> ou <code>false</code>.</li>
+  <li><strong>null</strong> — "intencionalmente vazio."</li>
+  <li><strong>undefined</strong> — "ainda não definido."</li>
 </ul>
 <h2>typeof</h2>
-<p>Use <code>typeof</code> to inspect a value's type at runtime:</p>
-<pre><code>typeof "hi";     // "string"
-typeof 42;       // "number"
-typeof true;     // "boolean"</code></pre>`,
+<p>Use <code>typeof</code> para inspecionar o tipo de um valor em tempo de execução:</p>
+<pre><code>typeof "oi";     // "string"
+typeof 42;        // "number"
+typeof true;      // "boolean"</code></pre>`,
           [
-            q("Which can't be reassigned?", ["let", "const", "var", "all"], 1, "const — its binding is fixed."),
-            q("What does typeof 'hello' return?", ["text", "string", "char", "word"], 1, "'string'."),
-            q("Which is NOT a primitive?", ["number", "object", "string", "boolean"], 1, "Object is not a primitive."),
+            q("Qual não pode ser reatribuída?", ["let", "const", "var", "todas"], 1, "const — o vínculo é fixo."),
+            q("O que typeof 'olá' retorna?", ["text", "string", "char", "word"], 1, "'string'."),
+            q("Qual NÃO é primitivo?", ["number", "object", "string", "boolean"], 1, "Objeto não é primitivo."),
           ]
         ),
-        L("operators", "Operators & Expressions",
-          "Add, compare, combine.",
-          `<p>Operators let you compute new values. The math operators are familiar:</p>
+        L("operators", "Operadores e expressões",
+          "Somar, comparar, combinar.",
+          `<p>Operadores permitem calcular novos valores. Os aritméticos são familiares:</p>
 <pre><code>10 + 3   // 13
 10 - 3   // 7
 10 * 3   // 30
 10 / 3   // 3.333...
-10 % 3   // 1   (remainder / modulo)
-10 ** 3  // 1000 (exponent)</code></pre>
-<h2>Comparison</h2>
-<pre><code>5 === 5   // true  (strict equality)
+10 % 3   // 1   (resto / módulo)
+10 ** 3  // 1000 (exponenciação)</code></pre>
+<h2>Comparação</h2>
+<pre><code>5 === 5   // true  (igualdade estrita)
 5 === "5" // false
 5 !== 6   // true
 5 &gt; 3    // true</code></pre>
-<p>Always use <code>===</code> and <code>!==</code>. The loose versions (<code>==</code>, <code>!=</code>) do type coercion and will eventually bite you.</p>
-<h2>Logical</h2>
-<pre><code>true &amp;&amp; false   // false (AND)
-true || false   // true  (OR)
-!true           // false (NOT)</code></pre>`,
+<p>Use sempre <code>===</code> e <code>!==</code>. As versões frouxas (<code>==</code>, <code>!=</code>) fazem conversão de tipo e uma hora vão te morder.</p>
+<h2>Lógicos</h2>
+<pre><code>true &amp;&amp; false   // false (E)
+true || false   // true  (OU)
+!true           // false (NÃO)</code></pre>`,
           [
-            q("What does 13 % 5 return?", ["2", "3", "8", "2.6"], 1, "Remainder of 13 ÷ 5 = 3."),
-            q("Which is strict equality?", ["=", "==", "===", "~"], 2, "=== checks value AND type."),
-            q("What does ! do?", ["Factorial", "Inverts a boolean", "Shouts", "Increments"], 1, "!true === false."),
+            q("Quanto vale 13 % 5?", ["2", "3", "8", "2.6"], 1, "Resto de 13 ÷ 5 = 3."),
+            q("Qual é a igualdade estrita?", ["=", "==", "===", "~"], 2, "=== compara valor E tipo."),
+            q("O que ! faz?", ["Fatorial", "Inverte um booleano", "Grita", "Incrementa"], 1, "!true === false."),
           ]
         ),
-        L("strings", "Strings & Numbers",
-          "The two types you'll work with most.",
-          `<p>Strings in JavaScript are text. Use single, double, or backtick quotes:</p>
-<pre><code>const a = 'hello';
-const b = "hello";
-const c = \`hello \${a}\`;  // template literal with interpolation</code></pre>
-<h2>Useful string methods</h2>
+        L("strings", "Strings e números",
+          "Os dois tipos que você mais vai usar.",
+          `<p>Strings em JavaScript são texto. Use aspas simples, duplas ou crases:</p>
+<pre><code>const a = 'olá';
+const b = "olá";
+const c = \`olá \${a}\`;  // template literal com interpolação</code></pre>
+<h2>Métodos úteis de string</h2>
 <pre><code>"Devstart".length           // 8
 "Devstart".toUpperCase()    // "DEVSTART"
 "Devstart".includes("start")// true
-"  hi  ".trim()             // "hi"
+"  oi  ".trim()             // "oi"
 "a,b,c".split(",")          // ["a","b","c"]</code></pre>
-<h2>Number methods</h2>
-<pre><code>Number("42")       // 42
-parseInt("42px")   // 42
+<h2>Métodos de número</h2>
+<pre><code>Number("42")         // 42
+parseInt("42px")     // 42
 (3.14159).toFixed(2) // "3.14"
-Math.random()      // 0..1
-Math.floor(1.9)    // 1</code></pre>
-<div class="callout"><div class="ico">💡</div><p>Template literals (backticks) let you embed expressions with <code>\${...}</code>. Prefer them to string concatenation with <code>+</code>.</p></div>`,
+Math.random()        // 0..1
+Math.floor(1.9)      // 1</code></pre>
+<div class="callout"><div class="ico">💡</div><p>Template literals (crases) permitem embutir expressões com <code>\${...}</code>. Prefira eles à concatenação com <code>+</code>.</p></div>`,
           [
-            q("Which gives a random number 0–1?", ["Math.floor()", "Math.random()", "random()", "Math.ceil()"], 1, "Math.random() returns [0, 1)."),
-            q("How to interpolate a variable in a string?", ["'hi' + name", "`hi ${name}`", "both work, second is preferred", "hi %s name"], 2, "Both work; template literals are cleaner."),
-            q("What does .trim() do?", ["Rounds a number", "Removes whitespace from both ends", "Deletes characters", "Splits a string"], 1, "Removes leading/trailing whitespace."),
+            q("Qual devolve um número aleatório entre 0 e 1?", ["Math.floor()", "Math.random()", "random()", "Math.ceil()"], 1, "Math.random() retorna [0, 1)."),
+            q("Como interpolar uma variável numa string?", ["'oi' + nome", "`oi ${nome}`", "as duas funcionam; a segunda é preferida", "oi %s nome"], 2, "As duas funcionam; template literals ficam mais limpos."),
+            q("O que o .trim() faz?", ["Arredonda um número", "Remove espaços das duas pontas", "Apaga caracteres", "Divide a string"], 1, "Remove espaços no começo e no fim."),
           ]
         ),
-        L("conditionals", "Conditionals (if/else)",
-          "Make decisions in your code.",
-          `<p>Programs decide what to do next based on conditions. The <code>if</code> statement is your first tool:</p>
-<pre><code>const age = 18;
-if (age >= 18) {
-  console.log("Adult");
-} else if (age >= 13) {
-  console.log("Teen");
+        L("conditionals", "Condicionais (if/else)",
+          "Tomar decisões no seu código.",
+          `<p>Programas decidem o próximo passo com base em condições. O <code>if</code> é sua primeira ferramenta:</p>
+<pre><code>const idade = 18;
+if (idade >= 18) {
+  console.log("Adulto");
+} else if (idade >= 13) {
+  console.log("Adolescente");
 } else {
-  console.log("Child");
+  console.log("Criança");
 }</code></pre>
-<h2>Truthy and falsy</h2>
-<p>Any value can be used as a condition. These are falsy: <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Everything else is truthy.</p>
-<h2>Ternary expression</h2>
-<pre><code>const label = age >= 18 ? "Adult" : "Minor";</code></pre>
+<h2>Truthy e falsy</h2>
+<p>Qualquer valor pode ser usado como condição. Estes são falsy: <code>false</code>, <code>0</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, <code>NaN</code>. Todo o resto é truthy.</p>
+<h2>Ternário</h2>
+<pre><code>const rotulo = idade >= 18 ? "Adulto" : "Menor";</code></pre>
 <h2>Switch</h2>
-<pre><code>switch (day) {
-  case "Mon": console.log("Monday"); break;
-  case "Fri": console.log("Friday"); break;
-  default: console.log("Other");
+<pre><code>switch (dia) {
+  case "Seg": console.log("Segunda"); break;
+  case "Sex": console.log("Sexta"); break;
+  default: console.log("Outro");
 }</code></pre>`,
           [
-            q("Which is falsy?", ["'false'", "'0'", "0", "-1"], 2, "The number 0 is falsy."),
-            q("Ternary syntax?", ["cond ? a : b", "cond => a : b", "cond : a ? b", "if cond a b"], 0, "cond ? a : b."),
-            q("Missing a break in switch causes…", ["Error", "Fall-through to next case", "Skip", "Nothing"], 1, "Execution continues into the next case."),
+            q("Qual é falsy?", ["'false'", "'0'", "0", "-1"], 2, "O número 0 é falsy."),
+            q("Sintaxe do ternário?", ["cond ? a : b", "cond => a : b", "cond : a ? b", "if cond a b"], 0, "cond ? a : b."),
+            q("Esquecer o break no switch causa…", ["Erro", "Fall-through para o próximo case", "Skip", "Nada"], 1, "A execução continua no próximo case."),
           ]
         ),
-        L("loops", "Loops",
-          "Do something over and over.",
-          `<p>Loops repeat a block of code. The most common kinds:</p>
-<pre><code>// classic for
+        L("loops", "Laços (loops)",
+          "Fazer algo várias vezes.",
+          `<p>Laços repetem um bloco de código. Os mais comuns:</p>
+<pre><code>// for clássico
 for (let i = 0; i &lt; 5; i++) {
   console.log(i);
 }
@@ -445,145 +434,145 @@ for (let i = 0; i &lt; 5; i++) {
 let n = 0;
 while (n &lt; 5) { n++; }
 
-// for...of — iterate values
-for (const fruit of ["apple", "banana"]) {
-  console.log(fruit);
+// for...of — itera valores
+for (const fruta of ["maçã", "banana"]) {
+  console.log(fruta);
 }
 
-// for...in — iterate keys
-for (const key in { a: 1, b: 2 }) {
-  console.log(key);
+// for...in — itera chaves
+for (const chave in { a: 1, b: 2 }) {
+  console.log(chave);
 }</code></pre>
-<h2>break and continue</h2>
-<p><code>break</code> exits the loop immediately; <code>continue</code> skips to the next iteration. Use them sparingly — clear conditions are usually better.</p>
-<div class="callout"><div class="ico">🔁</div><p>For arrays, prefer <code>.forEach</code>, <code>.map</code>, and <code>.filter</code> (coming up in a later lesson). They're cleaner than manual loops.</p></div>`,
+<h2>break e continue</h2>
+<p><code>break</code> sai do laço na hora; <code>continue</code> pula para a próxima iteração. Use com moderação — condições claras geralmente são melhores.</p>
+<div class="callout"><div class="ico">🔁</div><p>Para arrays, prefira <code>.forEach</code>, <code>.map</code> e <code>.filter</code> (ainda vão aparecer). Ficam mais limpos que laços manuais.</p></div>`,
           [
-            q("Which iterates values of an array?", ["for...in", "for...of", "while", "do"], 1, "for...of gives values; for...in gives keys."),
-            q("break does…", ["Exits loop", "Restarts loop", "Pauses", "Nothing"], 0, "Exits the enclosing loop."),
-            q("Classic for has how many parts?", ["2", "3", "4", "1"], 1, "init; condition; update."),
+            q("Qual itera os valores de um array?", ["for...in", "for...of", "while", "do"], 1, "for...of dá valores; for...in dá chaves."),
+            q("break faz…", ["Sai do laço", "Reinicia o laço", "Pausa", "Nada"], 0, "Sai do laço que o contém."),
+            q("O for clássico tem quantas partes?", ["2", "3", "4", "1"], 1, "inicialização; condição; atualização."),
           ]
         ),
-        L("functions", "Functions",
-          "Package behavior into reusable units.",
-          `<p>A function wraps code so you can call it many times with different inputs. Three syntaxes:</p>
-<pre><code>// Function declaration
-function greet(name) {
-  return \`Hello, \${name}!\`;
+        L("functions", "Funções",
+          "Empacotar comportamento em unidades reutilizáveis.",
+          `<p>Uma função envelopa código para você chamar várias vezes com entradas diferentes. Três sintaxes:</p>
+<pre><code>// Declaração de função
+function saudacao(nome) {
+  return \`Olá, \${nome}!\`;
 }
 
-// Function expression
-const greet2 = function(name) { return "Hi " + name; };
+// Expressão de função
+const saudacao2 = function(nome) { return "Oi " + nome; };
 
-// Arrow function (modern, concise)
-const greet3 = (name) =&gt; \`Hey, \${name}!\`;
+// Arrow function (moderna, concisa)
+const saudacao3 = (nome) =&gt; \`Eaí, \${nome}!\`;
 
-greet("Ana");  // "Hello, Ana!"</code></pre>
-<h2>Parameters &amp; defaults</h2>
-<pre><code>function total(price, tax = 0.1) {
-  return price * (1 + tax);
+saudacao("Ana");  // "Olá, Ana!"</code></pre>
+<h2>Parâmetros e valores padrão</h2>
+<pre><code>function total(preco, imposto = 0.1) {
+  return preco * (1 + imposto);
 }</code></pre>
 <h2>Return</h2>
-<p>A function without <code>return</code> returns <code>undefined</code>. Arrow functions with a single expression can skip the braces and the <code>return</code> keyword.</p>`,
+<p>Uma função sem <code>return</code> retorna <code>undefined</code>. Arrow functions com uma única expressão podem omitir as chaves e o <code>return</code>.</p>`,
           [
-            q("What does a function without return return?", ["null", "0", "undefined", "NaN"], 2, "undefined by default."),
-            q("Arrow function syntax?", ["(a) -> a + 1", "(a) => a + 1", "fn(a) a+1", "func a: a+1"], 1, "=> is the fat arrow."),
-            q("Default parameters?", ["Not allowed", "Done with = in param list", "Must use if/else", "Only in classes"], 1, "function f(a = 10) { ... }."),
+            q("O que uma função sem return retorna?", ["null", "0", "undefined", "NaN"], 2, "undefined por padrão."),
+            q("Sintaxe de arrow function?", ["(a) -> a + 1", "(a) => a + 1", "fn(a) a+1", "func a: a+1"], 1, "=> é a fat arrow."),
+            q("Parâmetros padrão?", ["Não existem", "Usa = na lista de parâmetros", "Precisa usar if/else", "Só em classes"], 1, "function f(a = 10) { ... }."),
           ]
         ),
         L("arrays", "Arrays",
-          "Ordered lists of anything.",
-          `<p>An array stores a list of values, indexed from 0:</p>
-<pre><code>const fruits = ["apple", "banana", "pear"];
-fruits[0];         // "apple"
-fruits.length;     // 3
-fruits.push("kiwi");           // add to end
-fruits.pop();                  // remove from end
-fruits.unshift("mango");       // add to start
-fruits.shift();                // remove from start</code></pre>
-<h2>Iteration methods (the good stuff)</h2>
+          "Listas ordenadas de qualquer coisa.",
+          `<p>Um array guarda uma lista de valores, indexada a partir de 0:</p>
+<pre><code>const frutas = ["maçã", "banana", "pera"];
+frutas[0];             // "maçã"
+frutas.length;         // 3
+frutas.push("kiwi");   // adiciona no fim
+frutas.pop();          // remove do fim
+frutas.unshift("manga"); // adiciona no começo
+frutas.shift();        // remove do começo</code></pre>
+<h2>Métodos de iteração (o bom)</h2>
 <pre><code>const nums = [1, 2, 3, 4];
 nums.forEach(n =&gt; console.log(n));
 nums.map(n =&gt; n * 2);          // [2, 4, 6, 8]
 nums.filter(n =&gt; n % 2 === 0); // [2, 4]
-nums.reduce((sum, n) =&gt; sum + n, 0); // 10
+nums.reduce((acc, n) =&gt; acc + n, 0); // 10
 nums.find(n =&gt; n &gt; 2);          // 3
 nums.includes(3);               // true</code></pre>
-<p>These methods are the bread and butter of modern JS. Learn them well.</p>`,
+<p>Esses métodos são o arroz com feijão do JS moderno. Domine bem.</p>`,
           [
-            q("Which adds to the END?", ["shift", "unshift", "push", "pop"], 2, "push appends; pop removes from end."),
-            q(".map returns what?", ["Same array mutated", "A new array of same length", "A boolean", "A single value"], 1, "A new array with transformed elements."),
-            q(".filter keeps elements where the callback returns?", ["anything", "truthy", "falsy", "a number"], 1, "Elements with truthy callback result."),
+            q("Qual adiciona no FIM?", ["shift", "unshift", "push", "pop"], 2, "push adiciona; pop remove do fim."),
+            q(".map retorna o quê?", ["O mesmo array alterado", "Um novo array do mesmo tamanho", "Um booleano", "Um único valor"], 1, "Um novo array com elementos transformados."),
+            q(".filter mantém elementos onde o callback retorna?", ["qualquer coisa", "truthy", "falsy", "um número"], 1, "Elementos cujo resultado do callback é truthy."),
           ]
         ),
-        L("objects", "Objects",
-          "Key/value pairs for modeling data.",
-          `<p>An object groups related values under named keys:</p>
-<pre><code>const user = {
+        L("objects", "Objetos",
+          "Pares chave/valor para modelar dados.",
+          `<p>Um objeto agrupa valores relacionados em chaves nomeadas:</p>
+<pre><code>const usuario = {
   username: "ana",
   vip: false,
-  progress: { htmlCss: 0.4 },
-  greet() { return \`Hi, \${this.username}\`; }
+  progresso: { htmlCss: 0.4 },
+  saudar() { return \`Oi, \${this.username}\`; }
 };
 
-user.username        // "ana"
-user["username"]     // same thing
-user.vip = true;     // mutate
-delete user.progress;</code></pre>
-<h2>Destructuring</h2>
-<pre><code>const { username, vip } = user;
+usuario.username       // "ana"
+usuario["username"]    // mesma coisa
+usuario.vip = true;    // mutar
+delete usuario.progresso;</code></pre>
+<h2>Desestruturação</h2>
+<pre><code>const { username, vip } = usuario;
 console.log(username); // "ana"</code></pre>
 <h2>Spread/rest</h2>
-<pre><code>const updated = { ...user, vip: true };  // non-mutating copy
-const [first, ...rest] = [1, 2, 3, 4];    // first=1, rest=[2,3,4]</code></pre>
-<div class="callout"><div class="ico">🧩</div><p>Objects and arrays are <em>reference types</em>. Assigning <code>const b = a</code> points to the same object. Use spread or <code>structuredClone</code> to copy.</p></div>`,
+<pre><code>const atualizado = { ...usuario, vip: true };  // cópia sem mutar
+const [primeiro, ...resto] = [1, 2, 3, 4];       // primeiro=1, resto=[2,3,4]</code></pre>
+<div class="callout"><div class="ico">🧩</div><p>Objetos e arrays são <em>tipos de referência</em>. <code>const b = a</code> aponta para o mesmo objeto. Use spread ou <code>structuredClone</code> para copiar.</p></div>`,
           [
-            q("How do you access a property by variable name?", ["obj.name", "obj[name]", "obj->name", "obj::name"], 1, "Bracket notation for dynamic keys."),
-            q("What does { ...obj, vip: true } do?", ["Mutates obj", "Creates a new object with overridden vip", "Deletes vip", "Freezes obj"], 1, "Spread creates a new object."),
-            q("Destructuring syntax?", ["const [x, y] = obj;", "const { x, y } = obj;", "const x,y = obj;", "const obj.{x,y};"], 1, "Use braces for objects."),
+            q("Como acessar uma propriedade por variável?", ["obj.nome", "obj[nome]", "obj->nome", "obj::nome"], 1, "Colchetes para chaves dinâmicas."),
+            q("O que { ...obj, vip: true } faz?", ["Muta obj", "Cria um novo objeto com vip sobrescrito", "Apaga vip", "Congela obj"], 1, "Spread cria um novo objeto."),
+            q("Sintaxe de desestruturação?", ["const [x, y] = obj;", "const { x, y } = obj;", "const x,y = obj;", "const obj.{x,y};"], 1, "Chaves para objetos."),
           ]
         ),
-        L("dom", "DOM Basics",
-          "Read and change the page from JavaScript.",
-          `<p>The DOM is a tree of nodes representing your HTML. JavaScript can find and modify any part of it.</p>
-<h2>Selecting elements</h2>
+        L("dom", "DOM básico",
+          "Ler e alterar a página a partir do JavaScript.",
+          `<p>O DOM é uma árvore de nós que representa seu HTML. O JavaScript pode encontrar e modificar qualquer parte dela.</p>
+<h2>Selecionando elementos</h2>
 <pre><code>document.getElementById("btn");
-document.querySelector(".card");        // first match
-document.querySelectorAll(".card");     // all matches (NodeList)</code></pre>
-<h2>Changing content and style</h2>
+document.querySelector(".card");        // primeiro match
+document.querySelectorAll(".card");     // todos (NodeList)</code></pre>
+<h2>Alterando conteúdo e estilo</h2>
 <pre><code>const el = document.querySelector("h1");
-el.textContent = "New title";
-el.innerHTML = "Bold <b>title</b>";
+el.textContent = "Novo título";
+el.innerHTML = "Título em <b>negrito</b>";
 el.classList.add("active");
 el.classList.toggle("dark");
 el.style.color = "red";
 el.setAttribute("data-id", "42");</code></pre>
-<h2>Creating elements</h2>
+<h2>Criando elementos</h2>
 <pre><code>const li = document.createElement("li");
-li.textContent = "New item";
+li.textContent = "Novo item";
 document.querySelector("ul").appendChild(li);</code></pre>`,
           [
-            q("Which returns ALL matching elements?", ["getElementById", "querySelector", "querySelectorAll", "getElementsByTagName"], 2, "querySelectorAll returns a NodeList."),
-            q("Safer than innerHTML for plain text?", ["innerText", "textContent", "value", "nodeValue"], 1, "textContent avoids HTML injection."),
-            q("To add a class?", ["el.class += 'x'", "el.addClass('x')", "el.classList.add('x')", "el.class = 'x'"], 2, "classList.add / remove / toggle."),
+            q("Qual retorna TODOS os elementos que casam?", ["getElementById", "querySelector", "querySelectorAll", "getElementsByTagName"], 2, "querySelectorAll retorna NodeList."),
+            q("Mais seguro que innerHTML para texto puro?", ["innerText", "textContent", "value", "nodeValue"], 1, "textContent evita injeção de HTML."),
+            q("Para adicionar uma classe?", ["el.class += 'x'", "el.addClass('x')", "el.classList.add('x')", "el.class = 'x'"], 2, "classList.add / remove / toggle."),
           ]
         ),
-        L("events", "Events",
-          "React to user actions — clicks, typing, scrolling.",
-          `<p>Events are how your page reacts to the user. Attach a listener with <code>addEventListener</code>:</p>
-<pre><code>const btn = document.querySelector("#go");
+        L("events", "Eventos",
+          "Reagir a ações do usuário — clicks, digitação, scroll.",
+          `<p>Eventos são como sua página reage ao usuário. Conecte um listener com <code>addEventListener</code>:</p>
+<pre><code>const btn = document.querySelector("#ir");
 btn.addEventListener("click", () =&gt; {
-  console.log("Clicked!");
+  console.log("Clicou!");
 });</code></pre>
-<h2>The event object</h2>
+<h2>O objeto do evento</h2>
 <pre><code>input.addEventListener("input", (e) =&gt; {
   console.log(e.target.value);
 });
 
 form.addEventListener("submit", (e) =&gt; {
-  e.preventDefault();   // stop the page from reloading
-  // validate and handle
+  e.preventDefault();   // evita o reload da página
+  // validar e tratar
 });</code></pre>
-<h2>Common event types</h2>
+<h2>Tipos comuns de evento</h2>
 <ul>
   <li>click, dblclick, contextmenu</li>
   <li>mouseenter, mouseleave, mousemove</li>
@@ -592,20 +581,20 @@ form.addEventListener("submit", (e) =&gt; {
   <li>scroll, resize, load</li>
 </ul>`,
           [
-            q("Attach a listener with?", ["el.on('click', fn)", "el.click(fn)", "el.addEventListener('click', fn)", "el.subscribe('click', fn)"], 2, "addEventListener is standard."),
-            q("Stop a form from reloading the page?", ["e.stopPropagation()", "e.preventDefault()", "return false from handler", "Both 2 and 3"], 3, "preventDefault() is preferred; return false also works in legacy."),
-            q("Which event fires as you type?", ["change", "input", "keyup only", "typed"], 1, "The input event fires on every change."),
+            q("Conectar um listener com?", ["el.on('click', fn)", "el.click(fn)", "el.addEventListener('click', fn)", "el.subscribe('click', fn)"], 2, "addEventListener é o padrão."),
+            q("Impedir que um form recarregue a página?", ["e.stopPropagation()", "e.preventDefault()", "return false do handler", "Opções 2 e 3"], 3, "preventDefault() é preferido; return false também funciona em código legado."),
+            q("Qual evento dispara enquanto digita?", ["change", "input", "só keyup", "typed"], 1, "O evento input dispara a cada alteração."),
           ]
         ),
-        L("project-todo", "Mini Project: To-Do List",
-          "Combine everything into a working app.",
-          `<p>Let's build a to-do list. The HTML:</p>
+        L("project-todo", "Mini projeto: lista de tarefas",
+          "Combine tudo em um app funcional.",
+          `<p>Vamos montar uma lista de tarefas. O HTML:</p>
 <pre><code>&lt;form id="form"&gt;
-  &lt;input id="task" placeholder="New task" /&gt;
-  &lt;button&gt;Add&lt;/button&gt;
+  &lt;input id="task" placeholder="Nova tarefa" /&gt;
+  &lt;button&gt;Adicionar&lt;/button&gt;
 &lt;/form&gt;
 &lt;ul id="list"&gt;&lt;/ul&gt;</code></pre>
-<p>The JavaScript:</p>
+<p>O JavaScript:</p>
 <pre><code>const form = document.getElementById("form");
 const input = document.getElementById("task");
 const list = document.getElementById("list");
@@ -632,236 +621,236 @@ list.addEventListener("click", (e) =&gt; {
 });
 
 render();</code></pre>
-<div class="callout"><div class="ico">🎉</div><p>You just built a persistent to-do app with zero dependencies. Next up: advanced JavaScript (VIP) to level up closures, async, and modules.</p></div>`,
+<div class="callout"><div class="ico">🎉</div><p>Você acabou de construir um app de tarefas com persistência e sem dependência nenhuma. A seguir: JavaScript avançado (VIP) para subir de nível em closures, async e módulos.</p></div>`,
           [
-            q("localStorage stores values as…", ["Objects", "Strings", "Numbers", "JSON files"], 1, "Strings only — use JSON.stringify/parse."),
-            q("Which prevents the form from reloading?", ["return", "e.preventDefault()", "submit.stop()", "form.cancel()"], 1, "Call preventDefault on the submit event."),
-            q("Event delegation binds listeners on…", ["Every child", "The parent", "The window", "The form"], 1, "Listen once on the parent and read e.target."),
+            q("localStorage guarda valores como…", ["Objetos", "Strings", "Números", "Arquivos JSON"], 1, "Apenas strings — use JSON.stringify/parse."),
+            q("Qual impede o form de recarregar?", ["return", "e.preventDefault()", "submit.stop()", "form.cancel()"], 1, "Chame preventDefault no evento submit."),
+            q("Event delegation liga listeners em…", ["Cada filho", "O pai", "A window", "O formulário"], 1, "Escuta uma vez no pai e lê e.target."),
           ]
         ),
       ],
     },
 
     // =================================================================
-    // 3. Programming Logic (FREE)
+    // 3. Lógica de programação (GRÁTIS)
     // =================================================================
     {
       id: "programming-logic",
-      title: "Programming Logic",
-      tagline: "Think like a programmer — the skill behind every language.",
-      description: "Algorithms, variables, conditionals, loops, and problem-solving patterns you'll use in every programming language you ever touch.",
-      level: "Beginner",
+      title: "Lógica de Programação",
+      tagline: "Pense como um programador — a habilidade por trás de toda linguagem.",
+      description: "Algoritmos, variáveis, condicionais, loops e padrões de resolução de problemas que você vai usar em qualquer linguagem que encostar.",
+      level: "Iniciante",
       duration: "5h",
       theme: "theme-logic",
       cover: "Logic",
       vip: false,
       instructor: "Marina Costa",
       lessons: [
-        L("what-is-programming", "What is Programming?",
-          "It's not typing — it's thinking.",
-          `<p>Programming is the craft of describing a process so precisely that a machine can execute it. The "typing" part — the code — is the last five percent. The real work is figuring out <em>what</em> you want the computer to do and <em>in what order</em>.</p>
-<p>A computer is astonishingly dumb. It will happily divide by zero, delete your entire database, or bill a customer twice. Your job as a programmer is to anticipate every case, handle every error, and leave nothing to chance.</p>
-<h2>The loop you'll live in</h2>
+        L("what-is-programming", "O que é programar?",
+          "Não é digitar — é pensar.",
+          `<p>Programar é o ofício de descrever um processo com tanta precisão que uma máquina consegue executá-lo. A parte "digitar" — o código — é os últimos cinco por cento. O trabalho de verdade é descobrir <em>o que</em> você quer que o computador faça e <em>em que ordem</em>.</p>
+<p>Um computador é absurdamente burro. Ele vai dividir por zero, apagar seu banco inteiro ou cobrar o cliente duas vezes sem piscar. Seu papel como pessoa programadora é antecipar cada caso, tratar cada erro e não deixar nada ao acaso.</p>
+<h2>O ciclo no qual você vai viver</h2>
 <ol>
-  <li><strong>Understand</strong> the problem.</li>
-  <li><strong>Break it down</strong> into smaller steps.</li>
-  <li><strong>Write</strong> code.</li>
-  <li><strong>Test</strong> it.</li>
-  <li><strong>Fix</strong> what's broken. Go back to step 3.</li>
+  <li><strong>Entender</strong> o problema.</li>
+  <li><strong>Quebrar</strong> em passos menores.</li>
+  <li><strong>Escrever</strong> o código.</li>
+  <li><strong>Testar</strong> o que fez.</li>
+  <li><strong>Consertar</strong> o que está quebrado. Voltar ao passo 3.</li>
 </ol>
-<div class="callout"><div class="ico">🧠</div><p>Good programmers are not people who write perfect code the first time. They're people who debug patiently, ask good questions, and break big problems into small ones.</p></div>`,
+<div class="callout"><div class="ico">🧠</div><p>Bons programadores não são pessoas que escrevem código perfeito de primeira. São pessoas que depuram com paciência, fazem boas perguntas e quebram problemas grandes em pequenos.</p></div>`,
           [
-            q("Most important skill in programming?", ["Typing speed", "Thinking clearly", "Math", "Memorizing syntax"], 1, "Clear thinking beats everything else."),
-            q("A computer is…", ["Intelligent", "Dumb but fast", "Creative", "Unreliable"], 1, "Very literal and very fast."),
-            q("What does 'debugging' mean?", ["Writing code", "Finding and fixing problems", "Reading docs", "Deleting code"], 1, "Locate a bug; fix it; verify."),
+            q("Habilidade mais importante na programação?", ["Velocidade de digitação", "Pensar com clareza", "Matemática", "Decorar sintaxe"], 1, "Raciocínio claro vence tudo."),
+            q("Um computador é…", ["Inteligente", "Burro, porém rápido", "Criativo", "Não confiável"], 1, "Muito literal e muito rápido."),
+            q("O que significa 'depurar'?", ["Escrever código", "Achar e consertar problemas", "Ler docs", "Apagar código"], 1, "Localizar o bug, corrigir, verificar."),
           ]
         ),
-        L("algorithms", "Algorithms: Thinking in Steps",
-          "Turn a goal into a numbered procedure.",
-          `<p>An algorithm is a finite, precise set of steps that produces a desired result. Making coffee is an algorithm. Logging a user in is an algorithm. Sorting a million records is an algorithm.</p>
-<h2>Example: finding the largest number in a list</h2>
+        L("algorithms", "Algoritmos: pensar em passos",
+          "Transforme um objetivo em um procedimento numerado.",
+          `<p>Um algoritmo é um conjunto finito e preciso de passos que produz um resultado desejado. Fazer café é um algoritmo. Logar um usuário é um algoritmo. Ordenar um milhão de registros é um algoritmo.</p>
+<h2>Exemplo: achar o maior número de uma lista</h2>
 <ol>
-  <li>Start with a variable <code>largest</code> equal to the first item.</li>
-  <li>Look at each remaining item in turn.</li>
-  <li>If it's larger than <code>largest</code>, replace <code>largest</code> with it.</li>
-  <li>When the list is done, <code>largest</code> holds the answer.</li>
+  <li>Comece com uma variável <code>maior</code> igual ao primeiro item.</li>
+  <li>Olhe cada item seguinte.</li>
+  <li>Se for maior que <code>maior</code>, substitua <code>maior</code> por ele.</li>
+  <li>Quando acabar a lista, <code>maior</code> tem a resposta.</li>
 </ol>
-<p>That's it. No code yet — just a procedure. Once you can write it in English, writing it in any language is mechanical.</p>
-<h2>Pseudocode</h2>
-<pre><code>FOR each number in list:
-  IF number &gt; largest:
-    largest = number
-RETURN largest</code></pre>
-<p>Pseudocode is language-agnostic. Get comfortable in it — it's how you'll plan on a whiteboard in interviews and in real design sessions.</p>`,
+<p>Pronto. Sem código. Só um procedimento. Depois que dá para escrever em português, passar para qualquer linguagem é mecânico.</p>
+<h2>Pseudocódigo</h2>
+<pre><code>PARA cada numero NA lista:
+  SE numero &gt; maior ENTÃO:
+    maior = numero
+RETORNAR maior</code></pre>
+<p>Pseudocódigo é agnóstico de linguagem. Se sinta à vontade com ele — é como você vai planejar numa lousa em entrevistas e em sessões reais de design.</p>`,
           [
-            q("An algorithm is…", ["Magic", "A finite set of steps", "A programming language", "Hardware"], 1, "Finite steps producing an output."),
-            q("What's pseudocode for?", ["Running on a PC", "Planning logic language-free", "Obfuscation", "Faster execution"], 1, "Planning the logic before you commit to a language."),
-            q("Correct approach to a hard problem?", ["Write code immediately", "Break it down first", "Ask AI to write it", "Skip it"], 1, "Decompose it into smaller problems."),
+            q("Um algoritmo é…", ["Mágica", "Um conjunto finito de passos", "Uma linguagem de programação", "Hardware"], 1, "Passos finitos que produzem uma saída."),
+            q("Para que serve o pseudocódigo?", ["Rodar num PC", "Planejar lógica sem linguagem", "Ofuscar", "Executar mais rápido"], 1, "Planejar a lógica antes de escolher a linguagem."),
+            q("Abordagem certa para um problema difícil?", ["Sair codando", "Quebrar primeiro", "Pedir para a IA resolver", "Pular"], 1, "Decompor em problemas menores."),
           ]
         ),
-        L("variables-memory", "Variables & Memory",
-          "Labels for boxes in memory.",
-          `<p>A variable is a human-readable label that points to a location in memory holding a value. In pseudocode:</p>
-<pre><code>age ← 25
-name ← "Ana"
-isVip ← false</code></pre>
-<p>Variables can change over time (unless the language enforces immutability). The key discipline: <strong>name variables so a stranger can read your code</strong>. <code>x</code> is rarely good. <code>userAge</code> almost always is.</p>
-<h2>Scope</h2>
-<p>Most languages let you declare variables with different <em>scopes</em> — where they're visible. A variable defined inside a function isn't accessible outside it. This is good: it keeps programs modular.</p>
-<div class="callout"><div class="ico">📦</div><p>Rule of thumb: declare variables as late as possible, in the smallest scope that works.</p></div>`,
+        L("variables-memory", "Variáveis e memória",
+          "Rótulos para caixas na memória.",
+          `<p>Uma variável é um rótulo legível que aponta para uma posição na memória com um valor. Em pseudocódigo:</p>
+<pre><code>idade ← 25
+nome ← "Ana"
+ehVip ← false</code></pre>
+<p>Variáveis podem mudar com o tempo (a não ser que a linguagem obrigue imutabilidade). A disciplina chave: <strong>nomeie variáveis para que um estranho leia seu código</strong>. <code>x</code> raramente é bom. <code>idadeUsuario</code> quase sempre é.</p>
+<h2>Escopo</h2>
+<p>A maioria das linguagens tem <em>escopos</em> — onde uma variável é visível. Uma variável declarada dentro de uma função não é acessível fora dela. Isso é bom: mantém os programas modulares.</p>
+<div class="callout"><div class="ico">📦</div><p>Regra prática: declare variáveis o mais tarde possível, no menor escopo que funciona.</p></div>`,
           [
-            q("A variable is best thought of as…", ["A function", "A labeled box holding a value", "A file", "A type"], 1, "Named box with a value inside."),
-            q("Good variable name?", ["x", "tmp", "userAge", "a1"], 2, "Descriptive names beat clever ones."),
-            q("Scope refers to…", ["Project size", "Where a variable is visible", "A loop", "File location"], 1, "Visibility and lifetime."),
+            q("Uma variável é bem descrita como…", ["Uma função", "Uma caixa com nome e um valor dentro", "Um arquivo", "Um tipo"], 1, "Caixa nomeada com um valor."),
+            q("Bom nome de variável?", ["x", "tmp", "idadeUsuario", "a1"], 2, "Nomes descritivos vencem clevers."),
+            q("Escopo se refere a…", ["Tamanho do projeto", "Onde uma variável é visível", "Um loop", "Localização do arquivo"], 1, "Visibilidade e tempo de vida."),
           ]
         ),
-        L("data-types", "Data Types Everywhere",
-          "Know what kind of value you're holding.",
-          `<p>Most languages share the same basic types. Names differ slightly but the ideas are universal:</p>
+        L("data-types", "Tipos de dados em toda parte",
+          "Saiba que tipo de valor você está segurando.",
+          `<p>A maioria das linguagens compartilha os mesmos tipos básicos. Nomes variam, ideias são universais:</p>
 <ul>
-  <li><strong>Integer</strong> — whole numbers: 0, 1, -42.</li>
-  <li><strong>Float / Decimal</strong> — numbers with a decimal point: 3.14.</li>
-  <li><strong>String</strong> — text: "hello".</li>
-  <li><strong>Boolean</strong> — true or false.</li>
-  <li><strong>Collection</strong> — lists/arrays, dictionaries/maps, sets.</li>
-  <li><strong>Null / None</strong> — the absence of a value.</li>
+  <li><strong>Integer</strong> — inteiros: 0, 1, -42.</li>
+  <li><strong>Float / Decimal</strong> — números com vírgula: 3.14.</li>
+  <li><strong>String</strong> — texto: "olá".</li>
+  <li><strong>Boolean</strong> — true ou false.</li>
+  <li><strong>Coleção</strong> — listas/arrays, dicionários/maps, sets.</li>
+  <li><strong>Null / None</strong> — a ausência de valor.</li>
 </ul>
-<h2>Type conversion</h2>
-<p>Adding a string to a number is ambiguous. Some languages throw an error, some auto-convert. Know your language's rules. Always be explicit when it matters:</p>
-<pre><code>age ← to_integer(input("Your age: "))</code></pre>
-<div class="callout"><div class="ico">⚠️</div><p>The most common beginner bug: reading a number from input, getting a string, then comparing it to a number. Always convert!</p></div>`,
+<h2>Conversão de tipo</h2>
+<p>Somar uma string com um número é ambíguo. Algumas linguagens lançam erro, outras convertem sozinhas. Saiba as regras da sua. Seja explícito quando importa:</p>
+<pre><code>idade ← para_inteiro(input("Sua idade: "))</code></pre>
+<div class="callout"><div class="ico">⚠️</div><p>Bug clássico de iniciante: ler um número de input, receber uma string e comparar com número. Converta sempre!</p></div>`,
           [
-            q("What type is 'hello'?", ["Integer", "String", "Boolean", "Float"], 1, "Text is a string."),
-            q("3.14 is a…", ["Integer", "String", "Float", "Boolean"], 2, "Floating-point decimal."),
-            q("Most common bug with input?", ["Typos", "Not converting string to number", "Bad names", "Too short"], 1, "input() returns a string."),
+            q("Qual o tipo de 'olá'?", ["Integer", "String", "Boolean", "Float"], 1, "Texto é string."),
+            q("3.14 é um…", ["Integer", "String", "Float", "Boolean"], 2, "Decimal de ponto flutuante."),
+            q("Bug mais comum com input?", ["Digitação", "Não converter string para número", "Nomes ruins", "Muito curto"], 1, "input() devolve uma string."),
           ]
         ),
-        L("conditionals", "Conditionals",
-          "Branching — the heart of decision-making.",
-          `<p>A conditional is a question your program asks. Based on the answer, a different path runs.</p>
-<pre><code>IF age &gt;= 18 THEN
-  print "Adult"
-ELSE
-  print "Minor"
-END</code></pre>
-<h2>Compound conditions</h2>
-<pre><code>IF age &gt;= 18 AND hasLicense THEN ...
-IF role == "admin" OR role == "owner" THEN ...
-IF NOT isBanned THEN ...</code></pre>
-<h2>Guard clauses</h2>
-<p>Instead of deeply nesting <code>if</code> statements, return early when a condition fails. This makes code easier to read:</p>
-<pre><code>IF user is None: RETURN error
-IF user.isBanned: RETURN error
-# happy path below</code></pre>`,
+        L("conditionals", "Condicionais",
+          "Ramificação — o coração da tomada de decisão.",
+          `<p>Uma condicional é uma pergunta que seu programa faz. Dependendo da resposta, um caminho diferente roda.</p>
+<pre><code>SE idade &gt;= 18 ENTÃO
+  imprime "Adulto"
+SENÃO
+  imprime "Menor"
+FIM</code></pre>
+<h2>Condições compostas</h2>
+<pre><code>SE idade &gt;= 18 E temCarteira ENTÃO ...
+SE cargo == "admin" OU cargo == "dono" ENTÃO ...
+SE NÃO estaBanido ENTÃO ...</code></pre>
+<h2>Cláusulas de guarda</h2>
+<p>Em vez de aninhar <code>if</code> fundo, retorne cedo quando uma condição falha. Isso deixa o código mais legível:</p>
+<pre><code>SE user é None: RETORNA erro
+SE user.estaBanido: RETORNA erro
+# caminho feliz abaixo</code></pre>`,
           [
-            q("Which represents AND in most languages?", ["||", "&&", "??", "=="], 1, "&& or 'and'."),
-            q("Guard clauses…", ["Add nesting", "Remove nesting with early returns", "Are loops", "Are classes"], 1, "Return early, reduce depth."),
-            q("The ELSE branch runs when…", ["Any time", "The IF is false", "There's an error", "Never"], 1, "Only when the IF condition is false."),
+            q("Qual representa E (AND) na maioria das linguagens?", ["||", "&&", "??", "=="], 1, "&& ou 'and'."),
+            q("Cláusulas de guarda…", ["Adicionam aninhamento", "Removem aninhamento com returns cedo", "São loops", "São classes"], 1, "Retorne cedo, diminua profundidade."),
+            q("O ramo ELSE executa quando…", ["Sempre", "O IF é falso", "Dá erro", "Nunca"], 1, "Apenas quando a condição do IF é falsa."),
           ]
         ),
-        L("loops", "Loops",
-          "Repeat until a condition is met.",
-          `<p>Loops let you do the same thing to many values. Two common shapes:</p>
-<pre><code>FOR i FROM 1 TO 10:
-  print i
+        L("loops", "Laços",
+          "Repita até uma condição ser alcançada.",
+          `<p>Laços permitem fazer a mesma coisa com muitos valores. Duas formas comuns:</p>
+<pre><code>PARA i DE 1 ATÉ 10:
+  imprime i
 
-WHILE balance &gt; 0:
-  balance ← balance - 100</code></pre>
-<h2>Infinite loop trap</h2>
-<p>A <code>WHILE</code> loop whose condition never becomes false runs forever. Always make sure your loop variable changes in a direction that will eventually stop it.</p>
-<h2>Counters and accumulators</h2>
+ENQUANTO saldo &gt; 0:
+  saldo ← saldo - 100</code></pre>
+<h2>Armadilha do loop infinito</h2>
+<p>Um <code>ENQUANTO</code> cuja condição nunca vira falsa roda pra sempre. Garanta que sua variável de controle muda numa direção que vai eventualmente parar.</p>
+<h2>Contadores e acumuladores</h2>
 <pre><code>total ← 0
-FOR each item in cart:
-  total ← total + item.price
-print total</code></pre>
-<p>Loops + conditions + variables = 80% of all programming.</p>`,
+PARA cada item EM carrinho:
+  total ← total + item.preco
+imprime total</code></pre>
+<p>Laços + condições + variáveis = 80% de toda programação.</p>`,
           [
-            q("Infinite loop occurs when…", ["Counter increases", "Condition never becomes false", "You use FOR", "You use break"], 1, "Condition must eventually fail."),
-            q("Accumulator is a variable that…", ["Stores the latest value", "Builds up a total across iterations", "Counts clicks", "Is global"], 1, "Accumulates values across a loop."),
-            q("For a known number of repetitions, use…", ["WHILE", "FOR", "IF", "SWITCH"], 1, "FOR is cleanest when count is known."),
+            q("Loop infinito acontece quando…", ["Contador cresce", "A condição nunca vira falsa", "Usa FOR", "Usa break"], 1, "A condição precisa eventualmente falhar."),
+            q("Acumulador é uma variável que…", ["Guarda o último valor", "Soma valores ao longo do loop", "Conta cliques", "É global"], 1, "Acumula valores ao longo de iterações."),
+            q("Para um número conhecido de repetições, use…", ["WHILE", "FOR", "IF", "SWITCH"], 1, "FOR é o mais limpo quando se sabe quantas vezes."),
           ]
         ),
-        L("functions", "Functions & Reusability",
-          "Name a block of steps and call it anywhere.",
-          `<p>A function is a named, reusable block. Once written, you can call it from anywhere. This is the single biggest productivity multiplier in programming.</p>
-<pre><code>FUNCTION greet(name):
-  RETURN "Hello, " + name
+        L("functions", "Funções e reusabilidade",
+          "Dê nome a um bloco de passos e chame em qualquer lugar.",
+          `<p>Uma função é um bloco nomeado e reutilizável. Depois de escrita, dá para chamar de qualquer lugar. É o maior multiplicador de produtividade em programação.</p>
+<pre><code>FUNÇÃO saudacao(nome):
+  RETORNA "Olá, " + nome
 
-print greet("Ana")  # "Hello, Ana"</code></pre>
-<h2>Parameters vs arguments</h2>
-<p><strong>Parameters</strong> are the names in the function definition. <strong>Arguments</strong> are the actual values you pass in. <code>greet(name)</code> has a parameter <code>name</code>; <code>greet("Ana")</code> passes "Ana" as the argument.</p>
-<h2>Single responsibility</h2>
-<p>A function should do one thing well. If you find yourself writing "and" in its name (<code>loadAndValidateAndSave</code>), split it into smaller functions.</p>
-<div class="callout"><div class="ico">🧰</div><p>Good code is a library of small, well-named functions that read like prose.</p></div>`,
+imprime saudacao("Ana")  # "Olá, Ana"</code></pre>
+<h2>Parâmetros vs argumentos</h2>
+<p><strong>Parâmetros</strong> são os nomes na definição da função. <strong>Argumentos</strong> são os valores reais que você passa. <code>saudacao(nome)</code> tem um parâmetro <code>nome</code>; <code>saudacao("Ana")</code> passa "Ana" como argumento.</p>
+<h2>Responsabilidade única</h2>
+<p>Uma função deve fazer uma coisa bem. Se você se pega escrevendo "e" no nome (<code>carregarEValidarESalvar</code>), separe em funções menores.</p>
+<div class="callout"><div class="ico">🧰</div><p>Código bom é uma biblioteca de funções pequenas e bem nomeadas que lê como texto corrido.</p></div>`,
           [
-            q("A function parameter is…", ["The value you pass", "The name in the definition", "A global variable", "A class"], 1, "Definition name. The value is the argument."),
-            q("Best function size?", ["As big as possible", "Does one thing well", "Exactly 10 lines", "No functions"], 1, "Single responsibility."),
-            q("Why use functions?", ["Show off", "Reusability and readability", "Required by law", "Speed only"], 1, "Reuse and clarity."),
+            q("Um parâmetro de função é…", ["O valor que você passa", "O nome na definição", "Uma variável global", "Uma classe"], 1, "Nome na definição. O valor é o argumento."),
+            q("Melhor tamanho de função?", ["O maior possível", "Faz uma coisa só, bem feita", "Exatamente 10 linhas", "Sem funções"], 1, "Responsabilidade única."),
+            q("Por que usar funções?", ["Exibicionismo", "Reuso e legibilidade", "Obrigação legal", "Só velocidade"], 1, "Reuso e clareza."),
           ]
         ),
-        L("collections", "Collections: Lists & Dictionaries",
-          "Group many values together.",
-          `<p>Two collection shapes dominate every language:</p>
-<h2>List / Array</h2>
-<p>An ordered sequence of values, indexed by position:</p>
-<pre><code>names ← ["Ana", "Bob", "Cleo"]
-names[0]   # "Ana"
-names.add("Dan")</code></pre>
-<h2>Dictionary / Map</h2>
-<p>Key-value pairs for looking up values by name:</p>
-<pre><code>user ← { "name": "Ana", "age": 25, "vip": false }
-user["name"]  # "Ana"
-user["vip"] ← true</code></pre>
-<p>Pick the right collection for the job. Use a list when order matters and you iterate in sequence. Use a dictionary when you look things up by a unique key.</p>`,
+        L("collections", "Coleções: listas e dicionários",
+          "Agrupar muitos valores juntos.",
+          `<p>Duas formas de coleção dominam qualquer linguagem:</p>
+<h2>Lista / Array</h2>
+<p>Sequência ordenada, indexada por posição:</p>
+<pre><code>nomes ← ["Ana", "Bob", "Cleo"]
+nomes[0]   # "Ana"
+nomes.adicionar("Dan")</code></pre>
+<h2>Dicionário / Map</h2>
+<p>Pares chave-valor para buscar valores pelo nome:</p>
+<pre><code>usuario ← { "nome": "Ana", "idade": 25, "vip": false }
+usuario["nome"]  # "Ana"
+usuario["vip"] ← true</code></pre>
+<p>Escolha a coleção certa para a tarefa. Lista quando a ordem importa e a iteração é sequencial. Dicionário quando você busca valores por uma chave única.</p>`,
           [
-            q("Best collection to store settings?", ["Array", "Dictionary", "Integer", "String"], 1, "Keyed lookups fit a dictionary."),
-            q("Array access is by…", ["Key", "Index", "Hash", "Name"], 1, "0-based index."),
-            q("Can a dictionary have duplicate keys?", ["Yes", "No", "Sometimes", "Only strings"], 1, "Keys are unique within a dictionary."),
+            q("Melhor coleção para guardar configurações?", ["Array", "Dicionário", "Integer", "String"], 1, "Busca por chave combina com dicionário."),
+            q("Acesso de array é por…", ["Chave", "Índice", "Hash", "Nome"], 1, "Índice começando em 0."),
+            q("Dicionário pode ter chaves duplicadas?", ["Sim", "Não", "Às vezes", "Só strings"], 1, "Chaves são únicas dentro de um dicionário."),
           ]
         ),
-        L("debugging", "The Debugging Mindset",
-          "Bugs aren't failures — they're clues.",
-          `<p>When your program misbehaves, resist the urge to change random lines. Instead:</p>
+        L("debugging", "Mentalidade de debug",
+          "Bugs não são derrota — são pista.",
+          `<p>Quando seu programa se comporta mal, resista à vontade de mudar linhas aleatórias. Em vez disso:</p>
 <ol>
-  <li><strong>Reproduce</strong> the bug reliably.</li>
-  <li><strong>Isolate</strong> — find the smallest input that triggers it.</li>
-  <li><strong>Print / log</strong> values along the way to see what the program actually believes.</li>
-  <li><strong>Form a hypothesis</strong>, test it, confirm or rule out.</li>
-  <li><strong>Fix</strong> the root cause, not the symptom.</li>
+  <li><strong>Reproduza</strong> o bug com confiabilidade.</li>
+  <li><strong>Isole</strong> — ache a menor entrada que dispara o bug.</li>
+  <li><strong>Print / log</strong> valores no caminho para ver o que o programa realmente acredita.</li>
+  <li><strong>Formule uma hipótese</strong>, teste, confirme ou descarte.</li>
+  <li><strong>Conserte</strong> a causa raiz, não o sintoma.</li>
 </ol>
-<h2>Rubber duck debugging</h2>
-<p>Explain the problem out loud to a rubber duck (or a colleague, or a comment in your file). The act of formulating the problem in words usually reveals the answer.</p>
+<h2>Debug do patinho de borracha</h2>
+<p>Explique o problema em voz alta para um patinho (ou colega, ou comentário no arquivo). Só o fato de verbalizar costuma revelar a resposta.</p>
 <h2>Print debugging vs debuggers</h2>
-<p>Starting out, <code>print</code> / <code>console.log</code> is fine. As you grow, learn your language's debugger — breakpoints and step-through execution are superpowers.</p>`,
+<p>No começo, <code>print</code> / <code>console.log</code> resolve. Quando crescer, aprenda o debugger da sua linguagem — breakpoints e execução passo a passo são superpoderes.</p>`,
           [
-            q("First step when a bug appears?", ["Rewrite everything", "Reproduce it reliably", "Blame the OS", "Ignore it"], 1, "You must reproduce to fix."),
-            q("Root cause vs symptom fix?", ["Same thing", "Root cause is preferred", "Symptom is always better", "Doesn't matter"], 1, "Fix root causes or bugs come back."),
-            q("Rubber duck debugging is…", ["A library", "Explaining the problem aloud to clarify thinking", "A hardware tool", "An OS"], 1, "Verbalizing exposes assumptions."),
+            q("Primeiro passo quando aparece um bug?", ["Reescrever tudo", "Reproduzir com confiabilidade", "Culpar o SO", "Ignorar"], 1, "Você precisa reproduzir para corrigir."),
+            q("Causa raiz vs sintoma?", ["Mesma coisa", "Causa raiz é preferida", "Sintoma é sempre melhor", "Tanto faz"], 1, "Consertar a causa raiz evita o bug voltar."),
+            q("Patinho de borracha é…", ["Uma lib", "Explicar o problema em voz alta", "Ferramenta de hardware", "Um SO"], 1, "Verbalizar expõe suposições."),
           ]
         ),
-        L("problem-solving", "Problem Solving Strategies",
-          "Frameworks for tackling anything.",
-          `<p>Five techniques that apply to nearly any programming problem:</p>
+        L("problem-solving", "Estratégias de resolução de problemas",
+          "Frameworks para atacar qualquer coisa.",
+          `<p>Cinco técnicas que funcionam em quase qualquer problema de programação:</p>
 <ol>
-  <li><strong>Decompose</strong> — break the problem into smaller sub-problems and solve each.</li>
-  <li><strong>Find a pattern</strong> — is this problem shaped like a known one (sorting, searching, counting)?</li>
-  <li><strong>Work backwards</strong> — start from the desired output and figure out what inputs produce it.</li>
-  <li><strong>Simplify</strong> — solve a tiny version first (list of 3 items, not a million).</li>
-  <li><strong>Write pseudocode</strong> — plan the solution before you commit to a language.</li>
+  <li><strong>Decompor</strong> — divida o problema em subproblemas e resolva cada.</li>
+  <li><strong>Achar um padrão</strong> — esse problema é de algum tipo conhecido (ordenar, buscar, contar)?</li>
+  <li><strong>Trabalhar de trás pra frente</strong> — parta da saída desejada e descubra que entradas produzem ela.</li>
+  <li><strong>Simplificar</strong> — resolva uma versão pequena primeiro (lista de 3 itens, não um milhão).</li>
+  <li><strong>Escrever pseudocódigo</strong> — planeje antes de escolher a linguagem.</li>
 </ol>
-<h2>Common categories you'll recognize</h2>
+<h2>Categorias comuns que você vai reconhecer</h2>
 <ul>
-  <li>Counting — how many of X?</li>
-  <li>Transforming — convert each item from A to B (map).</li>
-  <li>Filtering — keep only items matching a rule.</li>
-  <li>Aggregating — reduce many values to one (sum, max, join).</li>
-  <li>Searching — find the first/last/best match.</li>
+  <li>Contar — quantos X?</li>
+  <li>Transformar — converter cada item de A para B (map).</li>
+  <li>Filtrar — manter só os itens que obedecem a uma regra.</li>
+  <li>Agregar — reduzir muitos valores a um (soma, máximo, join).</li>
+  <li>Buscar — encontrar o primeiro/último/melhor match.</li>
 </ul>
-<div class="callout"><div class="ico">🏁</div><p>Congratulations — you now have the mental toolkit that applies to every language. Next, pick a language and keep practicing.</p></div>`,
+<div class="callout"><div class="ico">🏁</div><p>Parabéns — você agora tem o kit mental que serve para toda linguagem. Agora escolha uma e continue praticando.</p></div>`,
           [
-            q("Decompose means…", ["Compile", "Break a big problem into small ones", "Delete code", "Recompose"], 1, "Divide and conquer."),
-            q("Best way to start solving a new problem?", ["Code immediately", "Solve a tiny version first", "Google a library", "Hire help"], 1, "Simplify to understand the shape."),
-            q("Filtering keeps items that…", ["Are new", "Match a rule", "Are sorted", "Are largest"], 1, "Items matching the predicate."),
+            q("Decompor significa…", ["Compilar", "Quebrar um problema grande em pequenos", "Apagar código", "Recompor"], 1, "Dividir para conquistar."),
+            q("Melhor jeito de começar um problema novo?", ["Sair codando", "Resolver versão pequena primeiro", "Procurar lib", "Contratar ajuda"], 1, "Simplifique para entender o formato."),
+            q("Filtrar mantém itens que…", ["São novos", "Atendem a uma regra", "Estão ordenados", "São os maiores"], 1, "Itens que satisfazem o predicado."),
           ]
         ),
       ],
