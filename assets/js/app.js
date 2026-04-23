@@ -11,7 +11,7 @@
   };
 
   const ADMIN = { username: "admin", password: "devstart2025" };
-  const DISCORD_URL = "https://discord.gg/devstartup";
+  const DISCORD_URL = "https://discord.gg/AKMMJaqAtB";
 
   // --------- Storage helpers ---------
   const storage = {
@@ -39,10 +39,10 @@
   }
   function createUser({ username, password }) {
     username = (username || "").trim();
-    if (!username || !password) throw new Error("Please fill in all fields.");
-    if (username.length < 3) throw new Error("Username must be at least 3 characters.");
-    if (password.length < 4) throw new Error("Password must be at least 4 characters.");
-    if (findUser(username)) throw new Error("This username is already taken.");
+    if (!username || !password) throw new Error("Preencha todos os campos.");
+    if (username.length < 3) throw new Error("O usuário precisa ter ao menos 3 caracteres.");
+    if (password.length < 4) throw new Error("A senha precisa ter ao menos 4 caracteres.");
+    if (findUser(username)) throw new Error("Este nome de usuário já está em uso.");
     const user = {
       username,
       password, // client-side demo only
@@ -57,8 +57,8 @@
   }
   function login(username, password) {
     const user = findUser(username);
-    if (!user) throw new Error("User not found.");
-    if (user.password !== password) throw new Error("Incorrect password.");
+    if (!user) throw new Error("Usuário não encontrado.");
+    if (user.password !== password) throw new Error("Senha incorreta.");
     storage.set(STORAGE_KEYS.session, { username: user.username, at: Date.now() });
     return user;
   }
@@ -83,7 +83,7 @@
       storage.set(STORAGE_KEYS.admin, { at: Date.now() });
       return true;
     }
-    throw new Error("Invalid admin credentials.");
+    throw new Error("Credenciais de admin inválidas.");
   }
   function adminLogout() { storage.remove(STORAGE_KEYS.admin); }
   function isAdminSession() { return !!storage.get(STORAGE_KEYS.admin, null); }
@@ -226,7 +226,7 @@
       b.addEventListener("click", (e) => {
         e.preventDefault();
         logout();
-        toast({ title: "Signed out", message: "See you soon!", type: "info" });
+        toast({ title: "Sessão encerrada", message: "Até logo!", type: "info" });
         setTimeout(() => { window.location.href = resolvePath("index.html"); }, 400);
       });
     });
@@ -260,17 +260,17 @@
             <span>Devstart <span class="gradient-text">UP</span></span>
           </a>
           <nav class="nav">
-            <a href="${prefix}index.html">Home</a>
-            <a href="${prefix}pages/courses.html">Courses</a>
+            <a href="${prefix}index.html">Início</a>
+            <a href="${prefix}pages/courses.html">Cursos</a>
             <a href="${prefix}pages/vip.html">VIP</a>
-            <a href="${prefix}pages/dashboard.html">Dashboard</a>
+            <a href="${prefix}pages/dashboard.html">Painel</a>
           </nav>
           <div class="header-actions">
             ${user
-              ? `<a class="btn sm ghost" href="${prefix}pages/dashboard.html">Hi, ${escapeHtml(user.username)}</a>
-                 <a class="btn sm vip" href="${prefix}pages/vip.html">${user.vip ? "VIP active" : "Get VIP"}</a>`
-              : `<a class="btn sm ghost" href="${prefix}pages/login.html">Login</a>
-                 <a class="btn sm primary" href="${prefix}pages/register.html">Start free</a>`
+              ? `<a class="btn sm ghost" href="${prefix}pages/dashboard.html">Olá, ${escapeHtml(user.username)}</a>
+                 <a class="btn sm vip" href="${prefix}pages/vip.html">${user.vip ? "VIP ativo" : "Obter VIP"}</a>`
+              : `<a class="btn sm ghost" href="${prefix}pages/login.html">Entrar</a>
+                 <a class="btn sm primary" href="${prefix}pages/register.html">Começar grátis</a>`
             }
           </div>
         </div>
@@ -302,31 +302,31 @@
             <div class="avatar">${escapeHtml(initial)}</div>
             <div class="meta">
               <div class="name">${escapeHtml(user.username)}</div>
-              <div class="role">${user.vip ? "VIP Member 👑" : "Free plan"}</div>
+              <div class="role">${user.vip ? "Membro VIP 👑" : "Plano gratuito"}</div>
             </div>
           </div>` : `
           <div class="sidebar-user">
             <div class="avatar">?</div>
             <div class="meta">
-              <div class="name">Guest</div>
-              <div class="role">Sign in to save progress</div>
+              <div class="name">Visitante</div>
+              <div class="role">Entre para salvar seu progresso</div>
             </div>
           </div>`
         }
         <nav class="sidebar-nav">
-          <a href="${prefix}index.html">${icon("home")} Home</a>
-          <a href="${prefix}pages/courses.html">${icon("book")} Courses</a>
-          <a href="${prefix}pages/progress.html">${icon("chart")} My Progress</a>
-          <a href="${prefix}pages/dashboard.html">${icon("grid")} Dashboard</a>
-          <a href="${prefix}pages/profile.html">${icon("user")} Profile</a>
+          <a href="${prefix}index.html">${icon("home")} Início</a>
+          <a href="${prefix}pages/courses.html">${icon("book")} Cursos</a>
+          <a href="${prefix}pages/progress.html">${icon("chart")} Meu Progresso</a>
+          <a href="${prefix}pages/dashboard.html">${icon("grid")} Painel</a>
+          <a href="${prefix}pages/profile.html">${icon("user")} Perfil</a>
           <a href="${prefix}pages/vip.html">${icon("crown")} VIP</a>
           <a href="${DISCORD_URL}" target="_blank" rel="noopener">${icon("discord")} Discord</a>
           ${user
-            ? `<a href="#" data-logout>${icon("logout")} Log out</a>`
-            : `<a href="${prefix}pages/login.html">${icon("login")} Sign in</a>`
+            ? `<a href="#" data-logout>${icon("logout")} Sair</a>`
+            : `<a href="${prefix}pages/login.html">${icon("login")} Entrar</a>`
           }
         </nav>
-        <div class="sidebar-foot">© 2025 Devstart UP — built with ❤️ for devs</div>
+        <div class="sidebar-foot">© 2025 Devstart UP — feito com ❤️ para devs</div>
       </aside>
     `;
   }

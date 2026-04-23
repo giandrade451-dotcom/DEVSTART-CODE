@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Course · Devstart UP</title>
+  <title>Curso · Devstart UP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -15,7 +15,7 @@
   <div data-site-header></div>
 
   <main class="container" id="course-root">
-    <div class="card center"><p>Loading course…</p></div>
+    <div class="card center"><p>Carregando curso…</p></div>
   </main>
 
   <script src="../assets/js/courses-data.js"></script>
@@ -31,7 +31,7 @@
       const root = document.getElementById("course-root");
 
       if (!course) {
-        root.innerHTML = `<div class="card center"><h2>Course not found</h2><p>The course you're looking for doesn't exist.</p><a class="btn primary" href="courses.html">Browse all courses</a></div>`;
+        root.innerHTML = `<div class="card center"><h2>Curso não encontrado</h2><p>O curso que você procura não existe.</p><a class="btn primary" href="courses.html">Ver todos os cursos</a></div>`;
         return;
       }
 
@@ -40,18 +40,18 @@
 
       if (lockedByAdmin) {
         root.innerHTML = `
-          <header class="course-hero reveal"><span class="badge">Locked</span><h1>${escapeHtml(course.title)}</h1><p>This course is currently locked by the platform administrator.</p><a class="btn" href="courses.html">Back to courses</a></header>`;
+          <header class="course-hero reveal"><span class="badge">Bloqueado</span><h1>${escapeHtml(course.title)}</h1><p>Este curso está bloqueado pelo administrador da plataforma no momento.</p><a class="btn" href="courses.html">Voltar aos cursos</a></header>`;
         return;
       }
       if (lockedByVIP) {
         root.innerHTML = `
           <header class="course-hero reveal">
-            <span class="badge vip">VIP only</span>
+            <span class="badge vip">Somente VIP</span>
             <h1>${escapeHtml(course.title)}</h1>
             <p>${escapeHtml(course.description)}</p>
             <div class="row mt-2">
-              <a class="btn vip" href="vip.html">Unlock VIP access →</a>
-              <a class="btn" href="courses.html">Back to courses</a>
+              <a class="btn vip" href="vip.html">Desbloquear acesso VIP →</a>
+              <a class="btn" href="courses.html">Voltar aos cursos</a>
             </div>
           </header>`;
         return;
@@ -62,27 +62,27 @@
       root.innerHTML = `
         <header class="course-hero reveal">
           <div class="row" style="gap:8px;">
-            <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Free"}</span>
+            <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Grátis"}</span>
             <span class="badge">${escapeHtml(course.level)}</span>
             <span class="badge">⏱ ${escapeHtml(course.duration)}</span>
-            <span class="badge">${course.lessons.length} lessons</span>
+            <span class="badge">${course.lessons.length} aulas</span>
           </div>
           <h1>${escapeHtml(course.title)}</h1>
           <p style="font-size:1.1rem; max-width:720px; color: var(--text);">${escapeHtml(course.description)}</p>
           <div class="row mt-2">
-            <a class="btn primary" href="lesson.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(course.lessons[0].id)}">${p.completed === 0 ? "Start course" : "Continue"} →</a>
-            <span class="course-meta">Instructor · ${escapeHtml(course.instructor)}</span>
+            <a class="btn primary" href="lesson.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(course.lessons[0].id)}">${p.completed === 0 ? "Iniciar curso" : "Continuar"} →</a>
+            <span class="course-meta">Instrutor · ${escapeHtml(course.instructor)}</span>
           </div>
           ${user ? `
             <div class="mt-2" style="max-width:540px;">
-              <div class="progress-label"><span>${p.completed}/${p.total} lessons</span><span>${p.percent}%</span></div>
+              <div class="progress-label"><span>${p.completed}/${p.total} aulas</span><span>${p.percent}%</span></div>
               <div class="progress"><span style="width:${p.percent}%"></span></div>
-            </div>` : `<p class="small text-muted mt-2">Sign in to track your progress.</p>`
+            </div>` : `<p class="small text-muted mt-2">Entre para acompanhar seu progresso.</p>`
           }
         </header>
 
         <section class="mb-3 mt-4">
-          <h2>Lessons</h2>
+          <h2>Aulas</h2>
           <div class="card" style="padding:8px;">
             <div class="lesson-list">
               ${course.lessons.map((l, i) => {

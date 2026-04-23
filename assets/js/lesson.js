@@ -11,18 +11,18 @@
     const root = document.getElementById("lesson-root");
 
     if (!course) {
-      root.innerHTML = errorCard("Course not found", "The course you're trying to open doesn't exist.");
+      root.innerHTML = errorCard("Curso não encontrado", "O curso que você está tentando abrir não existe.");
       return;
     }
 
     const lockedByAdmin = locks.isCourseLockedForAll(course.id);
     const lockedByVIP = course.vip && (!user || !user.vip);
     if (lockedByAdmin) {
-      root.innerHTML = errorCard(course.title, "This course is currently locked by the administrator.");
+      root.innerHTML = errorCard(course.title, "Este curso está bloqueado pelo administrador no momento.");
       return;
     }
     if (lockedByVIP) {
-      root.innerHTML = `<div class="card center"><h2>VIP access required</h2><p>${escapeHtml(course.title)} is part of the VIP track.</p><a class="btn vip" href="vip.html">Unlock VIP →</a></div>`;
+      root.innerHTML = `<div class="card center"><h2>Acesso VIP necessário</h2><p>${escapeHtml(course.title)} faz parte da trilha VIP.</p><a class="btn vip" href="vip.html">Desbloquear VIP →</a></div>`;
       return;
     }
 
@@ -57,7 +57,7 @@
               }).join("")}
             </div>
             <div class="mt-2">
-              <div class="progress-label"><span>${p.completedLessons.length}/${course.lessons.length} done</span><span>${Math.round((p.completedLessons.length/course.lessons.length)*100)}%</span></div>
+              <div class="progress-label"><span>${p.completedLessons.length}/${course.lessons.length} concluídas</span><span>${Math.round((p.completedLessons.length/course.lessons.length)*100)}%</span></div>
               <div class="progress"><span style="width:${Math.round((p.completedLessons.length/course.lessons.length)*100)}%"></span></div>
             </div>
           </aside>
@@ -65,20 +65,20 @@
           <article class="lesson-content reveal delay-1">
             <div class="row" style="gap:8px;">
               <span class="badge">${escapeHtml(course.title)}</span>
-              <span class="badge">Lesson ${idx + 1} of ${course.lessons.length}</span>
-              ${p.completedLessons.includes(lesson.id) ? '<span class="badge done">Completed</span>' : ""}
+              <span class="badge">Aula ${idx + 1} de ${course.lessons.length}</span>
+              ${p.completedLessons.includes(lesson.id) ? '<span class="badge done">Concluída</span>' : ""}
             </div>
             <h1>${escapeHtml(lesson.title)}</h1>
             <p class="text-muted" style="font-size:1.05rem;">${escapeHtml(lesson.summary)}</p>
             <div>${lesson.content}</div>
 
             <section class="quiz" id="quiz">
-              <h2>Knowledge check</h2>
-              <p class="text-muted" style="margin-bottom:12px;">Answer all ${lesson.quiz.length} questions to complete the lesson.</p>
+              <h2>Teste seu conhecimento</h2>
+              <p class="text-muted" style="margin-bottom:12px;">Responda as ${lesson.quiz.length} questões para concluir a aula.</p>
               <form id="quiz-form">
                 ${lesson.quiz.map((q, qi) => `
                   <div class="q-block" data-qi="${qi}">
-                    <div class="q-title">Q${qi + 1}. ${escapeHtml(q.prompt)}</div>
+                    <div class="q-title">${qi + 1}. ${escapeHtml(q.prompt)}</div>
                     <div class="opts">
                       ${q.options.map((o, oi) => `
                         <label class="opt">
@@ -91,11 +91,11 @@
                 `).join("")}
                 ${savedQuiz ? `
                   <div class="quiz-result">
-                    <h3>You scored <span class="gradient-text">${savedQuiz.percent}%</span></h3>
-                    <p class="text-muted">${savedQuiz.score} correct of ${savedQuiz.total}. Retake below to try again.</p>
-                    <button type="button" class="btn mt-2" id="retake">Retake quiz</button>
+                    <h3>Você acertou <span class="gradient-text">${savedQuiz.percent}%</span></h3>
+                    <p class="text-muted">${savedQuiz.score} de ${savedQuiz.total} corretas. Refaça abaixo para tentar de novo.</p>
+                    <button type="button" class="btn mt-2" id="retake">Refazer quiz</button>
                   </div>` : `
-                  <button class="btn primary mt-3" type="submit">Submit answers</button>
+                  <button class="btn primary mt-3" type="submit">Enviar respostas</button>
                 `}
               </form>
             </section>
@@ -103,10 +103,10 @@
             <nav class="lesson-nav">
               ${prev
                 ? `<a class="btn" href="lesson.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(prev.id)}">← ${escapeHtml(prev.title)}</a>`
-                : `<a class="btn" href="course.html?id=${encodeURIComponent(course.id)}">← Back to course</a>`}
+                : `<a class="btn" href="course.html?id=${encodeURIComponent(course.id)}">← Voltar ao curso</a>`}
               ${next
                 ? `<a class="btn primary" href="lesson.html?course=${encodeURIComponent(course.id)}&lesson=${encodeURIComponent(next.id)}">${escapeHtml(next.title)} →</a>`
-                : `<a class="btn success" href="course.html?id=${encodeURIComponent(course.id)}">Finish course 🎉</a>`
+                : `<a class="btn success" href="course.html?id=${encodeURIComponent(course.id)}">Finalizar curso 🎉</a>`
               }
             </nav>
           </article>
@@ -139,7 +139,7 @@
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         if (!user) {
-          toast({ title: "Sign in required", message: "Create a free account to save your progress.", type: "info" });
+          toast({ title: "É preciso entrar", message: "Crie uma conta gratuita para salvar seu progresso.", type: "info" });
           return;
         }
         const total = lesson.quiz.length;
@@ -156,7 +156,7 @@
           opts.forEach(o => o.classList.remove("correct", "wrong"));
           if (!chosen) {
             allAnswered = false;
-            feedback.textContent = "Please pick an answer.";
+            feedback.textContent = "Escolha uma resposta.";
             feedback.classList.remove("hidden");
             return;
           }
@@ -164,16 +164,16 @@
           opts[q.correct].classList.add("correct");
           if (picked === q.correct) {
             score++;
-            feedback.textContent = q.explain ? `✓ ${q.explain}` : "✓ Correct!";
+            feedback.textContent = q.explain ? `✓ ${q.explain}` : "✓ Correto!";
           } else {
             opts[picked].classList.add("wrong");
-            feedback.textContent = q.explain ? `✗ ${q.explain}` : "✗ Not quite.";
+            feedback.textContent = q.explain ? `✗ ${q.explain}` : "✗ Quase lá.";
           }
           feedback.classList.remove("hidden");
         });
 
         if (!allAnswered) {
-          toast({ title: "Answer every question", message: "A few questions are still empty.", type: "error" });
+          toast({ title: "Responda todas as questões", message: "Ainda tem questões em branco.", type: "error" });
           return;
         }
 
@@ -182,8 +182,8 @@
         const updated = progress.markLessonComplete(course.id, lesson.id);
 
         toast({
-          title: score === total ? "Perfect score! 🎉" : "Quiz submitted",
-          message: `${score}/${total} correct (${percent}%)`,
+          title: score === total ? "Nota máxima! 🎉" : "Quiz enviado",
+          message: `${score}/${total} corretas (${percent}%)`,
           type: score === total ? "success" : (percent >= 60 ? "success" : "info"),
         });
 
@@ -193,7 +193,7 @@
     }
 
     function errorCard(title, msg) {
-      return `<div class="card center"><h2>${escapeHtml(title)}</h2><p>${escapeHtml(msg)}</p><a class="btn" href="courses.html">Back to courses</a></div>`;
+      return `<div class="card center"><h2>${escapeHtml(title)}</h2><p>${escapeHtml(msg)}</p><a class="btn" href="courses.html">Voltar aos cursos</a></div>`;
     }
   });
 })();

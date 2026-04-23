@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Create account · Devstart UP</title>
+  <title>Criar conta · Devstart UP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -16,25 +16,25 @@
 
   <main class="auth-wrap">
     <div class="auth-card reveal">
-      <h1>Start your journey 🚀</h1>
-      <p class="sub">Create a free Devstart UP account to save progress, take quizzes, and get your own dashboard.</p>
+      <h1>Comece sua jornada 🚀</h1>
+      <p class="sub">Crie uma conta gratuita na Devstart UP para salvar seu progresso, fazer os quizzes e ter seu próprio painel.</p>
       <form class="form" id="register-form" autocomplete="on">
         <div>
-          <label for="u">Username</label>
-          <input class="input" id="u" name="username" type="text" autocomplete="username" placeholder="Pick a unique username" required />
-          <div class="form-hint">At least 3 characters. Letters, numbers, underscores.</div>
+          <label for="u">Usuário</label>
+          <input class="input" id="u" name="username" type="text" autocomplete="username" placeholder="Escolha um usuário único" required />
+          <div class="form-hint">Ao menos 3 caracteres. Letras, números e sublinhados.</div>
         </div>
         <div>
-          <label for="p">Password</label>
+          <label for="p">Senha</label>
           <input class="input" id="p" name="password" type="password" autocomplete="new-password" placeholder="••••••••" required />
-          <div class="form-hint">At least 4 characters. Stored only in your browser — this is a demo platform.</div>
+          <div class="form-hint">Ao menos 4 caracteres. Guardada apenas no seu navegador — esta é uma plataforma de demonstração.</div>
         </div>
         <button class="btn primary block lg" type="submit" id="submit-btn">
-          <span id="submit-label">Create account</span>
+          <span id="submit-label">Criar conta</span>
         </button>
       </form>
       <div class="auth-alt">
-        Already have an account? <a href="login.html">Sign in</a>
+        Já tem uma conta? <a href="login.html">Entrar</a>
       </div>
     </div>
   </main>
@@ -66,12 +66,12 @@
               password: data.get("password"),
             });
             users.login(data.get("username"), data.get("password"));
-            toast({ title: "Account created!", message: "Welcome to Devstart UP.", type: "success" });
+            toast({ title: "Conta criada!", message: "Bem-vindo à Devstart UP.", type: "success" });
             setTimeout(() => { window.location.href = "dashboard.html"; }, 500);
           } catch (err) {
-            toast({ title: "Couldn't create account", message: err.message, type: "error" });
+            toast({ title: "Não foi possível criar a conta", message: err.message, type: "error" });
             btn.disabled = false;
-            label.textContent = "Create account";
+            label.textContent = "Criar conta";
           }
         }, 400);
       });

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Courses · Devstart UP</title>
+  <title>Cursos · Devstart UP</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -17,26 +17,26 @@
   <main class="container">
     <header class="dash-head reveal">
       <div>
-        <h1>All courses</h1>
-        <div class="sub">A complete curriculum from HTML basics to shipping a fullstack SaaS.</div>
+        <h1>Todos os cursos</h1>
+        <div class="sub">Uma grade completa, do básico de HTML até publicar um SaaS fullstack.</div>
       </div>
       <div class="row">
-        <input class="input" id="search" placeholder="Search courses…" style="min-width:240px;" />
+        <input class="input" id="search" placeholder="Buscar cursos…" style="min-width:240px;" />
         <select class="select" id="filter" style="max-width:180px;">
-          <option value="all">All</option>
-          <option value="free">Free only</option>
-          <option value="vip">VIP only</option>
+          <option value="all">Todos</option>
+          <option value="free">Só gratuitos</option>
+          <option value="vip">Só VIP</option>
         </select>
       </div>
     </header>
 
     <section class="mb-3 reveal">
-      <h2>Free courses</h2>
+      <h2>Cursos gratuitos</h2>
       <div class="grid cols-4" id="free-grid"></div>
     </section>
 
     <section class="mb-3 reveal delay-1">
-      <h2>VIP track</h2>
+      <h2>Trilha VIP</h2>
       <div class="grid cols-4" id="vip-grid"></div>
     </section>
   </main>
@@ -64,10 +64,10 @@
 
         document.getElementById("free-grid").innerHTML = free.length
           ? free.map(c => renderCard(c, user, progress, escapeHtml, locks)).join("")
-          : `<div class="card center"><p>No free courses match.</p></div>`;
+          : `<div class="card center"><p>Nenhum curso gratuito encontrado.</p></div>`;
         document.getElementById("vip-grid").innerHTML = vip.length
           ? vip.map(c => renderCard(c, user, progress, escapeHtml, locks, true)).join("")
-          : `<div class="card center"><p>No VIP courses match.</p></div>`;
+          : `<div class="card center"><p>Nenhum curso VIP encontrado.</p></div>`;
       }
 
       document.getElementById("search").addEventListener("input", render);
@@ -81,8 +81,8 @@
       const lockedByVIP = course.vip && (!user || !user.vip);
       const locked = lockedByAdmin || lockedByVIP;
       const label = locked
-        ? (lockedByVIP ? "Unlock VIP" : "Locked")
-        : (p.completed === 0 ? "Start" : (p.percent === 100 ? "Review" : "Continue"));
+        ? (lockedByVIP ? "Desbloquear VIP" : "Bloqueado")
+        : (p.completed === 0 ? "Iniciar" : (p.percent === 100 ? "Revisar" : "Continuar"));
       const href = locked
         ? (lockedByVIP ? "vip.html" : "#")
         : `course.html?id=${encodeURIComponent(course.id)}`;
@@ -90,8 +90,8 @@
         <a class="card course-card ${locked ? "locked" : ""}" href="${href}">
           <div class="course-cover ${course.theme}"><span>${escapeHtml(course.cover)}</span></div>
           <div class="course-head">
-            <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Free"}</span>
-            <span class="course-meta">${course.lessons.length} lessons · ${escapeHtml(course.level)}</span>
+            <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Grátis"}</span>
+            <span class="course-meta">${course.lessons.length} aulas · ${escapeHtml(course.level)}</span>
           </div>
           <h3>${escapeHtml(course.title)}</h3>
           <p>${escapeHtml(course.tagline)}</p>

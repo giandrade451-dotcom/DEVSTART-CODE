@@ -1,7 +1,7 @@
 /* =============================================================
-   Devstart UP — Courses data (part 2)
-   Appends: Python Basic, Advanced JS, Python Developer,
-            Fullstack, UI/UX Design.
+   Devstart UP — Dados dos cursos (parte 2)
+   Adiciona: Python Básico, JavaScript Avançado, Desenvolvedor Python,
+             Fullstack, Design UI/UX.
    ============================================================= */
 (function () {
   const q = (prompt, options, correct, explain) => ({ prompt, options, correct, explain });
@@ -9,90 +9,90 @@
 
   const more = [
     // =================================================================
-    // 4. Python Basic (FREE)
+    // 4. Python Básico (GRÁTIS)
     // =================================================================
     {
       id: "python-basic",
-      title: "Python Basic",
-      tagline: "The friendliest language for beginners — and a production powerhouse.",
-      description: "Install Python, write your first scripts, and master the core syntax you'll use in data science, web apps, automation, and AI.",
-      level: "Beginner",
+      title: "Python Básico",
+      tagline: "A linguagem mais amigável para iniciantes — e uma potência em produção.",
+      description: "Instale o Python, escreva seus primeiros scripts e domine a sintaxe essencial usada em ciência de dados, apps web, automação e IA.",
+      level: "Iniciante",
       duration: "5h",
       theme: "theme-python",
       cover: "Python",
       vip: false,
       instructor: "Lucas Pereira",
       lessons: [
-        L("meet-python", "Meet Python",
-          "Why Python is the world's most popular language.",
-          `<p>Python was created by Guido van Rossum in 1991. Today it's the #1 language in data science, machine learning, scientific computing, automation, and is a serious contender for backend web development (Django, Flask, FastAPI).</p>
-<p>Why is it so loved? <strong>Readability.</strong> Python reads almost like English and avoids punctuation clutter. It uses indentation to structure code, forcing a clean visual style.</p>
-<pre><code># A Python program that actually looks like English
-def greet(name):
-    print(f"Hello, {name}!")
+        L("meet-python", "Conheça o Python",
+          "Por que Python é a linguagem mais popular do mundo.",
+          `<p>O Python foi criado por Guido van Rossum em 1991. Hoje é a linguagem número 1 em ciência de dados, machine learning, computação científica, automação e é uma forte candidata para backend web (Django, Flask, FastAPI).</p>
+<p>Por que é tão amada? <strong>Legibilidade.</strong> Python lê quase como inglês e evita excesso de pontuação. A indentação faz parte da sintaxe, o que força um estilo visual limpo.</p>
+<pre><code># Um programa Python que realmente parece texto
+def saudacao(nome):
+    print(f"Olá, {nome}!")
 
-greet("Devstart")</code></pre>
-<h2>Where you'll use Python</h2>
+saudacao("Devstart")</code></pre>
+<h2>Onde você vai usar Python</h2>
 <ul>
-  <li>Data analysis &amp; visualization (pandas, matplotlib)</li>
+  <li>Análise e visualização de dados (pandas, matplotlib)</li>
   <li>Machine learning (scikit-learn, PyTorch, TensorFlow)</li>
-  <li>Web backends (Django, Flask, FastAPI)</li>
-  <li>Automation, scripting, dev tooling</li>
-  <li>Finance, bioinformatics, game scripting</li>
+  <li>Backends web (Django, Flask, FastAPI)</li>
+  <li>Automação, scripting, ferramentas de dev</li>
+  <li>Finanças, bioinformática, scripts de games</li>
 </ul>`,
           [
-            q("Who created Python?", ["Brendan Eich", "Guido van Rossum", "James Gosling", "Dennis Ritchie"], 1, "Guido, 1991."),
-            q("Python uses what to mark code blocks?", ["Braces", "Indentation", "Keywords begin/end", "Semicolons"], 1, "Indentation is syntactic."),
-            q("Which is a Python web framework?", ["Spring", "Express", "Flask", "Rails"], 2, "Flask, Django, FastAPI are Pythonic."),
+            q("Quem criou o Python?", ["Brendan Eich", "Guido van Rossum", "James Gosling", "Dennis Ritchie"], 1, "Guido, 1991."),
+            q("Python usa o quê para marcar blocos de código?", ["Chaves", "Indentação", "Palavras begin/end", "Ponto e vírgula"], 1, "A indentação é sintática."),
+            q("Qual é um framework web Python?", ["Spring", "Express", "Flask", "Rails"], 2, "Flask, Django e FastAPI são pythônicos."),
           ]
         ),
-        L("setup-hello", "Setup & Hello World",
-          "Get Python running and write your first line.",
-          `<p>Download Python from <code>python.org</code> (or use the one your OS includes — macOS and Linux usually do). Verify:</p>
+        L("setup-hello", "Setup e Hello World",
+          "Deixe o Python rodando e escreva sua primeira linha.",
+          `<p>Baixe o Python em <code>python.org</code> (ou use o que seu sistema já traz — macOS e Linux geralmente têm). Verifique:</p>
 <pre><code>$ python --version
 Python 3.12.1</code></pre>
-<h2>Running code</h2>
-<p>Two modes:</p>
+<h2>Rodando código</h2>
+<p>Dois modos:</p>
 <ol>
-  <li><strong>Interactive</strong> — type <code>python</code> in your terminal for a REPL where every line runs immediately.</li>
-  <li><strong>Scripts</strong> — save code to a <code>.py</code> file and run <code>python file.py</code>.</li>
+  <li><strong>Interativo</strong> — digite <code>python</code> no terminal para um REPL onde cada linha roda na hora.</li>
+  <li><strong>Scripts</strong> — salve o código num arquivo <code>.py</code> e rode <code>python arquivo.py</code>.</li>
 </ol>
 <pre><code># hello.py
-print("Hello, world!")
-print("I am a Python developer.")</code></pre>
-<h2>Editors</h2>
-<p>Use VS Code with the official Python extension. You'll get auto-complete, formatting, linting, and a built-in terminal.</p>
-<div class="callout"><div class="ico">🐍</div><p>Pin yourself to Python 3 — Python 2 is dead. Never write new code for Python 2.</p></div>`,
+print("Olá, mundo!")
+print("Sou um dev Python.")</code></pre>
+<h2>Editores</h2>
+<p>Use o VS Code com a extensão oficial de Python. Você ganha auto-complete, formatação, lint e terminal integrado.</p>
+<div class="callout"><div class="ico">🐍</div><p>Fixe no Python 3 — o Python 2 está morto. Nunca escreva código novo para Python 2.</p></div>`,
           [
-            q("Which Python is alive today?", ["2.7", "3.x", "Python 1", "Python 5"], 1, "Python 3.x is the modern version."),
-            q("Command to see Python version?", ["python -v", "python --version", "python info", "py -version"], 1, "python --version."),
-            q("Most popular editor for Python?", ["Notepad", "Vim only", "VS Code", "Word"], 2, "VS Code + Python extension."),
+            q("Qual Python está vivo hoje?", ["2.7", "3.x", "Python 1", "Python 5"], 1, "Python 3.x é a versão moderna."),
+            q("Comando para ver a versão do Python?", ["python -v", "python --version", "python info", "py -version"], 1, "python --version."),
+            q("Editor mais popular para Python?", ["Notepad", "Só Vim", "VS Code", "Word"], 2, "VS Code + extensão Python."),
           ]
         ),
-        L("variables-input", "Variables & Input",
-          "Store values and talk to users.",
-          `<p>Python variables are untyped — you assign with <code>=</code> and the type comes from the value:</p>
-<pre><code>name = "Ana"
-age = 25
-is_vip = False
-balance = 3.14</code></pre>
-<h2>Input and output</h2>
-<pre><code>name = input("Your name: ")
-print(f"Hi, {name}!")</code></pre>
-<p><code>input()</code> always returns a string. If you need a number, convert:</p>
-<pre><code>age = int(input("Your age: "))
-price = float(input("Price: "))</code></pre>
-<h2>Naming convention</h2>
-<p>Python uses <code>snake_case</code> for variables and functions, <code>PascalCase</code> for classes, <code>UPPER_SNAKE</code> for constants. Follow this — it's non-negotiable in the Python world.</p>`,
+        L("variables-input", "Variáveis e entrada",
+          "Guarde valores e converse com o usuário.",
+          `<p>Variáveis em Python não têm tipagem explícita — você atribui com <code>=</code> e o tipo vem do valor:</p>
+<pre><code>nome = "Ana"
+idade = 25
+ehVip = False
+saldo = 3.14</code></pre>
+<h2>Entrada e saída</h2>
+<pre><code>nome = input("Seu nome: ")
+print(f"Oi, {nome}!")</code></pre>
+<p><code>input()</code> sempre devolve uma string. Se precisar de número, converta:</p>
+<pre><code>idade = int(input("Sua idade: "))
+preco = float(input("Preço: "))</code></pre>
+<h2>Convenção de nomes</h2>
+<p>Python usa <code>snake_case</code> para variáveis e funções, <code>PascalCase</code> para classes e <code>UPPER_SNAKE</code> para constantes. Siga isso — é inegociável no mundo Python.</p>`,
           [
-            q("input() returns what type?", ["int", "float", "str", "bool"], 2, "Always a string."),
-            q("Python variable naming convention?", ["camelCase", "PascalCase", "snake_case", "kebab-case"], 2, "snake_case for variables."),
-            q("f-string syntax?", ["\"hi $name\"", "\"hi {name}\"", "f\"hi {name}\"", "%(name)s"], 2, "f\"hi {name}\"."),
+            q("input() retorna qual tipo?", ["int", "float", "str", "bool"], 2, "Sempre uma string."),
+            q("Convenção de nomes em Python?", ["camelCase", "PascalCase", "snake_case", "kebab-case"], 2, "snake_case para variáveis."),
+            q("Sintaxe de f-string?", ["\"oi $nome\"", "\"oi {nome}\"", "f\"oi {nome}\"", "%(nome)s"], 2, "f\"oi {nome}\"."),
           ]
         ),
-        L("strings-numbers", "Strings & Numbers",
-          "The two workhorses of every program.",
-          `<p>Strings in Python are very powerful. Some essentials:</p>
+        L("strings-numbers", "Strings e números",
+          "Os dois burros de carga de todo programa.",
+          `<p>Strings em Python são muito poderosas. Alguns essenciais:</p>
 <pre><code>s = "Devstart UP"
 s.upper()          # "DEVSTART UP"
 s.lower()
@@ -101,109 +101,109 @@ s.replace("UP", "LEVEL")
 len(s)             # 11
 s.split(" ")       # ["Devstart", "UP"]
 ",".join(["a","b"])# "a,b"</code></pre>
-<h2>Numbers</h2>
+<h2>Números</h2>
 <pre><code>3 + 4     # 7
-7 / 2     # 3.5  (float division)
-7 // 2    # 3    (integer division)
-7 % 2     # 1    (modulo)
-2 ** 10   # 1024 (exponent)
+7 / 2     # 3.5  (divisão float)
+7 // 2    # 3    (divisão inteira)
+7 % 2     # 1    (módulo)
+2 ** 10   # 1024 (exponenciação)
 round(3.7)# 4
 abs(-9)   # 9</code></pre>
 <h2>f-strings</h2>
-<p>The preferred way to format text:</p>
-<pre><code>price = 19.99
-print(f"Total: \${price:.2f}")  # "Total: $19.99"</code></pre>`,
+<p>A forma preferida de formatar texto:</p>
+<pre><code>preco = 19.99
+print(f"Total: R\${preco:.2f}")  # "Total: R$19.99"</code></pre>`,
           [
-            q("What does 7 // 2 return?", ["3.5", "3", "4", "2"], 1, "Integer division."),
-            q("Which checks membership?", ["has()", "in", "contains()", "find()"], 1, "Use 'in' operator."),
-            q("Format 3.14159 with 2 decimals?", ["{:.2}", "{:.2f}", "{:2f}", "{2.f}"], 1, ":.2f inside f-string."),
+            q("Quanto vale 7 // 2?", ["3.5", "3", "4", "2"], 1, "Divisão inteira."),
+            q("Qual verifica pertencimento?", ["has()", "in", "contains()", "find()"], 1, "Use o operador 'in'."),
+            q("Formatar 3.14159 com 2 decimais?", ["{:.2}", "{:.2f}", "{:2f}", "{2.f}"], 1, ":.2f dentro da f-string."),
           ]
         ),
-        L("lists", "Lists",
-          "Ordered, mutable sequences.",
-          `<p>A Python list is an ordered collection you can modify:</p>
-<pre><code>fruits = ["apple", "banana", "pear"]
-fruits[0]            # "apple"
-fruits[-1]           # "pear" (last)
-fruits[1:3]          # ["banana", "pear"]  (slice)
-fruits.append("kiwi")
-fruits.remove("banana")
-len(fruits)          # 3
-sorted(fruits)       # new sorted list</code></pre>
-<h2>List comprehensions</h2>
-<p>A concise way to transform or filter lists:</p>
-<pre><code>numbers = [1, 2, 3, 4, 5]
-squares = [n ** 2 for n in numbers]           # [1,4,9,16,25]
-evens = [n for n in numbers if n % 2 == 0]    # [2, 4]</code></pre>
-<p>Comprehensions are more idiomatic (and often faster) than for-loop + append.</p>`,
+        L("lists", "Listas",
+          "Sequências ordenadas e mutáveis.",
+          `<p>Uma lista em Python é uma coleção ordenada que você pode modificar:</p>
+<pre><code>frutas = ["maçã", "banana", "pera"]
+frutas[0]            # "maçã"
+frutas[-1]           # "pera" (última)
+frutas[1:3]          # ["banana", "pera"]  (fatia)
+frutas.append("kiwi")
+frutas.remove("banana")
+len(frutas)          # 3
+sorted(frutas)       # nova lista ordenada</code></pre>
+<h2>Compreensões de lista</h2>
+<p>Um jeito conciso de transformar ou filtrar listas:</p>
+<pre><code>numeros = [1, 2, 3, 4, 5]
+quadrados = [n ** 2 for n in numeros]         # [1,4,9,16,25]
+pares = [n for n in numeros if n % 2 == 0]    # [2, 4]</code></pre>
+<p>Compreensões são mais idiomáticas (e muitas vezes mais rápidas) que laços com append.</p>`,
           [
-            q("fruits[-1] gives…", ["Error", "First item", "Last item", "Reversed list"], 2, "Negative indexes count from the end."),
-            q("Slice syntax [1:3] includes…", ["Index 1, 2, 3", "Index 1, 2", "Index 1 only", "Index 3 only"], 1, "End is exclusive."),
-            q("Comprehension is…", ["Reading docs", "Concise list/filter syntax", "A class", "A decorator"], 1, "Powerful expression-based builder."),
+            q("frutas[-1] dá…", ["Erro", "Primeiro item", "Último item", "Lista invertida"], 2, "Índices negativos contam do fim."),
+            q("Fatia [1:3] inclui…", ["Índices 1, 2, 3", "Índices 1 e 2", "Apenas o 1", "Apenas o 3"], 1, "O fim é exclusivo."),
+            q("Compreensão é…", ["Ler docs", "Sintaxe concisa para listar/filtrar", "Uma classe", "Um decorator"], 1, "Construtor baseado em expressões."),
           ]
         ),
-        L("dictionaries", "Dictionaries & Tuples",
-          "Key-value maps and immutable tuples.",
-          `<p>Dictionaries store key-value pairs:</p>
-<pre><code>user = {
+        L("dictionaries", "Dicionários e tuplas",
+          "Mapas chave-valor e tuplas imutáveis.",
+          `<p>Dicionários guardam pares chave-valor:</p>
+<pre><code>usuario = {
     "username": "ana",
     "vip": False,
-    "age": 25,
+    "idade": 25,
 }
-user["username"]         # "ana"
-user["vip"] = True       # mutate
-user.get("email", "n/a") # safe lookup with default
-"age" in user            # True
-user.keys(), user.values(), user.items()</code></pre>
-<h2>Tuples</h2>
-<p>Tuples are immutable sequences. Common for returning multiple values:</p>
-<pre><code>point = (3, 4)
-x, y = point    # unpack
+usuario["username"]           # "ana"
+usuario["vip"] = True         # mutar
+usuario.get("email", "n/d")   # lookup seguro com default
+"idade" in usuario            # True
+usuario.keys(), usuario.values(), usuario.items()</code></pre>
+<h2>Tuplas</h2>
+<p>Tuplas são sequências imutáveis. Comuns para retornar múltiplos valores:</p>
+<pre><code>ponto = (3, 4)
+x, y = ponto    # unpack
 def minmax(xs): return (min(xs), max(xs))
 lo, hi = minmax([3, 1, 5])</code></pre>
 <h2>Sets</h2>
-<pre><code>tags = {"python", "web", "python"}  # {"python", "web"} — duplicates removed
+<pre><code>tags = {"python", "web", "python"}  # {"python", "web"} — duplicatas removidas
 tags.add("ai")
 "web" in tags</code></pre>`,
           [
-            q("Tuples are…", ["Mutable", "Immutable", "Unordered", "Keyed"], 1, "Can't modify after creation."),
-            q("Safe dict lookup with default?", ["dict.safe()", "dict.get(key, default)", "dict.try(key)", "dict[key or default]"], 1, ".get(key, default)."),
-            q("Sets remove…", ["Order", "Duplicates", "Keys", "Types"], 1, "Duplicate elements are dropped."),
+            q("Tuplas são…", ["Mutáveis", "Imutáveis", "Sem ordem", "Com chave"], 1, "Não podem ser modificadas após a criação."),
+            q("Lookup seguro em dict com default?", ["dict.safe()", "dict.get(chave, default)", "dict.try(chave)", "dict[chave or default]"], 1, ".get(chave, default)."),
+            q("Sets removem…", ["Ordem", "Duplicatas", "Chaves", "Tipos"], 1, "Elementos duplicados são descartados."),
           ]
         ),
         L("if-else", "If / Elif / Else",
-          "Decision-making the Pythonic way.",
-          `<p>Python uses indentation — no braces. The <code>elif</code> keyword handles chained conditions:</p>
-<pre><code>score = 87
-if score &gt;= 90:
-    grade = "A"
-elif score &gt;= 80:
-    grade = "B"
-elif score &gt;= 70:
-    grade = "C"
+          "Decisão no estilo Pythonista.",
+          `<p>Python usa indentação — sem chaves. A palavra <code>elif</code> cuida de condições encadeadas:</p>
+<pre><code>nota = 87
+if nota &gt;= 90:
+    conceito = "A"
+elif nota &gt;= 80:
+    conceito = "B"
+elif nota &gt;= 70:
+    conceito = "C"
 else:
-    grade = "F"
-print(grade)</code></pre>
+    conceito = "F"
+print(conceito)</code></pre>
 <h2>Truthiness</h2>
-<p>Empty containers are falsy. Use this idiom:</p>
-<pre><code>names = []
-if not names:
-    print("No names yet.")</code></pre>
-<h2>Ternary</h2>
-<pre><code>label = "Adult" if age &gt;= 18 else "Minor"</code></pre>
-<h2>Comparison chaining</h2>
-<pre><code>if 0 &lt; score &lt; 100: ...  # Pythonic, works like math</code></pre>`,
+<p>Coleções vazias são falsy. Use esta forma idiomática:</p>
+<pre><code>nomes = []
+if not nomes:
+    print("Sem nomes ainda.")</code></pre>
+<h2>Ternário</h2>
+<pre><code>rotulo = "Adulto" if idade &gt;= 18 else "Menor"</code></pre>
+<h2>Comparação em cadeia</h2>
+<pre><code>if 0 &lt; nota &lt; 100: ...  # pythônico, funciona como matemática</code></pre>`,
           [
-            q("Multi-branch keyword?", ["elseif", "elif", "elsif", "else if"], 1, "elif."),
-            q("Empty list is…", ["Truthy", "Falsy", "Error", "None"], 1, "Empty containers are falsy."),
-            q("Python comparison chaining?", ["Not supported", "a < b < c works", "Needs parentheses", "Only for ints"], 1, "a < b < c is idiomatic."),
+            q("Palavra para múltiplos ramos?", ["elseif", "elif", "elsif", "else if"], 1, "elif."),
+            q("Lista vazia é…", ["Truthy", "Falsy", "Erro", "None"], 1, "Coleções vazias são falsy."),
+            q("Python suporta comparação em cadeia?", ["Não", "Sim, a < b < c funciona", "Só com parênteses", "Só para ints"], 1, "a < b < c é idiomático."),
           ]
         ),
-        L("loops", "For & While Loops",
-          "Iterate like a Pythonista.",
-          `<p>Python's <code>for</code> loop is always a <em>for-each</em>. You iterate a sequence directly:</p>
-<pre><code>for fruit in ["apple", "banana"]:
-    print(fruit)
+        L("loops", "Laços for e while",
+          "Itere como uma Pythonista.",
+          `<p>O <code>for</code> em Python é sempre <em>for-each</em>. Você itera uma sequência diretamente:</p>
+<pre><code>for fruta in ["maçã", "banana"]:
+    print(fruta)
 
 for i in range(5):       # 0..4
     print(i)
@@ -219,162 +219,162 @@ while n &gt; 0:
     print(n)
     n -= 1</code></pre>
 <h2>break / continue / else</h2>
-<pre><code>for x in items:
+<pre><code>for x in itens:
     if x &lt; 0:
-        break        # stop the loop
+        break        # para o loop
     if x == 0:
-        continue     # skip this iteration
+        continue     # pula esta iteração
 else:
-    print("completed without break")</code></pre>
-<p>That <code>else</code> on a for-loop is a rare but powerful Python feature: it runs only if the loop finished without hitting <code>break</code>.</p>`,
+    print("completou sem break")</code></pre>
+<p>Esse <code>else</code> num for é raro mas poderoso: só roda se o laço terminou sem acionar <code>break</code>.</p>`,
           [
-            q("range(5) produces…", ["1..5", "0..4", "0..5", "1..4"], 1, "0 up to but not including 5."),
-            q("Which gets index and value?", ["zip", "enumerate", "range", "items"], 1, "enumerate(iterable) yields (i, v)."),
-            q("for...else runs when?", ["Always", "If loop finished without break", "If break used", "Never"], 1, "Only when no break triggered."),
+            q("range(5) produz…", ["1..5", "0..4", "0..5", "1..4"], 1, "Vai de 0 até, mas sem incluir, 5."),
+            q("Qual dá índice e valor?", ["zip", "enumerate", "range", "items"], 1, "enumerate(iter) devolve (i, v)."),
+            q("for...else roda quando?", ["Sempre", "Quando o loop termina sem break", "Se usa break", "Nunca"], 1, "Só quando nenhum break dispara."),
           ]
         ),
-        L("functions", "Functions",
-          "Define behavior once, use it anywhere.",
-          `<p>Define a function with <code>def</code>:</p>
-<pre><code>def greet(name, greeting="Hello"):
-    return f"{greeting}, {name}!"
+        L("functions", "Funções",
+          "Defina comportamento uma vez, use em qualquer lugar.",
+          `<p>Defina uma função com <code>def</code>:</p>
+<pre><code>def saudacao(nome, cumprimento="Olá"):
+    return f"{cumprimento}, {nome}!"
 
-greet("Ana")                    # "Hello, Ana!"
-greet("Ana", "Hi")              # "Hi, Ana!"
-greet(greeting="Hey", name="Ana")  # keyword args</code></pre>
-<h2>*args and **kwargs</h2>
-<p>Accept variable numbers of positional and keyword arguments:</p>
+saudacao("Ana")                       # "Olá, Ana!"
+saudacao("Ana", "Oi")                 # "Oi, Ana!"
+saudacao(cumprimento="Eaí", nome="Ana")  # keyword args</code></pre>
+<h2>*args e **kwargs</h2>
+<p>Aceitam quantidade variável de argumentos posicionais e nomeados:</p>
 <pre><code>def log(*args, **kwargs):
     print(args, kwargs)
 
 log(1, 2, user="ana")   # (1, 2) {"user": "ana"}</code></pre>
-<h2>Type hints (optional but recommended)</h2>
-<pre><code>def add(a: int, b: int) -&gt; int:
+<h2>Type hints (opcionais, mas recomendadas)</h2>
+<pre><code>def soma(a: int, b: int) -&gt; int:
     return a + b</code></pre>
 <h2>Docstrings</h2>
 <pre><code>def area(r: float) -&gt; float:
-    """Return the area of a circle with radius r."""
+    """Retorna a área de um círculo de raio r."""
     return 3.14159 * r * r</code></pre>`,
           [
-            q("Keyword to define a function?", ["function", "fn", "def", "func"], 2, "def."),
-            q("**kwargs captures…", ["Positional args", "Keyword args as dict", "Errors", "Return values"], 1, "Keyword args become a dict."),
-            q("Docstring goes where?", ["After def", "First line of function body (in quotes)", "In comments", "Outside the file"], 1, "Triple-quoted string as first line."),
+            q("Palavra para definir função?", ["function", "fn", "def", "func"], 2, "def."),
+            q("**kwargs captura…", ["Argumentos posicionais", "Keyword args como dict", "Erros", "Retornos"], 1, "Keyword args viram um dict."),
+            q("Docstring vai onde?", ["Depois do def, fora", "Primeira linha do corpo (em aspas)", "Em comentários", "Fora do arquivo"], 1, "String com aspas triplas na primeira linha."),
           ]
         ),
-        L("quiz-project", "Mini Project: Quiz Game",
-          "Apply everything into a working game.",
-          `<p>Let's build a small terminal quiz:</p>
-<pre><code>questions = [
-    {"q": "Capital of France?", "a": "paris"},
+        L("quiz-project", "Mini projeto: jogo de quiz",
+          "Aplique tudo num jogo de verdade.",
+          `<p>Vamos montar um quiz simples no terminal:</p>
+<pre><code>perguntas = [
+    {"q": "Capital da França?", "a": "paris"},
     {"q": "2 + 2?", "a": "4"},
-    {"q": "Language created by Guido?", "a": "python"},
+    {"q": "Linguagem criada por Guido?", "a": "python"},
 ]
 
-def run_quiz(questions):
-    score = 0
-    for i, item in enumerate(questions, start=1):
-        ans = input(f"Q{i}. {item['q']}\\n&gt; ").strip().lower()
-        if ans == item["a"]:
-            print("✓ Correct!")
-            score += 1
+def rodar_quiz(perguntas):
+    pontos = 0
+    for i, item in enumerate(perguntas, start=1):
+        resp = input(f"Q{i}. {item['q']}\\n&gt; ").strip().lower()
+        if resp == item["a"]:
+            print("✓ Correto!")
+            pontos += 1
         else:
-            print(f"✗ Wrong. Answer: {item['a']}")
-    pct = round(100 * score / len(questions))
-    print(f"\\nScore: {score}/{len(questions)} ({pct}%)")
+            print(f"✗ Errou. Resposta: {item['a']}")
+    pct = round(100 * pontos / len(perguntas))
+    print(f"\\nPontos: {pontos}/{len(perguntas)} ({pct}%)")
 
 if __name__ == "__main__":
-    run_quiz(questions)</code></pre>
-<h2>What you learned</h2>
+    rodar_quiz(perguntas)</code></pre>
+<h2>O que você aprendeu</h2>
 <ul>
-  <li>Data modeling with dictionaries and lists.</li>
-  <li>Iteration with <code>enumerate</code>.</li>
-  <li>Reading input and comparing strings.</li>
-  <li>Basic arithmetic for scoring.</li>
-  <li>The <code>if __name__ == "__main__"</code> idiom — the standard Python entry point.</li>
+  <li>Modelagem de dados com dicionários e listas.</li>
+  <li>Iteração com <code>enumerate</code>.</li>
+  <li>Ler input e comparar strings.</li>
+  <li>Aritmética básica para pontuação.</li>
+  <li>O idiom <code>if __name__ == "__main__"</code> — o entry point padrão em Python.</li>
 </ul>
-<div class="callout"><div class="ico">🏆</div><p>Nice work. Next step: the Python Developer (VIP) course for OOP, decorators, testing, and APIs.</p></div>`,
+<div class="callout"><div class="ico">🏆</div><p>Mandou bem. Próximo passo: o curso Desenvolvedor Python (VIP) para POO, decorators, testes e APIs.</p></div>`,
           [
-            q("What does if __name__ == '__main__' do?", ["Runs only when imported", "Runs only when executed directly", "Runs always", "Defines a main variable"], 1, "Only when executed as a script."),
-            q(".strip().lower() does what?", ["Uppercases", "Trims and lowercases", "Reverses", "Splits"], 1, "Remove whitespace and lowercase."),
-            q("enumerate(items, start=1) starts index at…", ["0", "1", "items[0]", "Can't change start"], 1, "start= sets the initial index."),
+            q("O que if __name__ == '__main__' faz?", ["Roda só quando importado", "Roda só quando executado direto", "Roda sempre", "Define uma variável main"], 1, "Só quando executado como script."),
+            q(".strip().lower() faz o quê?", ["Maiúsculas", "Tira espaços e deixa minúsculo", "Inverte", "Divide"], 1, "Remove espaços e coloca em minúsculas."),
+            q("enumerate(itens, start=1) começa o índice em…", ["0", "1", "itens[0]", "Não dá para mudar"], 1, "start= define o índice inicial."),
           ]
         ),
       ],
     },
 
     // =================================================================
-    // 5. Advanced JavaScript (VIP)
+    // 5. JavaScript Avançado (VIP)
     // =================================================================
     {
       id: "advanced-js",
-      title: "Advanced JavaScript",
-      tagline: "Closures, async, classes, modules — go from junior to senior.",
-      description: "Level-up the hard parts: scope and closures, prototypes and classes, promises and async/await, modules, and modern patterns.",
-      level: "Intermediate",
+      title: "JavaScript Avançado",
+      tagline: "Closures, async, classes, módulos — saia de júnior para sênior.",
+      description: "Destrave as partes difíceis: escopo e closures, protótipos e classes, promises e async/await, módulos e padrões modernos.",
+      level: "Intermediário",
       duration: "10h",
       theme: "theme-advjs",
-      cover: "Advanced JS",
+      cover: "JS Avançado",
       vip: true,
       instructor: "Caio Mendes",
       lessons: [
-        L("scope-closures", "Scope & Closures",
-          "Why closures are JS's superpower.",
-          `<p>Scope is the region of code where a variable is visible. JavaScript has three kinds: global, function, and block (introduced with <code>let</code>/<code>const</code> in ES2015). <code>var</code> only respects function scope — one reason to avoid it.</p>
+        L("scope-closures", "Escopo e closures",
+          "Por que closures são o superpoder do JS.",
+          `<p>Escopo é a região de código onde uma variável é visível. O JavaScript tem três tipos: global, de função e de bloco (introduzido com <code>let</code>/<code>const</code> no ES2015). <code>var</code> só respeita escopo de função — um dos motivos para evitar.</p>
 <pre><code>{
-  let x = 1;       // block-scoped
+  let x = 1;       // escopo de bloco
   const y = 2;
 }
 console.log(x);   // ReferenceError</code></pre>
 <h2>Closures</h2>
-<p>A closure is a function that <em>remembers</em> the variables from the scope where it was created, even after that scope has ended:</p>
-<pre><code>function counter() {
+<p>Uma closure é uma função que <em>lembra</em> das variáveis do escopo em que foi criada, mesmo depois que esse escopo terminou:</p>
+<pre><code>function contador() {
   let count = 0;
   return () =&gt; ++count;
 }
 
-const next = counter();
-next();  // 1
-next();  // 2</code></pre>
-<p>That inner arrow function "closes over" <code>count</code>. Closures power private state, memoization, event handlers, and currying.</p>`,
+const proximo = contador();
+proximo();  // 1
+proximo();  // 2</code></pre>
+<p>Aquela arrow function interna "fecha sobre" <code>count</code>. Closures alimentam estado privado, memoização, event handlers e currying.</p>`,
           [
-            q("Which keywords are block-scoped?", ["var", "let & const", "All three", "function"], 1, "let and const. var is function-scoped."),
-            q("A closure is…", ["A try/catch", "A function that remembers its defining scope", "A loop", "A class"], 1, "Functions retain outer variables."),
-            q("Closures are useful for…", ["Private state", "Currying", "Memoization", "All of the above"], 3, "All of these."),
+            q("Quais palavras-chave têm escopo de bloco?", ["var", "let e const", "As três", "function"], 1, "let e const. var é escopo de função."),
+            q("Uma closure é…", ["Um try/catch", "Uma função que lembra do escopo onde nasceu", "Um loop", "Uma classe"], 1, "Funções mantêm as variáveis externas."),
+            q("Closures são úteis para…", ["Estado privado", "Currying", "Memoização", "Todas as anteriores"], 3, "Tudo isso."),
           ]
         ),
-        L("this", "The 'this' Keyword",
-          "The most-debated feature in JavaScript — demystified.",
-          `<p><code>this</code> depends on <em>how</em> a function is called, not where it's defined. There are four binding rules, in priority order:</p>
+        L("this", "A palavra-chave 'this'",
+          "O recurso mais debatido do JavaScript — desmistificado.",
+          `<p>O <code>this</code> depende de <em>como</em> uma função é chamada, não onde foi definida. Há quatro regras de binding, em ordem de prioridade:</p>
 <ol>
-  <li><strong>new binding</strong> — <code>new Foo()</code> sets <code>this</code> to the new object.</li>
-  <li><strong>Explicit binding</strong> — <code>.call(ctx)</code>, <code>.apply(ctx, args)</code>, <code>.bind(ctx)</code>.</li>
-  <li><strong>Method call</strong> — <code>obj.method()</code> sets <code>this</code> to <code>obj</code>.</li>
-  <li><strong>Default</strong> — otherwise <code>this</code> is the global object (or <code>undefined</code> in strict mode).</li>
+  <li><strong>new binding</strong> — <code>new Foo()</code> seta <code>this</code> para o novo objeto.</li>
+  <li><strong>Binding explícito</strong> — <code>.call(ctx)</code>, <code>.apply(ctx, args)</code>, <code>.bind(ctx)</code>.</li>
+  <li><strong>Chamada de método</strong> — <code>obj.metodo()</code> seta <code>this</code> para <code>obj</code>.</li>
+  <li><strong>Padrão</strong> — senão, <code>this</code> é o objeto global (ou <code>undefined</code> em modo estrito).</li>
 </ol>
-<h2>Arrow functions are different</h2>
-<p>Arrow functions don't have their own <code>this</code>. They inherit it from the enclosing scope. This is why they're perfect for callbacks where you want to preserve <code>this</code>:</p>
+<h2>Arrow functions são diferentes</h2>
+<p>Arrow functions não têm <code>this</code> próprio. Elas herdam do escopo onde foram definidas. Por isso são perfeitas para callbacks que precisam preservar <code>this</code>:</p>
 <pre><code>class Timer {
   constructor() { this.count = 0; }
   start() {
     setInterval(() =&gt; { this.count++; }, 1000);
-    //          ^ arrow preserves this
+    //          ^ arrow preserva o this
   }
 }</code></pre>`,
           [
-            q("Arrow functions bind their own this?", ["Yes", "No — they inherit from outer scope", "Only in classes", "Only as methods"], 1, "Arrows don't have their own this."),
-            q("new Foo() — this is…", ["global", "undefined", "the new instance", "the prototype"], 2, "The newly created instance."),
-            q("To force this to a specific value when calling?", [".call / .apply / .bind", "this=", "use new", "Not possible"], 0, "Those are the explicit binding methods."),
+            q("Arrow functions criam o próprio this?", ["Sim", "Não — herdam do escopo externo", "Só em classes", "Só como métodos"], 1, "Arrows não têm this próprio."),
+            q("new Foo() — o this é…", ["global", "undefined", "a nova instância", "o protótipo"], 2, "A instância recém-criada."),
+            q("Para forçar o this num valor específico ao chamar?", [".call / .apply / .bind", "this=", "usar new", "Impossível"], 0, "Esses são os métodos de binding explícito."),
           ]
         ),
-        L("proto-classes", "Prototypes & Classes",
-          "JS's inheritance model, and the class syntax that sits on top.",
-          `<p>JavaScript is a <em>prototype-based</em> language. Every object has a hidden link (<code>__proto__</code>) to another object, its prototype. Property lookups walk up the prototype chain.</p>
+        L("proto-classes", "Protótipos e classes",
+          "O modelo de herança do JS e a sintaxe de classes por cima.",
+          `<p>JavaScript é uma linguagem <em>baseada em protótipos</em>. Todo objeto tem um link oculto (<code>__proto__</code>) para outro objeto, o protótipo. A busca de propriedades sobe essa cadeia.</p>
 <pre><code>class User {
   constructor(username) {
     this.username = username;
     this.vip = false;
   }
-  greet() { return \`Hi, \${this.username}\`; }
+  saudar() { return \`Oi, \${this.username}\`; }
 }
 
 class VipUser extends User {
@@ -382,75 +382,75 @@ class VipUser extends User {
     super(username);
     this.vip = true;
   }
-  perk() { return "Access to all courses!"; }
+  beneficio() { return "Acesso a todos os cursos!"; }
 }
 
 const u = new VipUser("ana");
-u.greet();  // "Hi, ana"
-u.perk();</code></pre>
-<h2>Under the hood</h2>
-<p>Classes are syntactic sugar over functions and prototypes. <code>class Foo {}</code> + <code>extends Bar</code> sets up the prototype chain for you.</p>`,
+u.saudar();    // "Oi, ana"
+u.beneficio();</code></pre>
+<h2>Por baixo do capô</h2>
+<p>Classes são açúcar sintático sobre funções e protótipos. <code>class Foo {}</code> + <code>extends Bar</code> monta a cadeia de protótipos para você.</p>`,
           [
-            q("class is syntactic sugar over…", ["Objects only", "Prototypes and constructor functions", "JSON", "Interfaces"], 1, "Prototypes."),
-            q("Keyword to inherit?", ["inherits", "extends", "implements", "super"], 1, "extends."),
-            q("super() is used to…", ["Make something super fast", "Call parent constructor", "Define a static method", "Add a getter"], 1, "Invoke the parent constructor."),
+            q("class é açúcar sintático sobre…", ["Só objetos", "Protótipos e funções construtoras", "JSON", "Interfaces"], 1, "Protótipos."),
+            q("Palavra para herdar?", ["inherits", "extends", "implements", "super"], 1, "extends."),
+            q("super() serve para…", ["Fazer algo super rápido", "Chamar o construtor pai", "Definir método estático", "Adicionar getter"], 1, "Invocar o construtor pai."),
           ]
         ),
-        L("async-callbacks", "Async: Callbacks",
-          "The old way — and why we moved on.",
-          `<p>JavaScript is single-threaded. Anything that takes time (network, disk, timers) is handled by the runtime and the result comes back <em>later</em>. For years, the way to handle "later" was a callback:</p>
-<pre><code>function fetchUser(id, callback) {
-  setTimeout(() =&gt; callback({ id, name: "Ana" }), 500);
+        L("async-callbacks", "Async: callbacks",
+          "O jeito antigo — e por que evoluímos.",
+          `<p>JavaScript é single-threaded. Qualquer coisa demorada (rede, disco, timers) é gerenciada pelo runtime e o resultado volta <em>depois</em>. Por anos, o jeito de lidar com "depois" era callback:</p>
+<pre><code>function buscarUsuario(id, callback) {
+  setTimeout(() =&gt; callback({ id, nome: "Ana" }), 500);
 }
 
-fetchUser(1, (user) =&gt; {
-  fetchUser(2, (user2) =&gt; {
-    fetchUser(3, (user3) =&gt; {
+buscarUsuario(1, (u1) =&gt; {
+  buscarUsuario(2, (u2) =&gt; {
+    buscarUsuario(3, (u3) =&gt; {
       // callback hell 🪜
     });
   });
 });</code></pre>
-<h2>The problems</h2>
+<h2>Os problemas</h2>
 <ul>
-  <li>Nested callbacks become unreadable ("callback hell").</li>
-  <li>Error handling is duplicated in every callback.</li>
-  <li>No way to compose parallel async work cleanly.</li>
+  <li>Callbacks aninhados viram ilegíveis ("callback hell").</li>
+  <li>Tratamento de erro se duplica em cada callback.</li>
+  <li>Sem jeito limpo de compor trabalho assíncrono em paralelo.</li>
 </ul>
-<p>These pain points led to Promises, introduced in ES2015.</p>`,
+<p>Essas dores levaram às Promises, no ES2015.</p>`,
           [
-            q("JS is single- or multi-threaded?", ["Multi", "Single (with async runtime)", "Depends on browser", "Always 2 threads"], 1, "Single-threaded event loop."),
-            q("Callback hell is…", ["A library", "Deep nesting of callbacks", "A syntax error", "Slow execution"], 1, "Pyramid of doom."),
-            q("What year did Promises land officially?", ["ES5", "ES2015", "ES2018", "ES2022"], 1, "ES2015 a.k.a. ES6."),
+            q("JS é mono ou multi-thread?", ["Multi", "Single (com runtime assíncrono)", "Depende do navegador", "Sempre 2 threads"], 1, "Event loop single-threaded."),
+            q("Callback hell é…", ["Uma biblioteca", "Aninhamento profundo de callbacks", "Erro de sintaxe", "Execução lenta"], 1, "Pirâmide do terror."),
+            q("Em que ano as Promises entraram oficialmente?", ["ES5", "ES2015", "ES2018", "ES2022"], 1, "ES2015 alias ES6."),
           ]
         ),
         L("promises", "Promises",
-          "A better abstraction for 'a value later.'",
-          `<p>A Promise is an object representing an async operation. It starts <em>pending</em> and eventually becomes <em>fulfilled</em> (with a value) or <em>rejected</em> (with an error).</p>
+          "Uma abstração melhor para 'um valor depois'.",
+          `<p>Uma Promise é um objeto que representa uma operação assíncrona. Começa <em>pendente</em> e eventualmente vira <em>fulfilled</em> (com um valor) ou <em>rejected</em> (com um erro).</p>
 <pre><code>const p = new Promise((resolve, reject) =&gt; {
-  setTimeout(() =&gt; resolve("done"), 500);
+  setTimeout(() =&gt; resolve("pronto"), 500);
 });
 
-p.then(value =&gt; console.log(value))
+p.then(valor =&gt; console.log(valor))
  .catch(err =&gt; console.error(err))
- .finally(() =&gt; console.log("cleanup"));</code></pre>
-<h2>Composition</h2>
-<pre><code>Promise.all([p1, p2, p3])      // wait for all (fail-fast)
-Promise.allSettled([p1, p2])   // wait for all, no short-circuit
-Promise.race([p1, p2])          // first to settle wins</code></pre>
-<p>Promises compose with <code>.then</code> chains — each <code>.then</code> returns a new promise.</p>`,
+ .finally(() =&gt; console.log("limpeza"));</code></pre>
+<h2>Composição</h2>
+<pre><code>Promise.all([p1, p2, p3])       // espera todas (falha rápido)
+Promise.allSettled([p1, p2])    // espera todas, sem curto-circuito
+Promise.race([p1, p2])          // primeira a resolver vence</code></pre>
+<p>Promises se compõem em cadeias de <code>.then</code> — cada <code>.then</code> retorna uma nova promise.</p>`,
           [
-            q("Promise states?", ["open/closed", "pending/fulfilled/rejected", "start/end", "success/fail"], 1, "Three states."),
-            q("Promise.all fails when?", ["Any promise rejects", "All reject", "First resolves", "Never"], 0, "One rejection rejects the whole."),
-            q("What runs regardless of outcome?", [".then", ".catch", ".finally", ".end"], 2, ".finally always runs."),
+            q("Estados de uma Promise?", ["aberto/fechado", "pending/fulfilled/rejected", "start/end", "success/fail"], 1, "Três estados."),
+            q("Promise.all falha quando?", ["Qualquer rejeita", "Todas rejeitam", "Primeira resolve", "Nunca"], 0, "Uma rejeição rejeita o todo."),
+            q("O que roda independente do resultado?", [".then", ".catch", ".finally", ".end"], 2, ".finally sempre roda."),
           ]
         ),
         L("async-await", "Async / Await",
-          "Write async code that reads synchronously.",
-          `<p><code>async</code>/<code>await</code> is syntactic sugar over promises — but it transforms how async code looks:</p>
-<pre><code>async function loadUser(id) {
+          "Escreva código assíncrono que lê como síncrono.",
+          `<p><code>async</code>/<code>await</code> é açúcar sobre promises — mas transforma a aparência do código async:</p>
+<pre><code>async function carregarUsuario(id) {
   try {
     const res = await fetch(\`/api/users/\${id}\`);
-    if (!res.ok) throw new Error("Not found");
+    if (!res.ok) throw new Error("Não encontrado");
     const user = await res.json();
     return user;
   } catch (err) {
@@ -458,183 +458,183 @@ Promise.race([p1, p2])          // first to settle wins</code></pre>
     return null;
   }
 }</code></pre>
-<h2>Rules</h2>
+<h2>Regras</h2>
 <ul>
-  <li><code>await</code> works only inside <code>async</code> functions (or top-level in modules).</li>
-  <li>An <code>async</code> function always returns a Promise.</li>
-  <li>Use <code>try/catch</code> for errors — cleaner than <code>.catch</code>.</li>
+  <li><code>await</code> só funciona dentro de funções <code>async</code> (ou no topo de módulos).</li>
+  <li>Uma função <code>async</code> sempre retorna uma Promise.</li>
+  <li>Use <code>try/catch</code> para erros — mais limpo que <code>.catch</code>.</li>
 </ul>
-<h2>Parallelism</h2>
-<pre><code>// Sequential (slow)
+<h2>Paralelismo</h2>
+<pre><code>// Sequencial (lento)
 const a = await fetch("/a");
 const b = await fetch("/b");
 
-// Parallel (fast)
+// Paralelo (rápido)
 const [a2, b2] = await Promise.all([fetch("/a"), fetch("/b")]);</code></pre>`,
           [
-            q("async functions return…", ["A raw value", "A Promise", "undefined", "null"], 1, "Always a Promise."),
-            q("To run two fetches in parallel?", ["await both", "await Promise.all([...])", "fetch.parallel()", "Promise.race"], 1, "Promise.all lets them run concurrently."),
-            q("Error handling with async/await uses…", ["try/catch", ".catch", "onError event", "throw only"], 0, "try/catch is idiomatic."),
+            q("Funções async retornam…", ["Valor cru", "Uma Promise", "undefined", "null"], 1, "Sempre uma Promise."),
+            q("Para rodar dois fetch em paralelo?", ["await nos dois", "await Promise.all([...])", "fetch.parallel()", "Promise.race"], 1, "Promise.all roda em paralelo."),
+            q("Tratamento de erro com async/await usa…", ["try/catch", ".catch", "onError event", "só throw"], 0, "try/catch é idiomático."),
           ]
         ),
-        L("fetch", "The Fetch API",
-          "Make HTTP requests from the browser.",
-          `<p><code>fetch</code> is the standard way to talk to HTTP servers from JavaScript.</p>
-<pre><code>const res = await fetch("https://api.example.com/users");
+        L("fetch", "A API Fetch",
+          "Fazer requisições HTTP pelo navegador.",
+          `<p><code>fetch</code> é a forma padrão de falar com servidores HTTP no JavaScript.</p>
+<pre><code>const res = await fetch("https://api.exemplo.com/users");
 if (!res.ok) throw new Error(\`HTTP \${res.status}\`);
 const users = await res.json();</code></pre>
-<h2>POST with a body</h2>
+<h2>POST com corpo</h2>
 <pre><code>await fetch("/api/users", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ username: "ana", password: "secret" }),
+  body: JSON.stringify({ username: "ana", password: "segredo" }),
 });</code></pre>
-<h2>AbortController — cancel a request</h2>
+<h2>AbortController — cancelar requisição</h2>
 <pre><code>const controller = new AbortController();
-fetch("/slow", { signal: controller.signal });
-controller.abort();  // cancel</code></pre>
-<div class="callout"><div class="ico">⚠️</div><p><code>fetch</code> only rejects on network failure. A 404 or 500 still resolves — you must check <code>res.ok</code>.</p></div>`,
+fetch("/lento", { signal: controller.signal });
+controller.abort();  // cancela</code></pre>
+<div class="callout"><div class="ico">⚠️</div><p><code>fetch</code> só rejeita em falha de rede. Um 404 ou 500 continua resolvendo — sempre cheque <code>res.ok</code>.</p></div>`,
           [
-            q("fetch rejects on HTTP 500?", ["Yes", "No — check res.ok", "Only if status > 500", "Sometimes"], 1, "It resolves; you must check res.ok."),
-            q("How to send JSON?", ["JSON.parse body", "body: JSON.stringify(...)", "headers only", "Use XML"], 1, "Stringify the body; set header."),
-            q("How to cancel a fetch?", ["fetch.cancel()", "AbortController", "signal.kill()", "Not possible"], 1, "AbortController + signal."),
+            q("fetch rejeita em HTTP 500?", ["Sim", "Não — cheque res.ok", "Só se status > 500", "Às vezes"], 1, "Ele resolve; você precisa checar res.ok."),
+            q("Como enviar JSON?", ["JSON.parse no body", "body: JSON.stringify(...)", "só headers", "Usar XML"], 1, "Stringify no body; setar header."),
+            q("Como cancelar um fetch?", ["fetch.cancel()", "AbortController", "signal.kill()", "Impossível"], 1, "AbortController + signal."),
           ]
         ),
-        L("modules", "ES Modules",
-          "Split your code into files the right way.",
-          `<p>Since ES2015, JavaScript has a standard module system. Split each piece of functionality into its own file:</p>
+        L("modules", "Módulos ES",
+          "Divida seu código em arquivos do jeito certo.",
+          `<p>Desde o ES2015, o JavaScript tem um sistema de módulos padrão. Divida cada funcionalidade no seu próprio arquivo:</p>
 <pre><code>// math.js
-export function add(a, b) { return a + b; }
+export function soma(a, b) { return a + b; }
 export const PI = 3.14159;
 export default function area(r) { return PI * r * r; }
 
 // app.js
-import area, { add, PI } from "./math.js";
-console.log(add(1, 2));  // 3</code></pre>
+import area, { soma, PI } from "./math.js";
+console.log(soma(1, 2));  // 3</code></pre>
 <h2>Named vs default exports</h2>
-<p>Use named exports for most things — they keep names consistent across the codebase. Reserve default for a module's "main" export.</p>
-<h2>Browsers and Node</h2>
-<p>In the browser, load a module with <code>&lt;script type="module" src="app.js"&gt;</code>. In Node.js, use <code>"type": "module"</code> in <code>package.json</code>.</p>`,
+<p>Use named exports para a maioria das coisas — eles mantêm os nomes consistentes pelo código. Reserve o default para o export "principal" do módulo.</p>
+<h2>Browsers e Node</h2>
+<p>No navegador, carregue um módulo com <code>&lt;script type="module" src="app.js"&gt;</code>. No Node.js, coloque <code>"type": "module"</code> no <code>package.json</code>.</p>`,
           [
-            q("Keyword to expose a function?", ["share", "export", "public", "emit"], 1, "export."),
-            q("How to mark a script as a module in HTML?", ["<script module>", "<script type=\"module\">", "<module>", "<script lang=\"esm\">"], 1, "type=\"module\" attribute."),
-            q("Import with {} uses…", ["default imports", "named imports", "CommonJS", "Types"], 1, "Named imports use braces."),
+            q("Palavra para expor uma função?", ["share", "export", "public", "emit"], 1, "export."),
+            q("Como marcar um script como módulo no HTML?", ["<script module>", "<script type=\"module\">", "<module>", "<script lang=\"esm\">"], 1, "Atributo type=\"module\"."),
+            q("Import com {} usa…", ["default imports", "named imports", "CommonJS", "Tipos"], 1, "Named imports usam chaves."),
           ]
         ),
-        L("array-methods", "Higher-Order Array Methods",
-          ".map, .filter, .reduce — mastery level.",
-          `<p>These three methods are the foundation of functional JavaScript. Mastering them replaces countless for-loops.</p>
+        L("array-methods", "Métodos de array de alta ordem",
+          ".map, .filter, .reduce — nível mestre.",
+          `<p>Esses três métodos são a base do JavaScript funcional. Dominá-los substitui incontáveis laços for.</p>
 <pre><code>const users = [
-  { name: "Ana", vip: true, spent: 1200 },
-  { name: "Bob", vip: false, spent: 50 },
-  { name: "Cleo", vip: true, spent: 500 },
+  { nome: "Ana", vip: true, gasto: 1200 },
+  { nome: "Bob", vip: false, gasto: 50 },
+  { nome: "Cleo", vip: true, gasto: 500 },
 ];
 
-// map — transform each
-const names = users.map(u =&gt; u.name);
+// map — transformar cada item
+const nomes = users.map(u =&gt; u.nome);
 
-// filter — keep matching
-const vipOnly = users.filter(u =&gt; u.vip);
+// filter — manter só o que bate
+const soVip = users.filter(u =&gt; u.vip);
 
-// reduce — aggregate to a single value
-const totalSpent = users.reduce((sum, u) =&gt; sum + u.spent, 0);
+// reduce — agregar num valor único
+const totalGasto = users.reduce((soma, u) =&gt; soma + u.gasto, 0);
 
-// chain them
-const totalVipSpend = users
+// encadear
+const totalVip = users
   .filter(u =&gt; u.vip)
-  .reduce((s, u) =&gt; s + u.spent, 0);</code></pre>
-<h2>Other essential methods</h2>
+  .reduce((s, u) =&gt; s + u.gasto, 0);</code></pre>
+<h2>Outros métodos essenciais</h2>
 <ul>
-  <li><code>.find</code>, <code>.findIndex</code> — first match.</li>
-  <li><code>.some</code>, <code>.every</code> — boolean checks.</li>
-  <li><code>.flat</code>, <code>.flatMap</code> — flatten nested arrays.</li>
-  <li><code>.sort((a,b) =&gt; a - b)</code> — always pass a comparator.</li>
+  <li><code>.find</code>, <code>.findIndex</code> — primeiro match.</li>
+  <li><code>.some</code>, <code>.every</code> — checagem booleana.</li>
+  <li><code>.flat</code>, <code>.flatMap</code> — achatar arrays aninhados.</li>
+  <li><code>.sort((a,b) =&gt; a - b)</code> — sempre passe um comparador.</li>
 </ul>`,
           [
-            q(".reduce's second arg is…", ["The length", "The initial accumulator", "A filter", "A step"], 1, "The initial value of the accumulator."),
-            q("Default .sort compares how?", ["Numerically", "As strings", "By length", "Randomly"], 1, "As strings — always pass a comparator for numbers."),
-            q("Which returns a boolean?", [".map", ".filter", ".every", ".reduce"], 2, ".every / .some return booleans."),
+            q("O segundo argumento do .reduce é…", ["O tamanho", "O valor inicial do acumulador", "Um filtro", "Um passo"], 1, "Valor inicial do acumulador."),
+            q(".sort padrão compara como?", ["Numericamente", "Como strings", "Por tamanho", "Aleatório"], 1, "Como strings — sempre passe comparador para números."),
+            q("Qual retorna booleano?", [".map", ".filter", ".every", ".reduce"], 2, ".every / .some retornam booleanos."),
           ]
         ),
-        L("destructuring", "Destructuring & Spread",
-          "Modern syntax for extracting and combining values.",
-          `<p>Destructuring unpacks values from arrays and objects into variables:</p>
-<pre><code>const user = { name: "Ana", age: 25, role: "admin" };
-const { name, age } = user;
+        L("destructuring", "Destructuring e spread",
+          "Sintaxe moderna para extrair e combinar valores.",
+          `<p>Destructuring desempacota valores de arrays e objetos em variáveis:</p>
+<pre><code>const user = { nome: "Ana", idade: 25, papel: "admin" };
+const { nome, idade } = user;
 
-const [first, ...rest] = [1, 2, 3, 4];
-// first = 1, rest = [2, 3, 4]
+const [primeiro, ...resto] = [1, 2, 3, 4];
+// primeiro = 1, resto = [2, 3, 4]
 
-// Defaults + rename
-const { title = "Untitled", meta: metadata = {} } = post;</code></pre>
-<h2>Spread in arrays</h2>
-<pre><code>const all = [...group1, ...group2];
-const copy = [...original];
+// Defaults + renomear
+const { titulo = "Sem título", meta: metadados = {} } = post;</code></pre>
+<h2>Spread em arrays</h2>
+<pre><code>const todos = [...grupo1, ...grupo2];
+const copia = [...original];
 Math.max(...[1, 8, 3]);   // 8</code></pre>
-<h2>Spread in objects</h2>
-<pre><code>const updated = { ...user, role: "owner" };   // override role
-const merged = { ...defaults, ...overrides };</code></pre>
-<h2>Rest parameters</h2>
-<pre><code>function sum(...nums) {
+<h2>Spread em objetos</h2>
+<pre><code>const atualizado = { ...user, papel: "dono" };  // sobrescreve papel
+const unido = { ...defaults, ...overrides };</code></pre>
+<h2>Parâmetros rest</h2>
+<pre><code>function soma(...nums) {
   return nums.reduce((s, n) =&gt; s + n, 0);
 }
-sum(1, 2, 3);  // 6</code></pre>`,
+soma(1, 2, 3);  // 6</code></pre>`,
           [
-            q("{ ...a, x: 1 } gives?", ["Mutates a", "Copy of a with x overridden", "A new array", "Error"], 1, "Non-mutating merge."),
-            q("Rest parameters syntax?", ["function f(rest...)", "function f(...args)", "function f(args*)", "function f(#args)"], 1, "function f(...args)."),
-            q("Rename on destructure?", ["{ name = rename }", "{ name: newName }", "{ name as newName }", "Not possible"], 1, "{ name: newName } renames."),
+            q("{ ...a, x: 1 } resulta em?", ["Muta a", "Cópia de a com x sobrescrito", "Um novo array", "Erro"], 1, "Merge sem mutar."),
+            q("Sintaxe de parâmetros rest?", ["function f(rest...)", "function f(...args)", "function f(args*)", "function f(#args)"], 1, "function f(...args)."),
+            q("Renomear no destructuring?", ["{ nome = novoNome }", "{ nome: novoNome }", "{ nome as novoNome }", "Impossível"], 1, "{ nome: novoNome } renomeia."),
           ]
         ),
-        L("error-handling", "Error Handling",
-          "Fail gracefully and recover.",
-          `<p>Every real program must handle errors. The basic shape:</p>
+        L("error-handling", "Tratamento de erros",
+          "Falhe com elegância e se recupere.",
+          `<p>Todo programa real precisa tratar erros. A forma básica:</p>
 <pre><code>try {
-  const data = JSON.parse(text);
+  const data = JSON.parse(texto);
   return data;
 } catch (err) {
-  console.error("Parse failed:", err.message);
+  console.error("Falha no parse:", err.message);
   return null;
 } finally {
-  // cleanup that always runs
+  // limpeza que sempre roda
 }</code></pre>
-<h2>Custom errors</h2>
+<h2>Erros customizados</h2>
 <pre><code>class ValidationError extends Error {
-  constructor(field, message) {
+  constructor(campo, message) {
     super(message);
-    this.field = field;
+    this.campo = campo;
     this.name = "ValidationError";
   }
 }
 
-throw new ValidationError("email", "Invalid format");</code></pre>
-<h2>Async errors</h2>
-<pre><code>async function run() {
+throw new ValidationError("email", "Formato inválido");</code></pre>
+<h2>Erros em async</h2>
+<pre><code>async function rodar() {
   try {
     const res = await fetch("/api");
     if (!res.ok) throw new Error(res.statusText);
   } catch (err) {
-    notifyUser("Something went wrong");
+    notificarUsuario("Algo deu errado");
   }
 }</code></pre>
-<div class="callout"><div class="ico">🛡️</div><p>Never silently swallow errors. At minimum, log them. Real users hit every edge case.</p></div>`,
+<div class="callout"><div class="ico">🛡️</div><p>Nunca engula erros em silêncio. No mínimo, faça log. Usuários reais batem em todo caso de borda.</p></div>`,
           [
-            q("finally block runs…", ["Only on success", "Only on error", "Always", "Never"], 2, "Always — great for cleanup."),
-            q("To throw your own error?", ["raise", "throw", "error()", "fail"], 1, "throw new Error(...)."),
-            q("Custom errors extend?", ["Exception", "Error", "Throw", "Failure"], 1, "extends Error."),
+            q("O bloco finally roda…", ["Só em sucesso", "Só em erro", "Sempre", "Nunca"], 2, "Sempre — ótimo para limpeza."),
+            q("Para lançar um erro próprio?", ["raise", "throw", "error()", "fail"], 1, "throw new Error(...)."),
+            q("Erros customizados estendem?", ["Exception", "Error", "Throw", "Failure"], 1, "extends Error."),
           ]
         ),
-        L("perf", "Performance Tips",
-          "Small techniques that keep apps snappy.",
-          `<p>Most performance wins come from a few basic habits:</p>
+        L("perf", "Dicas de performance",
+          "Pequenas técnicas que mantêm o app rápido.",
+          `<p>A maioria dos ganhos de performance vem de alguns hábitos básicos:</p>
 <ul>
-  <li><strong>Debounce</strong> rapid events (input, scroll). Fire your handler only after the user pauses.</li>
-  <li><strong>Throttle</strong> — cap how often a function can run.</li>
-  <li><strong>Cache</strong> expensive computations with memoization.</li>
-  <li><strong>Avoid layout thrashing</strong> — batch DOM reads and writes.</li>
-  <li><strong>Use <code>requestAnimationFrame</code></strong> for visual updates.</li>
-  <li><strong>Ship less JavaScript</strong> — lazy-load, code-split, drop unused libraries.</li>
+  <li><strong>Debounce</strong> eventos rápidos (input, scroll). Execute o handler só depois que o usuário pausa.</li>
+  <li><strong>Throttle</strong> — limita a frequência de execução.</li>
+  <li><strong>Cache</strong> cálculos caros com memoização.</li>
+  <li><strong>Evite layout thrashing</strong> — agrupe leituras e escritas no DOM.</li>
+  <li><strong>Use <code>requestAnimationFrame</code></strong> para atualizações visuais.</li>
+  <li><strong>Mande menos JavaScript</strong> — lazy-load, code-split, remova libs sem uso.</li>
 </ul>
-<h2>Debounce example</h2>
+<h2>Exemplo de debounce</h2>
 <pre><code>function debounce(fn, ms = 250) {
   let t;
   return (...args) =&gt; {
@@ -643,71 +643,71 @@ throw new ValidationError("email", "Invalid format");</code></pre>
   };
 }
 
-input.addEventListener("input", debounce(search, 300));</code></pre>
-<h2>Measure, don't guess</h2>
-<p>Use the Performance tab in DevTools. Trust numbers over intuition.</p>`,
+input.addEventListener("input", debounce(buscar, 300));</code></pre>
+<h2>Meça, não chute</h2>
+<p>Use a aba Performance do DevTools. Confie em números, não em intuição.</p>`,
           [
-            q("Debounce vs throttle — debounce fires…", ["On every event", "Only once per interval", "Once after the last event + pause", "Never"], 2, "After user stops firing events."),
-            q("Best place to measure JS perf?", ["GPU", "Performance DevTools tab", "Browser history", "Printer"], 1, "The Performance tab."),
-            q("Smooth animation callback?", ["setInterval", "setTimeout", "requestAnimationFrame", "setImmediate"], 2, "rAF aligns with the browser's repaint."),
+            q("Debounce vs throttle — debounce dispara…", ["A cada evento", "Uma vez por intervalo", "Uma vez após o último evento + pausa", "Nunca"], 2, "Depois que o usuário para de disparar."),
+            q("Melhor lugar para medir performance de JS?", ["GPU", "Aba Performance do DevTools", "Histórico do navegador", "Impressora"], 1, "A aba Performance."),
+            q("Callback para animação suave?", ["setInterval", "setTimeout", "requestAnimationFrame", "setImmediate"], 2, "rAF se alinha ao repaint do navegador."),
           ]
         ),
       ],
     },
 
     // =================================================================
-    // 6. Python Developer (VIP)
+    // 6. Desenvolvedor Python (VIP)
     // =================================================================
     {
       id: "python-developer",
-      title: "Python Developer",
-      tagline: "Go from scripts to production systems.",
-      description: "OOP, decorators, generators, testing, packaging, and building real APIs with Flask and FastAPI. The roadmap from script kid to senior.",
-      level: "Intermediate",
+      title: "Desenvolvedor Python",
+      tagline: "Vá de scripts a sistemas em produção.",
+      description: "POO, decorators, generators, testes, empacotamento e construção de APIs reais com Flask e FastAPI. O caminho de script kid a sênior.",
+      level: "Intermediário",
       duration: "12h",
       theme: "theme-python",
       cover: "PyDev",
       vip: true,
       instructor: "Lucas Pereira",
       lessons: [
-        L("toolchain", "Toolchain & Virtual Environments",
-          "Professional Python starts with isolated environments.",
-          `<p>A real Python project isolates its dependencies. Never install project libraries globally. Use virtual environments.</p>
+        L("toolchain", "Toolchain e ambientes virtuais",
+          "Python profissional começa com ambientes isolados.",
+          `<p>Um projeto Python sério isola suas dependências. Nunca instale bibliotecas do projeto globalmente. Use ambientes virtuais.</p>
 <pre><code>$ python -m venv .venv
-$ source .venv/bin/activate       # or .venv\\Scripts\\activate on Windows
+$ source .venv/bin/activate       # ou .venv\\Scripts\\activate no Windows
 (.venv) $ pip install requests flask pytest
 (.venv) $ pip freeze &gt; requirements.txt
 (.venv) $ deactivate</code></pre>
-<h2>Modern alternatives</h2>
+<h2>Alternativas modernas</h2>
 <ul>
-  <li><strong>uv</strong> — ultra-fast package manager (Rust-based).</li>
-  <li><strong>Poetry</strong> — dependency management + packaging, with a lock file.</li>
-  <li><strong>Hatch</strong> — modern project manager.</li>
+  <li><strong>uv</strong> — gerenciador de pacotes ultra-rápido (em Rust).</li>
+  <li><strong>Poetry</strong> — gerenciamento de dependências + empacotamento, com lock file.</li>
+  <li><strong>Hatch</strong> — gerenciador moderno de projetos.</li>
 </ul>
 <h2>pyproject.toml</h2>
-<p>The new standard for project configuration. Replaces <code>setup.py</code> + <code>requirements.txt</code> for most projects. Declare dependencies, version, entry points — all in one TOML file.</p>`,
+<p>O novo padrão para configurar projetos. Substitui <code>setup.py</code> + <code>requirements.txt</code> para a maioria dos projetos. Declare dependências, versão, entry points — tudo num TOML só.</p>`,
           [
-            q("Why use a venv?", ["Faster install", "Isolate per-project dependencies", "Required by Python", "Looks cool"], 1, "Each project gets its own libs."),
-            q("File to pin dependencies?", ["requirements.txt", "deps.py", "pip.ini", "libs.json"], 0, "requirements.txt (or pyproject.toml)."),
-            q("Modern standard project file?", ["setup.py", "pyproject.toml", "Pipfile", "package.json"], 1, "pyproject.toml."),
+            q("Por que usar venv?", ["Instalação mais rápida", "Isolar dependências por projeto", "Obrigatório no Python", "Fica bonito"], 1, "Cada projeto com suas próprias libs."),
+            q("Arquivo para fixar dependências?", ["requirements.txt", "deps.py", "pip.ini", "libs.json"], 0, "requirements.txt (ou pyproject.toml)."),
+            q("Arquivo de projeto padrão moderno?", ["setup.py", "pyproject.toml", "Pipfile", "package.json"], 1, "pyproject.toml."),
           ]
         ),
-        L("data-structures", "Advanced Data Structures",
+        L("data-structures", "Estruturas de dados avançadas",
           "collections, dataclasses, typing.",
-          `<p>Beyond lists and dicts, Python's standard library has huge wins:</p>
+          `<p>Além de listas e dicts, a biblioteca padrão do Python tem ganhos enormes:</p>
 <h2>collections</h2>
 <pre><code>from collections import Counter, defaultdict, deque, namedtuple
 
 Counter("mississippi")          # {'i': 4, 's': 4, ...}
 
 dd = defaultdict(list)
-dd["users"].append("ana")       # no KeyError
+dd["users"].append("ana")       # sem KeyError
 
-q = deque([1,2,3])              # O(1) append/pop on both ends
+q = deque([1,2,3])              # append/pop O(1) nas duas pontas
 q.appendleft(0)
 
-Point = namedtuple("Point", ["x", "y"])
-p = Point(3, 4)</code></pre>
+Ponto = namedtuple("Ponto", ["x", "y"])
+p = Ponto(3, 4)</code></pre>
 <h2>dataclasses</h2>
 <pre><code>from dataclasses import dataclass, field
 
@@ -719,23 +719,23 @@ class User:
 
 u = User("ana")
 print(u)  # User(username='ana', vip=False, tags=[])</code></pre>
-<p>dataclasses auto-generate <code>__init__</code>, <code>__repr__</code>, <code>__eq__</code>. Perfect for value objects.</p>`,
+<p>dataclasses geram <code>__init__</code>, <code>__repr__</code>, <code>__eq__</code> automaticamente. Perfeito para value objects.</p>`,
           [
-            q("Best for counting occurrences?", ["dict", "list", "Counter", "set"], 2, "collections.Counter."),
-            q("Mutable default arg trap — fix with?", ["None guard", "field(default_factory=...)", "tuple", "Both 1 and 2"], 3, "Both work; factory is idiomatic for dataclasses."),
-            q("@dataclass auto-generates what?", ["sql", "__init__, __repr__, __eq__", "tests", "docstrings"], 1, "Init, repr, eq."),
+            q("Melhor para contar ocorrências?", ["dict", "list", "Counter", "set"], 2, "collections.Counter."),
+            q("Armadilha de default mutável — como corrigir?", ["Guard com None", "field(default_factory=...)", "tupla", "As opções 1 e 2"], 3, "Ambas funcionam; factory é idiomático em dataclasses."),
+            q("@dataclass gera o quê?", ["sql", "__init__, __repr__, __eq__", "testes", "docstrings"], 1, "Init, repr, eq."),
           ]
         ),
-        L("comprehensions", "Comprehensions & Generators",
-          "Pythonic data pipelines.",
-          `<p>Python's list / dict / set comprehensions are terse data pipelines:</p>
-<pre><code>squares = [n*n for n in range(10)]
-index = {u.id: u for u in users}
-unique = {c.strip().lower() for c in words}</code></pre>
-<h2>Generator expressions</h2>
-<p>Swap <code>[]</code> for <code>()</code> to get a lazy sequence that doesn't build a full list in memory:</p>
-<pre><code>total = sum(n*n for n in range(10_000_000))   # no giant list created</code></pre>
-<h2>Generator functions with yield</h2>
+        L("comprehensions", "Compreensões e generators",
+          "Pipelines de dados pythônicos.",
+          `<p>Compreensões de lista / dict / set são pipelines de dados concisos:</p>
+<pre><code>quadrados = [n*n for n in range(10)]
+indice = {u.id: u for u in users}
+unicos = {c.strip().lower() for c in palavras}</code></pre>
+<h2>Expressões geradoras</h2>
+<p>Troque <code>[]</code> por <code>()</code> para obter uma sequência preguiçosa que não monta a lista inteira na memória:</p>
+<pre><code>total = sum(n*n for n in range(10_000_000))   # sem lista gigante na memória</code></pre>
+<h2>Funções geradoras com yield</h2>
 <pre><code>def fibonacci():
     a, b = 0, 1
     while True:
@@ -744,68 +744,68 @@ unique = {c.strip().lower() for c in words}</code></pre>
 
 from itertools import islice
 list(islice(fibonacci(), 10))  # [0,1,1,2,3,5,8,13,21,34]</code></pre>
-<p>Generators are the right tool when your data is huge or infinite — they stream one value at a time.</p>`,
+<p>Generators são a ferramenta certa quando seu dado é enorme ou infinito — eles entregam um valor por vez.</p>`,
           [
-            q("Generator expression uses?", ["[...]", "(...)", "{...}", "<...>"], 1, "Parentheses."),
-            q("yield pauses the function and…", ["Returns but discards state", "Keeps state for next call", "Throws an error", "Closes the file"], 1, "Preserves local state."),
-            q("Best for streaming huge data?", ["List comprehension", "Generator", "Dict", "Counter"], 1, "Generators don't materialize all values."),
+            q("Expressão geradora usa?", ["[...]", "(...)", "{...}", "<...>"], 1, "Parênteses."),
+            q("yield pausa a função e…", ["Retorna e descarta o estado", "Mantém o estado para a próxima chamada", "Lança erro", "Fecha arquivo"], 1, "Preserva o estado local."),
+            q("Melhor para streaming de dados grandes?", ["Compreensão de lista", "Generator", "Dict", "Counter"], 1, "Generators não materializam todos os valores."),
           ]
         ),
-        L("oop", "Object-Oriented Python",
-          "Classes, inheritance, dunder methods.",
-          `<pre><code>class Course:
-    def __init__(self, title, vip=False):
-        self.title = title
+        L("oop", "Python orientado a objetos",
+          "Classes, herança, métodos dunder.",
+          `<pre><code>class Curso:
+    def __init__(self, titulo, vip=False):
+        self.titulo = titulo
         self.vip = vip
-        self._lessons = []
+        self._aulas = []
 
-    def add_lesson(self, lesson):
-        self._lessons.append(lesson)
+    def add_aula(self, aula):
+        self._aulas.append(aula)
 
-    def __len__(self):          # len(course)
-        return len(self._lessons)
+    def __len__(self):          # len(curso)
+        return len(self._aulas)
 
     def __repr__(self):
-        return f"Course({self.title!r}, vip={self.vip})"
+        return f"Curso({self.titulo!r}, vip={self.vip})"
 
-class VipCourse(Course):
-    def __init__(self, title):
-        super().__init__(title, vip=True)</code></pre>
-<h2>Key ideas</h2>
+class CursoVip(Curso):
+    def __init__(self, titulo):
+        super().__init__(titulo, vip=True)</code></pre>
+<h2>Ideias-chave</h2>
 <ul>
-  <li><code>self</code> is the instance. Always the first parameter of instance methods.</li>
-  <li>Dunder methods (<code>__init__</code>, <code>__len__</code>, <code>__eq__</code>, <code>__iter__</code>) hook into built-in syntax.</li>
-  <li>Name with a leading underscore (<code>_private</code>) to signal "implementation detail."</li>
-  <li>Prefer composition over inheritance when possible.</li>
+  <li><code>self</code> é a instância. Sempre o primeiro parâmetro de métodos de instância.</li>
+  <li>Métodos dunder (<code>__init__</code>, <code>__len__</code>, <code>__eq__</code>, <code>__iter__</code>) encaixam na sintaxe embutida.</li>
+  <li>Nomear com underscore inicial (<code>_privado</code>) sinaliza "detalhe de implementação".</li>
+  <li>Prefira composição a herança quando der.</li>
 </ul>`,
           [
-            q("First parameter of instance method?", ["this", "self", "cls", "instance"], 1, "self by convention."),
-            q("__len__ customizes…", ["Print", "len(obj)", "Iteration", "Equality"], 1, "len() delegates to __len__."),
-            q("Access parent's method?", ["this.parent", "super().method()", "Class.method()", "All but 1"], 3, "super() and explicit Class.method() both work."),
+            q("Primeiro parâmetro de método de instância?", ["this", "self", "cls", "instance"], 1, "self por convenção."),
+            q("__len__ customiza…", ["Print", "len(obj)", "Iteração", "Igualdade"], 1, "len() delega para __len__."),
+            q("Acessar método do pai?", ["this.parent", "super().metodo()", "Classe.metodo()", "Todas menos a 1"], 3, "super() e Classe.metodo() funcionam."),
           ]
         ),
         L("decorators", "Decorators",
-          "Functions that wrap functions.",
-          `<p>A decorator is a function that takes a function and returns a new function. It's how Python adds logging, caching, auth, and more to existing code without changing it.</p>
+          "Funções que envelopam funções.",
+          `<p>Um decorator é uma função que recebe uma função e devolve uma nova função. É como o Python adiciona logging, cache, auth e mais a código existente sem alterá-lo.</p>
 <pre><code>import time
 from functools import wraps
 
 def timed(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
-        start = time.time()
-        result = fn(*args, **kwargs)
-        print(f"{fn.__name__} took {time.time() - start:.3f}s")
-        return result
+        inicio = time.time()
+        resultado = fn(*args, **kwargs)
+        print(f"{fn.__name__} demorou {time.time() - inicio:.3f}s")
+        return resultado
     return wrapper
 
 @timed
-def slow():
+def lento():
     time.sleep(1)
-    return "done"
+    return "pronto"
 
-slow()  # slow took 1.001s</code></pre>
-<h2>Decorators with arguments</h2>
+lento()  # lento demorou 1.001s</code></pre>
+<h2>Decorators com argumentos</h2>
 <pre><code>def retry(n=3):
     def deco(fn):
         @wraps(fn)
@@ -818,72 +818,72 @@ slow()  # slow took 1.001s</code></pre>
     return deco
 
 @retry(n=5)
-def fetch(): ...</code></pre>`,
+def buscar(): ...</code></pre>`,
           [
-            q("What does @wraps do?", ["Optimizes speed", "Preserves name/docstring of wrapped fn", "Adds logging", "Caches"], 1, "Preserves metadata."),
-            q("Decorator is…", ["A class", "A function that wraps a function", "A module", "A test"], 1, "Higher-order function."),
-            q("Decorator with args needs…", ["1 level", "2 nested closures", "3 nested closures", "Not possible"], 2, "Outer factory + decorator + wrapper."),
+            q("O que o @wraps faz?", ["Otimiza velocidade", "Preserva nome/docstring da função envelopada", "Adiciona log", "Faz cache"], 1, "Preserva metadados."),
+            q("Decorator é…", ["Uma classe", "Uma função que envelopa outra", "Um módulo", "Um teste"], 1, "Função de alta ordem."),
+            q("Decorator com args precisa de…", ["1 nível", "2 closures aninhadas", "3 closures aninhadas", "Impossível"], 2, "Factory + decorator + wrapper."),
           ]
         ),
-        L("iter-gen", "Iterators & Generators",
-          "How `for` works under the hood.",
-          `<p>Any object with <code>__iter__</code> (returning an iterator) and <code>__next__</code> (returning the next value or raising <code>StopIteration</code>) can be used in a <code>for</code> loop.</p>
-<pre><code>class Counter:
-    def __init__(self, stop): self.n, self.stop = 0, stop
+        L("iter-gen", "Iteradores e generators",
+          "Como o `for` funciona por baixo.",
+          `<p>Qualquer objeto com <code>__iter__</code> (que retorna um iterador) e <code>__next__</code> (que devolve o próximo valor ou lança <code>StopIteration</code>) pode ir num <code>for</code>.</p>
+<pre><code>class Contador:
+    def __init__(self, ate): self.n, self.ate = 0, ate
     def __iter__(self): return self
     def __next__(self):
-        if self.n &gt;= self.stop: raise StopIteration
+        if self.n &gt;= self.ate: raise StopIteration
         self.n += 1
         return self.n
 
-for x in Counter(3): print(x)  # 1, 2, 3</code></pre>
-<h2>Generators make this simpler</h2>
-<pre><code>def counter(stop):
+for x in Contador(3): print(x)  # 1, 2, 3</code></pre>
+<h2>Generators simplificam isso</h2>
+<pre><code>def contador(ate):
     n = 0
-    while n &lt; stop:
+    while n &lt; ate:
         n += 1
         yield n</code></pre>
 <h2>itertools</h2>
-<p>Python's <code>itertools</code> is a combinator library: <code>chain</code>, <code>cycle</code>, <code>islice</code>, <code>takewhile</code>, <code>groupby</code>, <code>product</code>, <code>permutations</code>. Master them and your data code shrinks dramatically.</p>`,
+<p>O <code>itertools</code> do Python é uma biblioteca de combinadores: <code>chain</code>, <code>cycle</code>, <code>islice</code>, <code>takewhile</code>, <code>groupby</code>, <code>product</code>, <code>permutations</code>. Domine e seu código de dados encolhe muito.</p>`,
           [
-            q("When an iterator is exhausted it raises…", ["EndOfInput", "StopIteration", "Exhausted", "None"], 1, "StopIteration."),
-            q("Simplest way to build an iterator?", ["Class with dunders", "Generator function", "Both work", "Built-in only"], 2, "Generators are concise."),
-            q("itertools.chain does?", ["Concatenates iterables", "Sorts", "Filters", "Reverses"], 0, "Joins multiple iterables."),
+            q("Quando um iterador esgota, ele lança…", ["EndOfInput", "StopIteration", "Exhausted", "None"], 1, "StopIteration."),
+            q("Forma mais simples de construir um iterador?", ["Classe com dunders", "Função geradora", "As duas", "Só as embutidas"], 2, "Generators são concisos."),
+            q("itertools.chain faz?", ["Concatena iteráveis", "Ordena", "Filtra", "Inverte"], 0, "Junta vários iteráveis."),
           ]
         ),
-        L("files-json", "File I/O & JSON",
-          "Read, write, serialize.",
-          `<pre><code># Text
-with open("notes.txt", "r", encoding="utf-8") as f:
-    text = f.read()
+        L("files-json", "I/O de arquivo e JSON",
+          "Ler, escrever, serializar.",
+          `<pre><code># Texto
+with open("notas.txt", "r", encoding="utf-8") as f:
+    texto = f.read()
 
 with open("out.txt", "w") as f:
-    f.write("Hello")
+    f.write("Olá")
 
 # JSON
 import json
-data = {"users": [{"name": "Ana"}]}
-with open("data.json", "w") as f:
-    json.dump(data, f, indent=2)
-with open("data.json") as f:
-    data = json.load(f)</code></pre>
-<h2>Why 'with'?</h2>
-<p>The <code>with</code> statement uses a context manager. It guarantees the file is closed, even if an exception is thrown. Always use it for files, locks, DB connections.</p>
+dados = {"users": [{"nome": "Ana"}]}
+with open("dados.json", "w") as f:
+    json.dump(dados, f, indent=2)
+with open("dados.json") as f:
+    dados = json.load(f)</code></pre>
+<h2>Por que 'with'?</h2>
+<p>O <code>with</code> usa um gerenciador de contexto. Garante que o arquivo feche, mesmo se der exceção. Sempre use para arquivos, locks, conexões de banco.</p>
 <h2>Paths</h2>
 <pre><code>from pathlib import Path
 p = Path.home() / ".config" / "app.json"
 p.parent.mkdir(exist_ok=True)
 p.write_text("{}", encoding="utf-8")</code></pre>
-<p><code>pathlib</code> is the modern replacement for <code>os.path</code>. Use it.</p>`,
+<p><code>pathlib</code> é o substituto moderno de <code>os.path</code>. Use.</p>`,
           [
-            q("Safest way to open a file?", ["open()", "with open() as f:", "file()", "os.open()"], 1, "Context manager auto-closes."),
-            q("Modern path module?", ["os.path", "pathlib", "glob", "fs"], 1, "pathlib.Path."),
-            q("JSON roundtrip uses…", ["json.dump / json.load", "pickle", "yaml", "csv"], 0, "dump writes; load reads."),
+            q("Jeito mais seguro de abrir arquivo?", ["open()", "with open() as f:", "file()", "os.open()"], 1, "O context manager fecha sozinho."),
+            q("Módulo moderno de caminhos?", ["os.path", "pathlib", "glob", "fs"], 1, "pathlib.Path."),
+            q("Round-trip de JSON usa…", ["json.dump / json.load", "pickle", "yaml", "csv"], 0, "dump escreve; load lê."),
           ]
         ),
-        L("modules-packages", "Modules & Packages",
-          "Structure real codebases.",
-          `<p>A <strong>module</strong> is a .py file. A <strong>package</strong> is a folder with an <code>__init__.py</code> (or PEP 420 namespace).</p>
+        L("modules-packages", "Módulos e pacotes",
+          "Estruture codebases reais.",
+          `<p>Um <strong>módulo</strong> é um arquivo .py. Um <strong>pacote</strong> é uma pasta com <code>__init__.py</code> (ou namespace PEP 420).</p>
 <pre><code>devstart/
   __init__.py
   auth/
@@ -897,38 +897,38 @@ p.write_text("{}", encoding="utf-8")</code></pre>
 <pre><code># devstart/auth/login.py
 from .models import User
 
-def authenticate(u, p): ...
+def autenticar(u, p): ...
 
 # devstart/cli.py
-from devstart.auth.login import authenticate</code></pre>
+from devstart.auth.login import autenticar</code></pre>
 <h2>__init__.py</h2>
-<p>Can be empty, or can re-export things for a nice public API:</p>
+<p>Pode ser vazio, ou pode reexportar coisas para uma API pública bonita:</p>
 <pre><code># devstart/auth/__init__.py
-from .login import authenticate
+from .login import autenticar
 from .models import User
-__all__ = ["authenticate", "User"]</code></pre>
-<h2>Absolute vs relative imports</h2>
-<p>Inside a package, prefer relative imports (<code>from .models import User</code>) for internal siblings, and absolute imports for anything the user types.</p>`,
+__all__ = ["autenticar", "User"]</code></pre>
+<h2>Absolutos vs relativos</h2>
+<p>Dentro de um pacote, prefira imports relativos (<code>from .models import User</code>) para irmãos internos e absolutos para o que o usuário digita.</p>`,
           [
-            q("Package is…", ["A zip file", "A folder with __init__.py", "A class", "A function"], 1, "Directory of modules."),
-            q("Relative import syntax?", ["from . import x", "from ~ import x", "import :x", "imp x"], 0, "Dots indicate relative location."),
-            q("__all__ is used for…", ["Errors", "Controlling * imports and public API", "Tests", "Types"], 1, "Declares the module's public names."),
+            q("Pacote é…", ["Um zip", "Uma pasta com __init__.py", "Uma classe", "Uma função"], 1, "Diretório de módulos."),
+            q("Sintaxe de import relativo?", ["from . import x", "from ~ import x", "import :x", "imp x"], 0, "Os pontos indicam localização relativa."),
+            q("__all__ é usado para…", ["Erros", "Controlar imports com * e API pública", "Testes", "Tipos"], 1, "Declara os nomes públicos do módulo."),
           ]
         ),
-        L("pytest", "Testing with pytest",
-          "Tests are what lets you sleep at night.",
-          `<p>Install pytest: <code>pip install pytest</code>. Create <code>tests/test_math.py</code>:</p>
-<pre><code>from myapp.math import add
+        L("pytest", "Testes com pytest",
+          "Testes são o que deixa você dormir em paz.",
+          `<p>Instale o pytest: <code>pip install pytest</code>. Crie <code>tests/test_math.py</code>:</p>
+<pre><code>from meuapp.math import soma
 
-def test_add_positive():
-    assert add(2, 3) == 5
+def test_soma_positivo():
+    assert soma(2, 3) == 5
 
-def test_add_negative():
-    assert add(-1, -2) == -3
+def test_soma_negativo():
+    assert soma(-1, -2) == -3
 
 import pytest
 
-def test_div_by_zero():
+def test_div_zero():
     with pytest.raises(ZeroDivisionError):
         1 / 0</code></pre>
 <h2>Fixtures</h2>
@@ -939,30 +939,30 @@ def user():
 def test_vip_flag(user):
     assert user["vip"] is False</code></pre>
 <h2>Parametrize</h2>
-<pre><code>@pytest.mark.parametrize("a,b,sum", [(1,1,2), (2,3,5), (0,0,0)])
-def test_add(a, b, sum):
-    assert add(a, b) == sum</code></pre>
-<p>Write tests <em>as you go</em>, not at the end. Aim for fast, focused, deterministic tests.</p>`,
+<pre><code>@pytest.mark.parametrize("a,b,total", [(1,1,2), (2,3,5), (0,0,0)])
+def test_soma(a, b, total):
+    assert soma(a, b) == total</code></pre>
+<p>Escreva testes <em>conforme codifica</em>, não só no fim. Mire em testes rápidos, focados e determinísticos.</p>`,
           [
-            q("Test files named?", ["*.test.py", "test_*.py or *_test.py", "tests.py only", "Anywhere"], 1, "pytest convention."),
-            q("@pytest.fixture provides…", ["A random value", "Reusable setup for tests", "A logger", "A config"], 1, "Injected dependencies."),
-            q("Check exception is raised?", ["try/except", "with pytest.raises(...)", "assert raises", "Both 1 and 2"], 1, "pytest.raises is idiomatic."),
+            q("Arquivos de teste são nomeados?", ["*.test.py", "test_*.py ou *_test.py", "só tests.py", "Qualquer um"], 1, "Convenção do pytest."),
+            q("@pytest.fixture fornece…", ["Um valor aleatório", "Setup reutilizável para testes", "Um logger", "Uma config"], 1, "Dependências injetadas."),
+            q("Checar que uma exceção é lançada?", ["try/except", "with pytest.raises(...)", "assert raises", "1 e 2"], 1, "pytest.raises é o idiomático."),
           ]
         ),
-        L("requests-apis", "Working with APIs",
-          "Consume HTTP services with requests.",
+        L("requests-apis", "Trabalhando com APIs",
+          "Consuma serviços HTTP com requests.",
           `<pre><code>import requests
 
-res = requests.get("https://api.example.com/users", timeout=5)
+res = requests.get("https://api.exemplo.com/users", timeout=5)
 res.raise_for_status()
 users = res.json()
 
 res = requests.post(
-    "https://api.example.com/login",
-    json={"username": "ana", "password": "secret"},
+    "https://api.exemplo.com/login",
+    json={"username": "ana", "password": "segredo"},
     headers={"Accept": "application/json"},
 )</code></pre>
-<h2>Sessions, retries, and pagination</h2>
+<h2>Sessions, retries e paginação</h2>
 <pre><code>with requests.Session() as s:
     s.headers["Authorization"] = "Bearer ..."
     while url:
@@ -971,210 +971,210 @@ res = requests.post(
         data = r.json()
         yield from data["items"]
         url = data.get("next")</code></pre>
-<h2>httpx — the async alternative</h2>
-<p><code>httpx</code> is a modern client with async support. Use it when you need concurrency or modern HTTP/2.</p>`,
+<h2>httpx — a alternativa async</h2>
+<p><code>httpx</code> é um cliente moderno com suporte async. Use quando precisar de concorrência ou HTTP/2.</p>`,
           [
-            q("Raise on 4xx/5xx?", ["res.ok()", "res.raise_for_status()", "res.error()", "res.check()"], 1, "raise_for_status()."),
-            q("Send JSON body cleanly?", ["data=...", "json=...", "body=...", "payload=..."], 1, "json= serializes + sets header."),
-            q("Async HTTP client?", ["requests", "httpx", "urllib3", "urllib"], 1, "httpx supports async."),
+            q("Disparar erro em 4xx/5xx?", ["res.ok()", "res.raise_for_status()", "res.error()", "res.check()"], 1, "raise_for_status()."),
+            q("Enviar corpo JSON direto?", ["data=...", "json=...", "body=...", "payload=..."], 1, "json= serializa e seta header."),
+            q("Cliente HTTP async?", ["requests", "httpx", "urllib3", "urllib"], 1, "httpx suporta async."),
           ]
         ),
-        L("flask", "Intro to Flask",
-          "Build a minimal web API.",
+        L("flask", "Introdução ao Flask",
+          "Monte uma API web mínima.",
           `<pre><code># app.py
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
-courses = []
+cursos = []
 
-@app.get("/courses")
-def list_courses():
-    return jsonify(courses)
+@app.get("/cursos")
+def listar_cursos():
+    return jsonify(cursos)
 
-@app.post("/courses")
-def create_course():
+@app.post("/cursos")
+def criar_curso():
     body = request.get_json()
-    courses.append(body)
+    cursos.append(body)
     return jsonify(body), 201
 
 if __name__ == "__main__":
     app.run(debug=True)</code></pre>
-<p>Run: <code>flask --app app run</code>. Visit <code>http://localhost:5000/courses</code>.</p>
-<h2>Flask philosophy</h2>
-<p>Flask is a micro-framework: small core, lots of extensions (Flask-Login, Flask-SQLAlchemy, Flask-Migrate). You assemble the stack you want.</p>
-<h2>When to use Flask</h2>
-<p>Great for learning, small APIs, admin dashboards, and when you want fine-grained control. For a larger app consider Django; for a modern typed API, see the next lesson on FastAPI.</p>`,
+<p>Rode: <code>flask --app app run</code>. Acesse <code>http://localhost:5000/cursos</code>.</p>
+<h2>Filosofia do Flask</h2>
+<p>Flask é um micro-framework: core pequeno, muitas extensões (Flask-Login, Flask-SQLAlchemy, Flask-Migrate). Você monta o stack que quer.</p>
+<h2>Quando usar Flask</h2>
+<p>Ótimo para aprender, APIs pequenas, painéis admin e quando você quer controle fino. Para app maior, considere Django; para API moderna tipada, veja a próxima aula sobre FastAPI.</p>`,
           [
-            q("Decorator for a GET route?", ["@app.get(...)", "@app.route(..., method='GET')", "Both work", "@route"], 2, "Both; .get is newer/clearer."),
-            q("What does jsonify do?", ["Parses JSON", "Serializes to JSON response with right headers", "Makes JSONP", "Minifies JSON"], 1, "Wraps a dict/list into a Response."),
-            q("Flask is described as…", ["Full-stack framework", "Micro-framework", "ORM", "Web server"], 1, "Micro: small core, many extensions."),
+            q("Decorator para rota GET?", ["@app.get(...)", "@app.route(..., method='GET')", "Ambos funcionam", "@route"], 2, "Ambos; .get é mais novo/claro."),
+            q("O que jsonify faz?", ["Parseia JSON", "Serializa em Response com headers corretos", "Faz JSONP", "Minifica JSON"], 1, "Empacota dict/list numa Response."),
+            q("Flask é descrito como…", ["Framework full-stack", "Micro-framework", "ORM", "Servidor web"], 1, "Micro: core pequeno, muitas extensões."),
           ]
         ),
-        L("fastapi", "Intro to FastAPI",
-          "Typed, async, production-ready APIs.",
+        L("fastapi", "Introdução ao FastAPI",
+          "APIs tipadas, assíncronas e prontas para produção.",
           `<pre><code># main.py
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 app = FastAPI()
 
-class Course(BaseModel):
-    title: str
+class Curso(BaseModel):
+    titulo: str
     vip: bool = False
 
-db: list[Course] = []
+db: list[Curso] = []
 
-@app.get("/courses", response_model=list[Course])
-def list_courses():
+@app.get("/cursos", response_model=list[Curso])
+def listar_cursos():
     return db
 
-@app.post("/courses", response_model=Course, status_code=201)
-def create_course(course: Course):
-    db.append(course)
-    return course</code></pre>
-<p>Run: <code>uvicorn main:app --reload</code>. Get automatic docs at <code>/docs</code> — a full Swagger UI generated from your types.</p>
-<h2>Why FastAPI wins</h2>
+@app.post("/cursos", response_model=Curso, status_code=201)
+def criar_curso(curso: Curso):
+    db.append(curso)
+    return curso</code></pre>
+<p>Rode: <code>uvicorn main:app --reload</code>. Documentação automática em <code>/docs</code> — uma Swagger UI gerada a partir dos seus tipos.</p>
+<h2>Por que o FastAPI vence</h2>
 <ul>
-  <li>Type hints double as validation (via Pydantic).</li>
-  <li>Automatic OpenAPI + interactive docs.</li>
-  <li>Native <code>async</code> for fast I/O.</li>
-  <li>Dependency injection for auth, DB sessions, etc.</li>
+  <li>Type hints fazem validação (via Pydantic).</li>
+  <li>OpenAPI + docs interativas automáticas.</li>
+  <li><code>async</code> nativo para I/O rápido.</li>
+  <li>Injeção de dependência para auth, sessão de banco etc.</li>
 </ul>
-<div class="callout"><div class="ico">🚀</div><p>For new Python APIs in 2025, FastAPI is usually the best default.</p></div>`,
+<div class="callout"><div class="ico">🚀</div><p>Para novas APIs Python em 2025, FastAPI costuma ser o padrão certo.</p></div>`,
           [
-            q("Validation in FastAPI comes from?", ["Django", "Pydantic", "Marshmallow", "Zod"], 1, "Pydantic models."),
-            q("Auto-docs URL by default?", ["/api", "/docs", "/swagger", "/help"], 1, "/docs (Swagger UI)."),
-            q("Server to run FastAPI?", ["gunicorn only", "uvicorn", "apache", "iis"], 1, "uvicorn is the standard ASGI server."),
+            q("Validação no FastAPI vem de?", ["Django", "Pydantic", "Marshmallow", "Zod"], 1, "Modelos Pydantic."),
+            q("URL padrão das auto-docs?", ["/api", "/docs", "/swagger", "/help"], 1, "/docs (Swagger UI)."),
+            q("Servidor para rodar FastAPI?", ["só gunicorn", "uvicorn", "apache", "iis"], 1, "uvicorn é o ASGI padrão."),
           ]
         ),
       ],
     },
 
     // =================================================================
-    // 7. Fullstack Web Development (VIP)
+    // 7. Desenvolvimento Web Fullstack (VIP)
     // =================================================================
     {
       id: "fullstack",
-      title: "Fullstack Web Development",
-      tagline: "Everything to build and ship a modern web app.",
-      description: "From HTTP basics to React frontends, Node/Express backends, databases, auth, and deployment. The complete map of a web product.",
-      level: "Advanced",
+      title: "Desenvolvimento Web Fullstack",
+      tagline: "Tudo para construir e lançar um app web moderno.",
+      description: "Do básico de HTTP a frontends em React, backends Node/Express, bancos de dados, auth e deploy. O mapa completo de um produto web.",
+      level: "Avançado",
       duration: "16h",
       theme: "theme-fullstack",
       cover: "Fullstack",
       vip: true,
       instructor: "Marina Costa",
       lessons: [
-        L("how-web-works", "How the Web Works",
-          "HTTP, DNS, TCP, the browser rendering pipeline.",
-          `<p>Before writing code, understand the plumbing. A single page load involves:</p>
+        L("how-web-works", "Como a web funciona",
+          "HTTP, DNS, TCP, o pipeline de renderização do navegador.",
+          `<p>Antes de escrever código, entenda o encanamento. Uma carga de página envolve:</p>
 <ol>
-  <li><strong>DNS</strong> — your browser resolves <code>devstart.up</code> to an IP.</li>
-  <li><strong>TCP + TLS</strong> — a secure connection is opened.</li>
-  <li><strong>HTTP request</strong> — <code>GET /</code> with headers (cookies, user-agent, etc.).</li>
-  <li><strong>Server</strong> — routes the request, runs your code, queries databases.</li>
-  <li><strong>Response</strong> — HTML, JSON, or a redirect, with headers.</li>
-  <li><strong>Browser parses</strong> HTML, fetches CSS/JS, builds the DOM and CSSOM, and paints.</li>
+  <li><strong>DNS</strong> — seu navegador resolve <code>devstart.up</code> para um IP.</li>
+  <li><strong>TCP + TLS</strong> — uma conexão segura é aberta.</li>
+  <li><strong>Requisição HTTP</strong> — <code>GET /</code> com headers (cookies, user-agent etc.).</li>
+  <li><strong>Servidor</strong> — roteia, roda seu código, consulta bancos.</li>
+  <li><strong>Resposta</strong> — HTML, JSON ou redirect, com headers.</li>
+  <li><strong>Parsing pelo navegador</strong> — monta DOM e CSSOM, busca CSS/JS, renderiza.</li>
 </ol>
-<h2>Status codes</h2>
+<h2>Códigos de status</h2>
 <ul>
-  <li>2xx — success (200 OK, 201 Created, 204 No Content).</li>
-  <li>3xx — redirects (301 permanent, 302 found).</li>
-  <li>4xx — client errors (400, 401, 403, 404, 409, 422, 429).</li>
-  <li>5xx — server errors (500, 502, 503).</li>
+  <li>2xx — sucesso (200 OK, 201 Created, 204 No Content).</li>
+  <li>3xx — redirect (301 permanente, 302 encontrado).</li>
+  <li>4xx — erros de cliente (400, 401, 403, 404, 409, 422, 429).</li>
+  <li>5xx — erros de servidor (500, 502, 503).</li>
 </ul>`,
           [
-            q("DNS translates?", ["HTML", "Domain → IP", "JS", "URLs"], 1, "Names to IP addresses."),
-            q("404 means?", ["OK", "Server error", "Not found", "Forbidden"], 2, "Resource not found."),
-            q("Which is a redirect?", ["200", "301", "404", "500"], 1, "301 permanent redirect."),
+            q("DNS traduz?", ["HTML", "Domínio → IP", "JS", "URLs"], 1, "Nomes em endereços IP."),
+            q("404 significa?", ["OK", "Erro de servidor", "Não encontrado", "Proibido"], 2, "Recurso não encontrado."),
+            q("Qual é um redirect?", ["200", "301", "404", "500"], 1, "301 redireciona permanentemente."),
           ]
         ),
-        L("frontend-backend", "Frontend vs Backend",
-          "Two worlds, one product.",
-          `<p>A web app has two halves:</p>
+        L("frontend-backend", "Frontend vs backend",
+          "Dois mundos, um produto.",
+          `<p>Um app web tem duas metades:</p>
 <h2>Frontend</h2>
-<p>Runs in the browser. Built with HTML/CSS/JS (often through frameworks like React, Vue, Svelte). Handles: rendering, user interaction, calling APIs, UI state.</p>
+<p>Roda no navegador. Feito com HTML/CSS/JS (geralmente com frameworks como React, Vue, Svelte). Cuida de: renderização, interação, chamadas a APIs, estado de UI.</p>
 <h2>Backend</h2>
-<p>Runs on a server. Built with Node, Python, Go, Ruby, Rust, etc. Handles: authentication, business logic, persistence, external integrations, security.</p>
-<h2>The API boundary</h2>
-<p>Between them sits an HTTP API — usually JSON over REST or GraphQL. The frontend asks "what do I show?" and "do this action." The backend answers with data or confirmation.</p>
-<div class="callout"><div class="ico">🧩</div><p>As a fullstack dev, you don't need to be equally strong on both sides — but you must understand the boundary so you can design it well.</p></div>`,
+<p>Roda num servidor. Node, Python, Go, Ruby, Rust etc. Cuida de: autenticação, regras de negócio, persistência, integrações externas, segurança.</p>
+<h2>A fronteira da API</h2>
+<p>Entre os dois fica uma API HTTP — normalmente JSON sobre REST ou GraphQL. O frontend pergunta "o que mostro?" e "faça isso". O backend responde com dados ou confirmação.</p>
+<div class="callout"><div class="ico">🧩</div><p>Como dev fullstack você não precisa ser igualmente forte nos dois lados — mas precisa entender a fronteira para projetar bem.</p></div>`,
           [
-            q("Where does business logic usually live?", ["Frontend", "Backend", "Browser", "DNS"], 1, "Backend owns logic and data."),
-            q("REST APIs commonly use?", ["XML", "JSON", "CSV", "YAML"], 1, "JSON is the lingua franca."),
-            q("Frontend frameworks include?", ["React, Vue, Svelte", "Rails, Django", "Flask, Express", "Postgres"], 0, "Those run in the browser."),
+            q("Onde a regra de negócio normalmente mora?", ["Frontend", "Backend", "Navegador", "DNS"], 1, "Backend é dono da lógica e dos dados."),
+            q("APIs REST geralmente usam?", ["XML", "JSON", "CSV", "YAML"], 1, "JSON é a língua franca."),
+            q("Frameworks de frontend incluem?", ["React, Vue, Svelte", "Rails, Django", "Flask, Express", "Postgres"], 0, "Esses rodam no navegador."),
           ]
         ),
-        L("semantic-html", "Modern Semantic HTML",
-          "Use the right tag for the right meaning.",
-          `<p>Modern HTML has dozens of tags for meaning, not just looks:</p>
+        L("semantic-html", "HTML semântico moderno",
+          "Use a tag certa para cada significado.",
+          `<p>O HTML moderno tem dezenas de tags para significado, não só visual:</p>
 <pre><code>&lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;article&gt;, &lt;section&gt;,
 &lt;aside&gt;, &lt;footer&gt;, &lt;figure&gt;, &lt;figcaption&gt;,
 &lt;time&gt;, &lt;mark&gt;, &lt;details&gt;, &lt;summary&gt;, &lt;dialog&gt;</code></pre>
-<h2>Why semantics matter</h2>
+<h2>Por que semântica importa</h2>
 <ul>
-  <li><strong>Accessibility</strong> — screen readers use semantic landmarks for navigation.</li>
-  <li><strong>SEO</strong> — search engines understand structure.</li>
-  <li><strong>Browser features</strong> — <code>&lt;dialog&gt;</code> is a real modal; <code>&lt;details&gt;</code> is a real disclosure widget. Free.</li>
-  <li><strong>Maintainability</strong> — you can scan a page's outline at a glance.</li>
+  <li><strong>Acessibilidade</strong> — screen readers usam landmarks para navegar.</li>
+  <li><strong>SEO</strong> — buscadores entendem a estrutura.</li>
+  <li><strong>Recursos do navegador</strong> — <code>&lt;dialog&gt;</code> é um modal nativo; <code>&lt;details&gt;</code> é um widget de expansão. Grátis.</li>
+  <li><strong>Manutenção</strong> — dá para ler o esqueleto da página num relance.</li>
 </ul>
-<h2>Divs are fine, too</h2>
-<p>Not everything needs a semantic tag. Use <code>&lt;div&gt;</code> when there's no clearer meaning. Just don't use div-soup when a real tag exists.</p>`,
+<h2>Divs também são ok</h2>
+<p>Nem tudo precisa de uma tag semântica. Use <code>&lt;div&gt;</code> quando não existir significado mais claro. Só não faça sopa de divs quando há tag certa.</p>`,
           [
-            q("<main> should appear how many times per page?", ["0", "1", "As many as needed", "At least 2"], 1, "Exactly one main per page."),
-            q("<details> + <summary> gives you…", ["A modal", "A native expandable widget", "A tooltip", "Nothing"], 1, "Zero-JS disclosure."),
-            q("Who benefits from semantic HTML?", ["Screen readers", "Search engines", "Other devs", "All of the above"], 3, "Everyone."),
+            q("Quantas vezes <main> deve aparecer por página?", ["0", "1", "Quantas precisar", "No mínimo 2"], 1, "Exatamente um main por página."),
+            q("<details> + <summary> te dá…", ["Um modal", "Widget expansível nativo", "Tooltip", "Nada"], 1, "Expansão sem JS."),
+            q("Quem se beneficia de HTML semântico?", ["Screen readers", "Buscadores", "Outros devs", "Todos"], 3, "Todo mundo."),
           ]
         ),
-        L("css-architecture", "CSS Architecture",
-          "BEM, utility-first, and design tokens.",
-          `<p>On small projects, any CSS works. On large products, chaos sets in fast. Three approaches that scale:</p>
+        L("css-architecture", "Arquitetura de CSS",
+          "BEM, utility-first e design tokens.",
+          `<p>Em projetos pequenos, qualquer CSS resolve. Em produtos grandes, o caos se instala. Três abordagens que escalam:</p>
 <h2>BEM (Block-Element-Modifier)</h2>
 <pre><code>.card { }
-.card__title { }
-.card__title--large { }</code></pre>
-<p>Naming conventions give every class a clear meaning and scope. Very readable; can be verbose.</p>
-<h2>Utility-first (Tailwind-style)</h2>
-<pre><code>&lt;button class="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600"&gt;Buy&lt;/button&gt;</code></pre>
-<p>No custom class names — compose small primitives. Extremely fast once you know it.</p>
-<h2>CSS Variables (design tokens)</h2>
+.card__titulo { }
+.card__titulo--grande { }</code></pre>
+<p>Convenções de nomenclatura dão sentido e escopo claros. Muito legível; pode ficar verboso.</p>
+<h2>Utility-first (estilo Tailwind)</h2>
+<pre><code>&lt;button class="px-4 py-2 rounded-lg bg-indigo-500 hover:bg-indigo-600"&gt;Comprar&lt;/button&gt;</code></pre>
+<p>Sem classes customizadas — compõe primitivas pequenas. Muito ágil depois que se acostuma.</p>
+<h2>Variáveis CSS (design tokens)</h2>
 <pre><code>:root {
-  --color-brand: #7c5cff;
+  --cor-marca: #7c5cff;
   --space-md: 16px;
   --radius: 12px;
 }</code></pre>
-<p>Define your design system in variables. Every component pulls from them. Changing the brand color is a one-line edit.</p>`,
+<p>Defina seu design system em variáveis. Todo componente puxa delas. Trocar a cor da marca é uma linha.</p>`,
           [
-            q("BEM stands for?", ["Block Element Module", "Block Element Modifier", "Best Enterprise Method", "Brand Element Map"], 1, "Block-Element-Modifier."),
-            q("Utility-first framework?", ["Bootstrap", "Tailwind CSS", "Material UI", "Bulma"], 1, "Tailwind."),
-            q("Design tokens live in?", ["JS files", "CSS variables (or JSON)", "Tests", "HTML attributes"], 1, "CSS vars are the standard."),
+            q("BEM significa?", ["Block Element Module", "Block Element Modifier", "Best Enterprise Method", "Brand Element Map"], 1, "Block-Element-Modifier."),
+            q("Framework utility-first?", ["Bootstrap", "Tailwind CSS", "Material UI", "Bulma"], 1, "Tailwind."),
+            q("Design tokens moram em?", ["Arquivos JS", "Variáveis CSS (ou JSON)", "Testes", "Atributos HTML"], 1, "Variáveis CSS são o padrão."),
           ]
         ),
-        L("js-for-fs", "JavaScript for Fullstack",
-          "The dialect of modern JS you'll write daily.",
-          `<p>Beyond fundamentals, these features dominate production JS:</p>
+        L("js-for-fs", "JavaScript para fullstack",
+          "O dialeto de JS que você vai escrever todo dia.",
+          `<p>Além dos fundamentos, esses recursos dominam JS em produção:</p>
 <ul>
-  <li><strong>Modules</strong> with <code>import</code>/<code>export</code>.</li>
-  <li><strong>async/await</strong> everywhere for I/O.</li>
+  <li><strong>Módulos</strong> com <code>import</code>/<code>export</code>.</li>
+  <li><strong>async/await</strong> em todo I/O.</li>
   <li><strong>Destructuring</strong>, <strong>spread</strong>, <strong>rest</strong>.</li>
-  <li><strong>Optional chaining</strong> (<code>user?.address?.city</code>) and <strong>nullish coalescing</strong> (<code>x ?? "default"</code>).</li>
-  <li><strong>Array/Object methods</strong> — map, filter, reduce, Object.entries.</li>
+  <li><strong>Optional chaining</strong> (<code>user?.endereco?.cidade</code>) e <strong>nullish coalescing</strong> (<code>x ?? "padrão"</code>).</li>
+  <li><strong>Métodos de Array/Object</strong> — map, filter, reduce, Object.entries.</li>
   <li><strong>Template literals</strong>.</li>
 </ul>
-<h2>Linting and formatting</h2>
-<p>Every team uses ESLint + Prettier. Configure once, commit the config, stop arguing about semicolons.</p>
+<h2>Lint e formatação</h2>
+<p>Todo time usa ESLint + Prettier. Configure uma vez, comite a config, pare de discutir sobre ponto e vírgula.</p>
 <h2>TypeScript</h2>
-<p>In modern teams, plain JS is rare. TypeScript adds a type system that catches bugs before runtime. The learning curve is small; the payoff is huge. Learn it as soon as you're comfortable with JS.</p>`,
+<p>Em times modernos, JS puro é raro. TypeScript adiciona um sistema de tipos que pega bugs antes do runtime. A curva é pequena; o retorno é enorme. Aprenda assim que estiver confortável com JS.</p>`,
           [
-            q("Optional chaining operator?", [".", "?.", "??", "=>"], 1, "?. safely accesses nested properties."),
-            q("?? differs from || because…", ["It's faster", "It only triggers on null/undefined", "It's for numbers", "Deprecated"], 1, "|| triggers on any falsy; ?? only null/undefined."),
-            q("Typed superset of JS?", ["Flow", "TypeScript", "CoffeeScript", "Dart"], 1, "TypeScript is the industry standard."),
+            q("Operador optional chaining?", [".", "?.", "??", "=>"], 1, "?. acessa propriedades aninhadas com segurança."),
+            q("?? difere de || porque…", ["É mais rápido", "Só dispara em null/undefined", "É para números", "Deprecado"], 1, "|| dispara em qualquer falsy; ?? só em null/undefined."),
+            q("Superset tipado de JS?", ["Flow", "TypeScript", "CoffeeScript", "Dart"], 1, "TypeScript é o padrão da indústria."),
           ]
         ),
-        L("react-intro", "Intro to React",
-          "Components as the unit of UI.",
-          `<p>React is a library for building UIs out of components. Each component is a function that returns JSX (HTML-like syntax in JS):</p>
-<pre><code>function Button({ label, onClick }) {
+        L("react-intro", "Introdução ao React",
+          "Componentes como unidade de UI.",
+          `<p>React é uma biblioteca para construir UIs a partir de componentes. Cada componente é uma função que retorna JSX (sintaxe parecida com HTML dentro do JS):</p>
+<pre><code>function Botao({ label, onClick }) {
   return (
     &lt;button className="btn primary" onClick={onClick}&gt;
       {label}
@@ -1185,477 +1185,477 @@ def create_course(course: Course):
 function App() {
   return (
     &lt;div&gt;
-      &lt;h1&gt;Hello&lt;/h1&gt;
-      &lt;Button label="Click me" onClick={() =&gt; alert("!")} /&gt;
+      &lt;h1&gt;Olá&lt;/h1&gt;
+      &lt;Botao label="Clique" onClick={() =&gt; alert("!")} /&gt;
     &lt;/div&gt;
   );
 }</code></pre>
-<h2>Why React?</h2>
+<h2>Por que React?</h2>
 <ul>
-  <li>Huge ecosystem (Next.js, Remix, countless component libs).</li>
-  <li>Industry standard — nearly every frontend job lists it.</li>
-  <li>Declarative: describe what the UI should look like for a given state, React updates the DOM efficiently.</li>
+  <li>Ecosistema gigante (Next.js, Remix, inúmeras libs de componente).</li>
+  <li>Padrão da indústria — quase toda vaga frontend exige.</li>
+  <li>Declarativo: você diz como a UI deve ficar para um estado; o React atualiza o DOM com eficiência.</li>
 </ul>`,
           [
-            q("React components are…", ["Classes only", "Functions (or classes)", "Templates", "CSS files"], 1, "Modern React uses function components."),
-            q("JSX is…", ["An image format", "HTML-like syntax inside JS", "A compiler", "A runtime"], 1, "Transpiled to React.createElement calls."),
-            q("Most popular React meta-framework?", ["Gatsby", "Next.js", "Nuxt", "Svelte"], 1, "Next.js."),
+            q("Componentes React são…", ["Só classes", "Funções (ou classes)", "Templates", "Arquivos CSS"], 1, "React moderno usa componentes de função."),
+            q("JSX é…", ["Formato de imagem", "Sintaxe parecida com HTML dentro do JS", "Um compilador", "Um runtime"], 1, "Transpila para chamadas React.createElement."),
+            q("Meta-framework React mais popular?", ["Gatsby", "Next.js", "Nuxt", "Svelte"], 1, "Next.js."),
           ]
         ),
-        L("react-state", "Components, Props & State",
-          "Props go down, state lives in components.",
-          `<p><strong>Props</strong> are inputs to a component. <strong>State</strong> is internal, changeable data managed by hooks.</p>
+        L("react-state", "Componentes, props e state",
+          "Props descem, state vive nos componentes.",
+          `<p><strong>Props</strong> são entradas de um componente. <strong>State</strong> é dado interno, mutável, gerenciado por hooks.</p>
 <pre><code>import { useState, useEffect } from "react";
 
-function Counter({ start = 0 }) {
-  const [count, setCount] = useState(start);
+function Contador({ inicio = 0 }) {
+  const [count, setCount] = useState(inicio);
 
   useEffect(() =&gt; {
-    document.title = \`Count: \${count}\`;
+    document.title = \`Contador: \${count}\`;
   }, [count]);
 
   return (
     &lt;div&gt;
-      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;p&gt;Contador: {count}&lt;/p&gt;
       &lt;button onClick={() =&gt; setCount(count + 1)}&gt;+1&lt;/button&gt;
     &lt;/div&gt;
   );
 }</code></pre>
-<h2>Key hooks</h2>
+<h2>Hooks chave</h2>
 <ul>
-  <li><code>useState</code> — local state.</li>
-  <li><code>useEffect</code> — side effects (fetching, subscriptions).</li>
-  <li><code>useMemo</code> — memoize expensive computations.</li>
-  <li><code>useCallback</code> — stable function identity.</li>
-  <li><code>useRef</code> — persist a mutable value or DOM reference.</li>
+  <li><code>useState</code> — estado local.</li>
+  <li><code>useEffect</code> — efeitos colaterais (fetch, subscriptions).</li>
+  <li><code>useMemo</code> — memoiza cálculos caros.</li>
+  <li><code>useCallback</code> — identidade estável de função.</li>
+  <li><code>useRef</code> — mantém valor mutável ou referência ao DOM.</li>
 </ul>`,
           [
-            q("Props flow…", ["Up from child", "Down from parent", "Sideways", "Nowhere"], 1, "Parent → child."),
-            q("Hook for side effects?", ["useState", "useEffect", "useCallback", "useRef"], 1, "useEffect runs on render/deps."),
-            q("State setter from useState?", ["The value itself", "A function you call to update state", "A ref", "A dispatcher"], 1, "setState(newValue)."),
+            q("Props fluem…", ["De cima pra baixo a partir do filho", "Do pai para o filho", "De lado", "Em lugar nenhum"], 1, "Pai → filho."),
+            q("Hook para efeitos colaterais?", ["useState", "useEffect", "useCallback", "useRef"], 1, "useEffect roda no render/deps."),
+            q("Setter de useState?", ["O valor em si", "Uma função que atualiza o estado", "Uma ref", "Um dispatcher"], 1, "setState(novoValor)."),
           ]
         ),
-        L("routing", "Routing in SPAs",
-          "Make single-page apps feel multi-page.",
-          `<p>A Single-Page App loads one HTML file, then JavaScript swaps the view as the URL changes — without a full page reload. This needs a router.</p>
+        L("routing", "Roteamento em SPAs",
+          "Faça single-page apps parecerem multi-páginas.",
+          `<p>Um Single-Page App carrega um HTML e o JavaScript troca a tela conforme a URL muda — sem reload completo. Para isso precisa de um router.</p>
 <h2>React Router</h2>
 <pre><code>import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 &lt;BrowserRouter&gt;
   &lt;nav&gt;
-    &lt;Link to="/"&gt;Home&lt;/Link&gt;
-    &lt;Link to="/courses"&gt;Courses&lt;/Link&gt;
+    &lt;Link to="/"&gt;Início&lt;/Link&gt;
+    &lt;Link to="/cursos"&gt;Cursos&lt;/Link&gt;
   &lt;/nav&gt;
   &lt;Routes&gt;
     &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
-    &lt;Route path="/courses/:id" element={&lt;CoursePage /&gt;} /&gt;
+    &lt;Route path="/cursos/:id" element={&lt;CoursePage /&gt;} /&gt;
     &lt;Route path="*" element={&lt;NotFound /&gt;} /&gt;
   &lt;/Routes&gt;
 &lt;/BrowserRouter&gt;</code></pre>
-<h2>File-based routing</h2>
-<p>Next.js, Remix, SvelteKit, and Nuxt use folders. <code>pages/courses/[id].jsx</code> automatically becomes <code>/courses/123</code>. Less boilerplate.</p>`,
+<h2>Roteamento baseado em arquivos</h2>
+<p>Next.js, Remix, SvelteKit e Nuxt usam pastas. <code>pages/cursos/[id].jsx</code> automaticamente vira <code>/cursos/123</code>. Menos boilerplate.</p>`,
           [
-            q("SPA stands for?", ["Static Page App", "Single-Page Application", "Server Page App", "Simple Page Admin"], 1, "One HTML; JS swaps views."),
-            q("Next.js uses what routing style?", ["Manual config", "File-based", "XML config", "Database-driven"], 1, "File-system routing."),
-            q("Catch-all route?", ["/:any", "/*", "*", "/..."], 2, "Wildcard `*`."),
+            q("SPA significa?", ["Static Page App", "Single-Page Application", "Server Page App", "Simple Page Admin"], 1, "Um HTML; JS troca as telas."),
+            q("Next.js usa qual estilo de roteamento?", ["Config manual", "Baseado em arquivos", "Config em XML", "Driven por banco"], 1, "Roteamento por sistema de arquivos."),
+            q("Rota catch-all?", ["/:any", "/*", "*", "/..."], 2, "Curinga `*`."),
           ]
         ),
-        L("node-basics", "Node.js Basics",
-          "JavaScript on the server.",
-          `<p>Node.js runs JavaScript outside the browser. It ships with a standard library for files, HTTP, streams, and has the largest package registry in the world (npm).</p>
+        L("node-basics", "Básico de Node.js",
+          "JavaScript no servidor.",
+          `<p>Node.js roda JavaScript fora do navegador. Vem com uma lib padrão para arquivos, HTTP, streams, e tem o maior registro de pacotes do mundo (npm).</p>
 <pre><code>$ node --version
 v20.10.0
 $ npm init -y
 $ npm install express
 $ node server.js</code></pre>
-<h2>Hello world HTTP server</h2>
+<h2>Servidor HTTP hello world</h2>
 <pre><code>import http from "node:http";
 
 const server = http.createServer((req, res) =&gt; {
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ hello: "world" }));
+  res.end(JSON.stringify({ ola: "mundo" }));
 });
 
 server.listen(3000);</code></pre>
 <h2>npm</h2>
 <ul>
-  <li><code>npm install x</code> — add a dependency.</li>
-  <li><code>npm run dev</code> — run a script from <code>package.json</code>.</li>
-  <li><code>package-lock.json</code> — exact versions pinned for reproducible installs.</li>
+  <li><code>npm install x</code> — adiciona dependência.</li>
+  <li><code>npm run dev</code> — roda script do <code>package.json</code>.</li>
+  <li><code>package-lock.json</code> — trava versões para instalações reprodutíveis.</li>
 </ul>`,
           [
-            q("Node.js runs what language?", ["Python", "JavaScript", "Go", "Java"], 1, "JS on the server."),
-            q("npm installs packages into?", ["./lib/", "./node_modules/", "system-wide", "./packages/"], 1, "node_modules."),
-            q("Lock file ensures?", ["Security scans", "Reproducible installs", "Minification", "Faster runtime"], 1, "Exact version pinning."),
+            q("Node.js roda qual linguagem?", ["Python", "JavaScript", "Go", "Java"], 1, "JS no servidor."),
+            q("npm instala pacotes em?", ["./lib/", "./node_modules/", "global", "./packages/"], 1, "node_modules."),
+            q("O lock file garante?", ["Scans de segurança", "Instalações reprodutíveis", "Minificação", "Runtime mais rápido"], 1, "Versões exatas fixadas."),
           ]
         ),
-        L("express", "REST APIs with Express",
-          "The classic Node API framework.",
+        L("express", "APIs REST com Express",
+          "O clássico framework de API em Node.",
           `<pre><code>import express from "express";
 const app = express();
 app.use(express.json());
 
-const courses = [];
+const cursos = [];
 
-app.get("/courses", (req, res) =&gt; res.json(courses));
+app.get("/cursos", (req, res) =&gt; res.json(cursos));
 
-app.post("/courses", (req, res) =&gt; {
-  const course = { id: Date.now(), ...req.body };
-  courses.push(course);
-  res.status(201).json(course);
+app.post("/cursos", (req, res) =&gt; {
+  const curso = { id: Date.now(), ...req.body };
+  cursos.push(curso);
+  res.status(201).json(curso);
 });
 
 app.use((err, req, res, next) =&gt; {
   console.error(err);
-  res.status(500).json({ error: "Internal" });
+  res.status(500).json({ error: "Interno" });
 });
 
 app.listen(3000);</code></pre>
 <h2>Middleware</h2>
-<p>Express is built around middleware — functions that run before your handlers. Auth, logging, CORS, body parsing, rate limiting — all implemented as middleware.</p>
+<p>O Express é construído em torno de middleware — funções que rodam antes dos handlers. Auth, log, CORS, parse de body, rate limit — tudo é middleware.</p>
 <pre><code>app.use((req, res, next) =&gt; {
   console.log(req.method, req.url);
   next();
 });</code></pre>`,
           [
-            q("Express middleware signature?", ["(req, res)", "(req, res, next)", "(ctx)", "() => {}"], 1, "(req, res, next)."),
-            q("Return JSON response?", ["res.send({...})", "res.json({...})", "res.body", "res.out()"], 1, "res.json sets content-type."),
-            q("To parse JSON request bodies?", ["Built-in", "app.use(express.json())", "Middleware 'bodyParser'", "Both 2 and 3"], 3, "Both work; express.json is built-in."),
+            q("Assinatura de middleware Express?", ["(req, res)", "(req, res, next)", "(ctx)", "() => {}"], 1, "(req, res, next)."),
+            q("Retornar JSON?", ["res.send({...})", "res.json({...})", "res.body", "res.out()"], 1, "res.json seta o content-type."),
+            q("Parsear JSON do body?", ["Built-in", "app.use(express.json())", "Middleware 'bodyParser'", "As duas 2 e 3"], 3, "Ambos funcionam; express.json é built-in."),
           ]
         ),
-        L("databases", "Databases: SQL vs NoSQL",
-          "Pick the right tool for your data.",
-          `<h2>SQL (relational)</h2>
-<p>Postgres, MySQL, SQLite. Tables with strict schemas. Joins. ACID transactions. Great for: most apps, anything with relationships, anything you can't afford to lose.</p>
+        L("databases", "Bancos: SQL vs NoSQL",
+          "Escolha a ferramenta certa para seus dados.",
+          `<h2>SQL (relacional)</h2>
+<p>Postgres, MySQL, SQLite. Tabelas com schemas estritos. Joins. Transações ACID. Ótimo para: a maioria dos apps, qualquer coisa com relacionamentos, qualquer coisa que você não pode perder.</p>
 <pre><code>SELECT u.username, COUNT(p.id) AS progress_count
 FROM users u
 LEFT JOIN progress p ON p.user_id = u.id
 GROUP BY u.username;</code></pre>
 <h2>NoSQL</h2>
-<p>MongoDB (document), Redis (key-value), DynamoDB, Firestore. Flexible schemas, different tradeoffs. Great for: high-write workloads, caching, unstructured data.</p>
+<p>MongoDB (documento), Redis (chave-valor), DynamoDB, Firestore. Schemas flexíveis, tradeoffs diferentes. Ótimo para: carga alta de escrita, cache, dados não estruturados.</p>
 <pre><code>db.users.find({ vip: true }).sort({ createdAt: -1 })</code></pre>
-<h2>Default recommendation</h2>
-<p>Start with Postgres. It's free, rock-solid, has JSON columns (so you can mix relational and document), and scales further than most startups ever need.</p>
+<h2>Recomendação padrão</h2>
+<p>Comece com Postgres. É grátis, sólido, tem colunas JSON (dá para misturar relacional e documento) e escala além do que a maioria das startups precisa.</p>
 <h2>ORMs</h2>
-<p>Prisma (TS), Drizzle (TS), TypeORM, SQLAlchemy (Python). They translate code into SQL and back, and keep your schema in source control.</p>`,
+<p>Prisma (TS), Drizzle (TS), TypeORM, SQLAlchemy (Python). Traduzem código em SQL e vice-versa, e mantêm seu schema versionado.</p>`,
           [
-            q("Default DB for most apps?", ["Mongo", "Postgres", "Cassandra", "SQLite only"], 1, "Postgres is the safe default."),
-            q("ACID stands for?", ["A flavor of SQL", "Atomic, Consistent, Isolated, Durable", "A NoSQL feature", "An ORM"], 1, "Transaction guarantees."),
-            q("ORM translates?", ["CSS to JS", "Code to SQL and back", "SQL to HTML", "Nothing"], 1, "Object-Relational Mapping."),
+            q("Banco padrão para a maioria dos apps?", ["Mongo", "Postgres", "Cassandra", "Só SQLite"], 1, "Postgres é o padrão seguro."),
+            q("ACID significa?", ["Um sabor de SQL", "Atomic, Consistent, Isolated, Durable", "Um recurso NoSQL", "Um ORM"], 1, "Garantias de transação."),
+            q("ORM traduz?", ["CSS em JS", "Código em SQL e vice-versa", "SQL em HTML", "Nada"], 1, "Object-Relational Mapping."),
           ]
         ),
-        L("auth-jwt", "Authentication & JWT",
-          "Who is this user, and what can they do?",
-          `<p>Two pieces: <strong>authentication</strong> (who are you) and <strong>authorization</strong> (what can you do).</p>
-<h2>Password storage</h2>
-<p><strong>Never</strong> store plain passwords. Use <code>bcrypt</code>, <code>argon2</code>, or <code>scrypt</code>. These are slow hashing functions designed to resist brute-force.</p>
+        L("auth-jwt", "Autenticação e JWT",
+          "Quem é esse usuário e o que ele pode fazer?",
+          `<p>Duas peças: <strong>autenticação</strong> (quem é você) e <strong>autorização</strong> (o que você pode fazer).</p>
+<h2>Guarda de senhas</h2>
+<p><strong>Nunca</strong> guarde senhas em texto puro. Use <code>bcrypt</code>, <code>argon2</code> ou <code>scrypt</code>. São funções lentas feitas para resistir a brute force.</p>
 <pre><code>import bcrypt from "bcryptjs";
 const hash = await bcrypt.hash(password, 12);
 const ok = await bcrypt.compare(password, user.hash);</code></pre>
 <h2>Sessions vs JWT</h2>
 <ul>
-  <li><strong>Sessions</strong> (server-side): a cookie holds a random ID. Server stores user data. Simple, revocable, works great.</li>
-  <li><strong>JWT</strong>: a signed token carries the user's claims. Stateless, great for APIs across services. Careful: hard to revoke mid-session.</li>
+  <li><strong>Sessions</strong> (no servidor): um cookie guarda um ID aleatório. O servidor guarda os dados. Simples, revogável, funciona muito bem.</li>
+  <li><strong>JWT</strong>: um token assinado carrega as claims do usuário. Stateless, ótimo para APIs entre serviços. Cuidado: difícil revogar no meio.</li>
 </ul>
 <pre><code>import jwt from "jsonwebtoken";
 const token = jwt.sign({ userId: 42 }, process.env.JWT_SECRET, { expiresIn: "1h" });
 const payload = jwt.verify(token, process.env.JWT_SECRET);</code></pre>
-<div class="callout"><div class="ico">🔒</div><p>Store JWTs in HttpOnly, Secure cookies — not in localStorage. localStorage is readable by any JS on the page, including injected scripts.</p></div>`,
+<div class="callout"><div class="ico">🔒</div><p>Guarde JWTs em cookies HttpOnly e Secure — não no localStorage. O localStorage é lido por qualquer JS na página, incluindo scripts injetados.</p></div>`,
           [
-            q("Safe password hashing?", ["SHA-256", "bcrypt or argon2", "MD5", "Plain text"], 1, "Slow hashes resist brute force."),
-            q("JWT stands for?", ["JSON Web Token", "Java Web Tool", "JavaScript Wrap Type", "JSON Wizard"], 0, "JSON Web Token."),
-            q("Safe place to store a JWT?", ["localStorage", "HttpOnly cookie", "URL query", "Local variable"], 1, "HttpOnly, Secure cookie."),
+            q("Hash seguro para senha?", ["SHA-256", "bcrypt ou argon2", "MD5", "Texto puro"], 1, "Hashes lentos resistem a brute force."),
+            q("JWT significa?", ["JSON Web Token", "Java Web Tool", "JavaScript Wrap Type", "JSON Wizard"], 0, "JSON Web Token."),
+            q("Lugar seguro para guardar JWT?", ["localStorage", "Cookie HttpOnly", "Query da URL", "Variável local"], 1, "Cookie HttpOnly e Secure."),
           ]
         ),
-        L("deploy", "Deployment",
-          "Put it on the internet.",
-          `<h2>Static frontends</h2>
-<p>Vercel, Netlify, Cloudflare Pages — push to Git, get a production URL with HTTPS and a CDN. Free tiers are enough for many projects.</p>
-<h2>Backend services</h2>
-<p>Fly.io, Render, Railway, AWS, GCP. Docker-based deploys are the standard.</p>
-<h2>Minimal Dockerfile</h2>
+        L("deploy", "Deploy",
+          "Coloque na internet.",
+          `<h2>Frontends estáticos</h2>
+<p>Vercel, Netlify, Cloudflare Pages — push no Git, URL de produção com HTTPS e CDN. Planos gratuitos dão conta de muita coisa.</p>
+<h2>Backends</h2>
+<p>Fly.io, Render, Railway, AWS, GCP. Deploys em Docker são o padrão.</p>
+<h2>Dockerfile mínimo</h2>
 <pre><code>FROM node:20-alpine
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev
 COPY . .
 CMD ["node", "server.js"]</code></pre>
-<h2>Environment variables</h2>
-<p>Never commit secrets. Use <code>.env</code> locally (gitignored) and your platform's secret manager in production.</p>
+<h2>Variáveis de ambiente</h2>
+<p>Nunca comite segredos. Use <code>.env</code> local (no gitignore) e o secret manager da plataforma em produção.</p>
 <h2>CI/CD</h2>
-<p>GitHub Actions is the default. Every PR: lint, test, type-check, preview deploy. Every merge to main: production deploy.</p>`,
+<p>GitHub Actions é o padrão. Cada PR: lint, testes, type-check, preview deploy. Cada merge na main: deploy de produção.</p>`,
           [
-            q("Never commit…", ["Tests", "Secrets / API keys", "Docs", "Code"], 1, "Secrets belong in env/secret managers."),
-            q("Static frontend hosts?", ["Vercel, Netlify, Cloudflare", "Postgres, Redis", "Kubernetes", "SSH only"], 0, "Those are static hosts with CDN."),
-            q("CI/CD typically runs on?", ["Every push / PR", "Once per year", "Never", "Only on main"], 0, "Every PR or push."),
+            q("Nunca comite…", ["Testes", "Segredos / API keys", "Docs", "Código"], 1, "Segredos moram em .env / secret manager."),
+            q("Hosts de frontend estático?", ["Vercel, Netlify, Cloudflare", "Postgres, Redis", "Kubernetes", "Só SSH"], 0, "Hosts estáticos com CDN."),
+            q("CI/CD geralmente roda em?", ["Cada push / PR", "Uma vez por ano", "Nunca", "Só na main"], 0, "Em cada PR ou push."),
           ]
         ),
-        L("capstone", "Capstone: Building a SaaS",
-          "Putting it all together — and what comes next.",
-          `<p>A real SaaS product pulls together every skill in this course:</p>
+        L("capstone", "Projeto final: construindo um SaaS",
+          "Juntando tudo — e o que vem depois.",
+          `<p>Um produto SaaS real reúne todas as habilidades do curso:</p>
 <ul>
-  <li>A landing page (this very site!) — semantic HTML, responsive CSS, animations.</li>
-  <li>Authentication — sign up, sign in, hashed passwords, sessions or JWTs.</li>
-  <li>A dashboard — per-user data, progress, settings.</li>
-  <li>An API — typed endpoints, validation, error handling.</li>
-  <li>A database — users, courses, progress. Migrations tracked in git.</li>
-  <li>Billing — Stripe Checkout + webhooks, or manual VIP unlocks via admin.</li>
-  <li>Admin panel — users, search, permissions.</li>
-  <li>Deployment — CI/CD, environment variables, monitoring.</li>
-  <li>Observability — logs, error tracking (Sentry), uptime monitoring.</li>
+  <li>Uma landing page (como este site!) — HTML semântico, CSS responsivo, animações.</li>
+  <li>Autenticação — cadastro, login, senhas hasheadas, sessions ou JWTs.</li>
+  <li>Um painel — dados por usuário, progresso, configurações.</li>
+  <li>Uma API — endpoints tipados, validação, tratamento de erro.</li>
+  <li>Um banco — users, cursos, progresso. Migrations versionadas no git.</li>
+  <li>Pagamentos — Stripe Checkout + webhooks, ou VIP manual via admin.</li>
+  <li>Painel admin — usuários, busca, permissões.</li>
+  <li>Deploy — CI/CD, variáveis de ambiente, monitoramento.</li>
+  <li>Observabilidade — logs, erros (Sentry), monitor de uptime.</li>
 </ul>
-<h2>Your next steps</h2>
+<h2>Próximos passos</h2>
 <ol>
-  <li>Ship a tiny project end-to-end. Don't over-engineer.</li>
-  <li>Learn TypeScript — you'll hit a ceiling without it.</li>
-  <li>Pick one backend language and go deep (Node + TS, or Python + FastAPI, or Go).</li>
-  <li>Contribute to open source. Read other people's code.</li>
-  <li>Build in public. Share what you learn.</li>
+  <li>Entregue um projeto pequeno de ponta a ponta. Não engenheire demais.</li>
+  <li>Aprenda TypeScript — o teto chega sem ele.</li>
+  <li>Escolha uma linguagem de backend e aprofunde (Node + TS, ou Python + FastAPI, ou Go).</li>
+  <li>Contribua com open source. Leia código dos outros.</li>
+  <li>Construa em público. Compartilhe o que aprende.</li>
 </ol>
-<div class="callout"><div class="ico">🎓</div><p>You now know the full map. The only thing left is to keep shipping.</p></div>`,
+<div class="callout"><div class="ico">🎓</div><p>Agora você tem o mapa completo. O que resta é continuar entregando.</p></div>`,
           [
-            q("Best strategy after finishing a tutorial?", ["Watch 10 more", "Ship a real (small) project", "Memorize docs", "Nothing"], 1, "Shipping teaches what tutorials can't."),
-            q("Observability means?", ["UI design", "Monitoring logs/metrics/errors", "A database", "A CSS feature"], 1, "Logs, metrics, traces."),
-            q("Stripe is a…", ["Database", "Payments platform", "Framework", "Linter"], 1, "Payment processor."),
+            q("Melhor estratégia depois de um tutorial?", ["Ver mais 10", "Entregar um projeto real (pequeno)", "Decorar docs", "Nada"], 1, "Entregar ensina o que tutorial não consegue."),
+            q("Observabilidade significa?", ["Design de UI", "Monitorar logs/métricas/erros", "Um banco", "Um recurso de CSS"], 1, "Logs, métricas, traces."),
+            q("Stripe é um…", ["Banco de dados", "Plataforma de pagamentos", "Framework", "Linter"], 1, "Processador de pagamentos."),
           ]
         ),
       ],
     },
 
     // =================================================================
-    // 8. UI/UX Design (VIP)
+    // 8. Design UI/UX (VIP)
     // =================================================================
     {
       id: "ui-ux",
-      title: "UI/UX Design",
-      tagline: "Design products that feel effortless and look beautiful.",
-      description: "Principles of user experience, information architecture, visual design, color, typography, and how to build a design system that scales.",
-      level: "Intermediate",
+      title: "Design UI/UX",
+      tagline: "Desenhe produtos que parecem fáceis e ficam lindos.",
+      description: "Princípios de experiência do usuário, arquitetura da informação, design visual, cor, tipografia e como construir um design system que escala.",
+      level: "Intermediário",
       duration: "8h",
       theme: "theme-uiux",
       cover: "UI/UX",
       vip: true,
       instructor: "Ana Ribeiro",
       lessons: [
-        L("what-is-ux", "What is UX?",
-          "Experience is everything the user sees, feels, and remembers.",
-          `<p>UX (User Experience) is the sum of every interaction a person has with your product — before, during, and after use. It's not just the visual design; it's the signup flow, the error messages, the loading time, the email receipts, the tone of voice.</p>
+        L("what-is-ux", "O que é UX?",
+          "Experiência é tudo que o usuário vê, sente e lembra.",
+          `<p>UX (User Experience / Experiência do Usuário) é a soma de toda interação que uma pessoa tem com o seu produto — antes, durante e depois do uso. Não é só o visual; é o fluxo de cadastro, as mensagens de erro, o tempo de carregamento, o e-mail de confirmação, o tom de voz.</p>
 <h2>UX vs UI</h2>
 <ul>
-  <li><strong>UX</strong> — how does this <em>work</em> and <em>feel</em>?</li>
-  <li><strong>UI</strong> — what does it <em>look like</em> on screen?</li>
+  <li><strong>UX</strong> — como isso <em>funciona</em> e <em>parece usar</em>?</li>
+  <li><strong>UI</strong> — como isso <em>fica na tela</em>?</li>
 </ul>
-<p>Great UI without UX is a beautiful app no one can use. Great UX without UI is a well-designed flow that looks like a 1998 intranet. You need both.</p>
-<h2>Five pillars of good UX (Nielsen)</h2>
+<p>UI boa sem UX é um app bonito que ninguém consegue usar. UX boa sem UI é um fluxo bem desenhado que parece uma intranet de 1998. Precisa dos dois.</p>
+<h2>Cinco pilares de boa UX (Nielsen)</h2>
 <ol>
-  <li><strong>Useful</strong> — solves a real problem.</li>
-  <li><strong>Usable</strong> — people can figure it out.</li>
-  <li><strong>Findable</strong> — things are where they should be.</li>
-  <li><strong>Credible</strong> — trustworthy, polished.</li>
-  <li><strong>Accessible</strong> — works for everyone.</li>
+  <li><strong>Útil</strong> — resolve um problema real.</li>
+  <li><strong>Usável</strong> — a pessoa consegue entender.</li>
+  <li><strong>Encontrável</strong> — as coisas estão onde deveriam estar.</li>
+  <li><strong>Confiável</strong> — inspira credibilidade, parece polido.</li>
+  <li><strong>Acessível</strong> — funciona para todo mundo.</li>
 </ol>`,
           [
-            q("UX differs from UI because…", ["UX is only visual", "UX covers the whole experience; UI is visual layer", "They're the same", "UI is broader"], 1, "UX = the whole experience."),
-            q("Accessibility means…", ["Fast loading", "Works for everyone, including people with disabilities", "Mobile only", "Cheap"], 1, "Inclusive design."),
-            q("Findable refers to…", ["Hiring", "Being able to locate information", "SEO only", "Search results"], 1, "Can users find what they need?"),
+            q("UX difere de UI porque…", ["UX é só visual", "UX cobre toda a experiência; UI é a camada visual", "São iguais", "UI é mais amplo"], 1, "UX = experiência inteira."),
+            q("Acessibilidade significa…", ["Carregamento rápido", "Funciona para todos, inclusive pessoas com deficiência", "Só mobile", "Barato"], 1, "Design inclusivo."),
+            q("Encontrável se refere a…", ["Contratação", "Conseguir localizar informação", "Só SEO", "Resultados de busca"], 1, "A pessoa consegue achar o que precisa?"),
           ]
         ),
-        L("user-research", "User Research",
-          "Design for real people — not imaginary ones.",
-          `<p>Before you design anything, understand who will use it. Research methods fall into two camps:</p>
-<h2>Qualitative (the why)</h2>
+        L("user-research", "Pesquisa com usuários",
+          "Desenhe para pessoas reais — não imaginárias.",
+          `<p>Antes de desenhar qualquer coisa, entenda quem vai usar. Métodos de pesquisa caem em dois campos:</p>
+<h2>Qualitativa (o porquê)</h2>
 <ul>
-  <li><strong>Interviews</strong> — open-ended conversations with 5–8 users.</li>
-  <li><strong>Usability tests</strong> — watch users attempt tasks with your prototype.</li>
-  <li><strong>Diary studies</strong> — users record moments over days/weeks.</li>
+  <li><strong>Entrevistas</strong> — conversas abertas com 5 a 8 pessoas.</li>
+  <li><strong>Testes de usabilidade</strong> — ver pessoas tentando tarefas no seu protótipo.</li>
+  <li><strong>Diários</strong> — pessoas registram momentos ao longo de dias/semanas.</li>
 </ul>
-<h2>Quantitative (the what)</h2>
+<h2>Quantitativa (o quê)</h2>
 <ul>
-  <li><strong>Surveys</strong> — large samples, statistical significance.</li>
-  <li><strong>Analytics</strong> — what users actually do.</li>
-  <li><strong>A/B tests</strong> — two versions, measure which wins.</li>
+  <li><strong>Pesquisas</strong> — amostras grandes, significância estatística.</li>
+  <li><strong>Analytics</strong> — o que as pessoas de fato fazem.</li>
+  <li><strong>Testes A/B</strong> — duas versões, mede qual vence.</li>
 </ul>
-<h2>Personas and jobs-to-be-done</h2>
-<p>Turn findings into lightweight representations: "Alex, 24, self-taught dev, learning at night after work, frustrated by courses that don't go deep." JTBD reframes it as: "When I get home tired, I want to learn a tangible skill in 30 minutes so I feel like I made progress."</p>`,
+<h2>Personas e jobs-to-be-done</h2>
+<p>Transforme os achados em representações leves: "Alex, 24, autodidata em dev, estuda à noite depois do trabalho, cansa de cursos que não aprofundam." JTBD reformula assim: "Quando chego cansado em casa, quero aprender uma habilidade palpável em 30 minutos para sentir que progredi."</p>`,
           [
-            q("A/B testing is…", ["Qualitative", "Quantitative", "Art", "Usability testing"], 1, "Two variants, measured numerically."),
-            q("How many users for good qualitative insight?", ["1", "5–8", "500+", "100"], 1, "5 uncover 85% of usability issues (Nielsen)."),
-            q("Personas are…", ["Real single users", "Composite representations of user groups", "Bots", "Stakeholders"], 1, "Distilled patterns from research."),
+            q("Teste A/B é…", ["Qualitativo", "Quantitativo", "Arte", "Teste de usabilidade"], 1, "Duas variantes, medida numérica."),
+            q("Quantas pessoas para boa insight qualitativa?", ["1", "5–8", "500+", "100"], 1, "5 expõem 85% dos problemas (Nielsen)."),
+            q("Personas são…", ["Usuários reais específicos", "Representações compostas de grupos", "Bots", "Stakeholders"], 1, "Padrões destilados da pesquisa."),
           ]
         ),
-        L("ia", "Information Architecture",
-          "How content is organized determines how it's used.",
-          `<p>Information Architecture (IA) is the structure of your product: what goes where, how it's grouped, what you name things. Strong IA makes navigation invisible. Weak IA turns every task into a scavenger hunt.</p>
-<h2>Techniques</h2>
+        L("ia", "Arquitetura da informação",
+          "Como o conteúdo está organizado define como ele é usado.",
+          `<p>Arquitetura da Informação (AI) é a estrutura do seu produto: o que vai onde, como é agrupado, como você nomeia as coisas. Boa AI torna a navegação invisível. AI fraca transforma cada tarefa numa caça ao tesouro.</p>
+<h2>Técnicas</h2>
 <ul>
-  <li><strong>Card sorting</strong> — users group items into categories that make sense to them.</li>
-  <li><strong>Tree testing</strong> — validate that users can find specific items in your proposed hierarchy.</li>
-  <li><strong>Sitemaps</strong> — visual diagram of every page and its relationships.</li>
+  <li><strong>Card sorting</strong> — pessoas agrupam itens em categorias que fazem sentido para elas.</li>
+  <li><strong>Tree testing</strong> — valida se as pessoas acham itens específicos na hierarquia proposta.</li>
+  <li><strong>Sitemaps</strong> — diagrama visual de cada página e relações.</li>
 </ul>
-<h2>Naming matters</h2>
-<p>"Settings" vs "Preferences" vs "Configuration" — each sends a different signal. Use the language your users already use. When in doubt, test.</p>
-<h2>Progressive disclosure</h2>
-<p>Show the essentials first. Reveal complexity on demand. A good settings page has three tabs, not seventy toggles.</p>`,
+<h2>Nomes importam</h2>
+<p>"Ajustes" vs "Preferências" vs "Configurações" — cada um manda um sinal diferente. Use a linguagem que seus usuários já usam. Na dúvida, teste.</p>
+<h2>Divulgação progressiva</h2>
+<p>Mostre o essencial primeiro. Revele complexidade sob demanda. Uma boa tela de configurações tem três abas, não setenta switches.</p>`,
           [
-            q("IA stands for?", ["Interactive Architecture", "Information Architecture", "Internal API", "Interface Animation"], 1, "Information Architecture."),
-            q("Card sorting helps discover…", ["Colors", "User mental models for grouping", "Typography", "Load times"], 1, "How users group and label content."),
-            q("Progressive disclosure means…", ["Show everything", "Reveal complexity as needed", "Hide everything", "Use dropdowns"], 1, "Essentials first, details on demand."),
+            q("AI significa?", ["Arquitetura Interativa", "Arquitetura da Informação", "API Interna", "Animação de Interface"], 1, "Arquitetura da Informação."),
+            q("Card sorting ajuda a descobrir…", ["Cores", "Modelos mentais de agrupamento", "Tipografia", "Tempo de load"], 1, "Como as pessoas agrupam e nomeiam conteúdo."),
+            q("Divulgação progressiva significa…", ["Mostrar tudo", "Revelar complexidade conforme necessário", "Esconder tudo", "Usar dropdowns"], 1, "Essencial primeiro, detalhes sob demanda."),
           ]
         ),
-        L("wireframes", "Wireframing & Prototyping",
-          "Low-fi first, high-fi later.",
-          `<p>Start with wireframes — deliberately low-fidelity layouts using boxes and labels. The point is to design structure without getting distracted by colors and fonts.</p>
-<h2>Fidelity spectrum</h2>
+        L("wireframes", "Wireframing e prototipagem",
+          "Baixa fidelidade primeiro, alta fidelidade depois.",
+          `<p>Comece com wireframes — layouts deliberadamente em baixa fidelidade, com caixas e rótulos. O ponto é desenhar a estrutura sem se distrair com cores e fontes.</p>
+<h2>Espectro de fidelidade</h2>
 <ol>
-  <li><strong>Sketches</strong> — pencil and paper, minutes per screen.</li>
-  <li><strong>Wireframes</strong> — grayscale boxes in Figma. Focus on layout and content.</li>
-  <li><strong>Mockups</strong> — visual design applied. Pixel-accurate.</li>
-  <li><strong>Prototypes</strong> — clickable, to test real flows.</li>
+  <li><strong>Esboços</strong> — lápis e papel, minutos por tela.</li>
+  <li><strong>Wireframes</strong> — caixas em tons de cinza no Figma. Foco em layout e conteúdo.</li>
+  <li><strong>Mockups</strong> — design visual aplicado. Pixel-perfect.</li>
+  <li><strong>Protótipos</strong> — clicáveis, para testar fluxos reais.</li>
 </ol>
-<h2>Tools</h2>
-<p>Figma is the industry default. Others: Sketch (macOS), Adobe XD, Framer (great for interactive prototypes).</p>
-<h2>When to move up</h2>
-<p>Only when the current fidelity isn't revealing new questions. Jumping to high-fi too early means redesigning when you find a flow problem.</p>`,
+<h2>Ferramentas</h2>
+<p>Figma é o padrão da indústria. Outras: Sketch (macOS), Adobe XD, Framer (ótimo para protótipos interativos).</p>
+<h2>Quando subir de fidelidade</h2>
+<p>Só quando o nível atual não revela mais novas perguntas. Pular para alta fidelidade cedo demais leva a redesigns quando aparece um problema de fluxo.</p>`,
           [
-            q("Best fidelity to start at?", ["Pixel-perfect", "Sketches or wireframes", "Final UI", "3D renders"], 1, "Low-fi exposes structure fastest."),
-            q("Industry-standard design tool?", ["Photoshop", "Figma", "InDesign", "MS Paint"], 1, "Figma dominates in 2025."),
-            q("Prototype's main purpose?", ["Look pretty", "Test real flows", "Replace dev", "Print brochures"], 1, "Interactivity for validation."),
+            q("Melhor fidelidade para começar?", ["Pixel-perfect", "Esboços ou wireframes", "UI final", "Renders 3D"], 1, "Baixa fidelidade expõe a estrutura mais rápido."),
+            q("Ferramenta de design padrão da indústria?", ["Photoshop", "Figma", "InDesign", "MS Paint"], 1, "Figma domina em 2025."),
+            q("Propósito principal do protótipo?", ["Ficar bonito", "Testar fluxos reais", "Substituir o dev", "Imprimir panfletos"], 1, "Interatividade para validar."),
           ]
         ),
-        L("visual-design", "Visual Design Principles",
-          "Contrast, hierarchy, rhythm, balance.",
-          `<p>Four principles show up in every good interface:</p>
-<h2>Contrast</h2>
-<p>Make important things stand out. Differ in size, color, or weight. A primary button should look obviously different from a secondary one.</p>
-<h2>Hierarchy</h2>
-<p>Arrange elements so the eye knows what to read first, second, third. Typography size and color do most of the work.</p>
-<h2>Rhythm &amp; spacing</h2>
-<p>Consistent spacing makes layouts feel calm. Pick a spacing scale (4, 8, 12, 16, 24, 32, 48, 64) and stick to it. Never eyeball pixels.</p>
-<h2>Balance</h2>
-<p>Distribute visual weight. Symmetry is formal; asymmetry is dynamic. Both are valid — just be intentional.</p>
-<h2>The 60-30-10 rule</h2>
-<p>60% neutral (background), 30% supporting (content), 10% accent (CTAs and highlights). Works every time.</p>`,
+        L("visual-design", "Princípios de design visual",
+          "Contraste, hierarquia, ritmo, equilíbrio.",
+          `<p>Quatro princípios aparecem em toda boa interface:</p>
+<h2>Contraste</h2>
+<p>Faça o importante se destacar. Varie em tamanho, cor ou peso. Um botão primário tem que parecer obviamente diferente de um secundário.</p>
+<h2>Hierarquia</h2>
+<p>Arrume os elementos para o olho saber o que ler primeiro, segundo, terceiro. Tamanho e cor de tipografia fazem o grosso do trabalho.</p>
+<h2>Ritmo e espaçamento</h2>
+<p>Espaçamento consistente deixa layouts calmos. Escolha uma escala (4, 8, 12, 16, 24, 32, 48, 64) e siga. Nunca chute pixels.</p>
+<h2>Equilíbrio</h2>
+<p>Distribua o peso visual. Simetria é formal; assimetria é dinâmica. Os dois funcionam — só seja intencional.</p>
+<h2>Regra 60-30-10</h2>
+<p>60% neutro (fundo), 30% suporte (conteúdo), 10% destaque (CTAs). Funciona sempre.</p>`,
           [
-            q("Spacing scale should be…", ["Random", "Consistent (e.g. 4/8/16/24)", "Only even", "Prime numbers"], 1, "A consistent scale feels intentional."),
-            q("60/30/10 rule ratios are?", ["Background/support/accent", "Header/body/footer", "Mobile/tablet/desktop", "Red/green/blue"], 0, "Neutral/support/accent."),
-            q("Hierarchy is best established by?", ["Underlines", "Size + weight + color", "Animations", "Sound"], 1, "Typography does the heavy lifting."),
+            q("A escala de espaçamento deve ser…", ["Aleatória", "Consistente (ex. 4/8/16/24)", "Só par", "Números primos"], 1, "Escala consistente parece intencional."),
+            q("Proporção 60/30/10 representa?", ["Fundo/suporte/destaque", "Cabeçalho/corpo/rodapé", "Mobile/tablet/desktop", "Vermelho/verde/azul"], 0, "Neutro/suporte/destaque."),
+            q("Hierarquia é melhor estabelecida por?", ["Sublinhados", "Tamanho + peso + cor", "Animações", "Som"], 1, "Tipografia faz o trabalho pesado."),
           ]
         ),
-        L("typography", "Typography",
-          "90% of your design is type.",
-          `<h2>Pairing fonts</h2>
-<p>Most designs use one or two typefaces. A popular pattern: a distinctive display font for headings + a neutral sans-serif for body. Don't mix three or more unless you really know what you're doing.</p>
-<h2>Sizing and rhythm</h2>
-<p>Define a type scale: e.g. 12, 14, 16, 18, 24, 32, 48, 64. Use rem/em so everything scales with root size. Body text: 16px minimum. Line-height 1.5–1.7. Measure (characters per line) between 45–80 for comfortable reading.</p>
-<h2>Hierarchy knobs</h2>
+        L("typography", "Tipografia",
+          "90% do seu design é tipo.",
+          `<h2>Combinando fontes</h2>
+<p>A maioria dos designs usa uma ou duas tipografias. Padrão clássico: uma display distintiva para títulos + uma sans-serif neutra para texto. Não misture três ou mais a não ser que saiba bem o que está fazendo.</p>
+<h2>Tamanho e ritmo</h2>
+<p>Defina uma escala tipográfica: ex. 12, 14, 16, 18, 24, 32, 48, 64. Use rem/em para tudo escalar a partir do tamanho raiz. Corpo: mínimo 16px. Altura de linha 1.5–1.7. Largura de linha (caracteres por linha) entre 45 e 80 para leitura confortável.</p>
+<h2>Alavancas da hierarquia</h2>
 <ul>
-  <li><strong>Size</strong> — biggest lever.</li>
-  <li><strong>Weight</strong> — 400/500 for body, 600/700/800 for headings.</li>
-  <li><strong>Color / contrast</strong> — dimmer text recedes; brighter text advances.</li>
-  <li><strong>Letter-spacing</strong> — tighten display; loosen small caps.</li>
+  <li><strong>Tamanho</strong> — maior alavanca.</li>
+  <li><strong>Peso</strong> — 400/500 no corpo, 600/700/800 em títulos.</li>
+  <li><strong>Cor / contraste</strong> — texto apagado recua; texto forte avança.</li>
+  <li><strong>Espaçamento entre letras</strong> — aperte em display; solte em caps pequenos.</li>
 </ul>
-<div class="callout"><div class="ico">🔤</div><p>Accessible contrast: WCAG requires 4.5:1 for body text, 3:1 for large text. Always check.</p></div>`,
+<div class="callout"><div class="ico">🔤</div><p>Contraste acessível: WCAG exige 4.5:1 para texto normal, 3:1 para texto grande. Cheque sempre.</p></div>`,
           [
-            q("Minimum body text size?", ["12px", "14px", "16px", "20px"], 2, "16px is the web convention."),
-            q("Ideal measure (chars per line)?", ["20", "45–80", "120+", "Unlimited"], 1, "Comfort reading range."),
-            q("Accessible contrast for body text?", ["2:1", "3:1", "4.5:1", "7:1"], 2, "WCAG AA requires 4.5:1."),
+            q("Tamanho mínimo do texto corrido?", ["12px", "14px", "16px", "20px"], 2, "16px é a convenção da web."),
+            q("Largura ideal (caracteres por linha)?", ["20", "45–80", "120+", "Ilimitado"], 1, "Faixa confortável de leitura."),
+            q("Contraste acessível para texto corrido?", ["2:1", "3:1", "4.5:1", "7:1"], 2, "WCAG AA exige 4.5:1."),
           ]
         ),
-        L("color", "Color Theory",
-          "Hue, saturation, lightness — and intentional palettes.",
-          `<h2>HSL is your friend</h2>
-<p>Instead of picking random hex values, think in HSL (Hue / Saturation / Lightness). Fixing the hue and varying lightness gives you a naturally cohesive shade scale.</p>
-<pre><code>/* Tailwind-style scale */
+        L("color", "Teoria de cor",
+          "Matiz, saturação, luminosidade — e paletas intencionais.",
+          `<h2>HSL é seu amigo</h2>
+<p>Em vez de escolher hex aleatório, pense em HSL (Hue / Saturation / Lightness). Fixando o hue e variando a lightness você ganha uma escala de tons naturalmente coesa.</p>
+<pre><code>/* Escala estilo Tailwind */
 50:  hsl(252 100% 97%);
 100: hsl(252 100% 93%);
-500: hsl(252 100% 65%);  /* brand */
+500: hsl(252 100% 65%);  /* marca */
 900: hsl(252 80%  20%);</code></pre>
-<h2>Semantic color roles</h2>
+<h2>Papéis semânticos de cor</h2>
 <ul>
-  <li><strong>Primary</strong> — brand color.</li>
-  <li><strong>Secondary / accent</strong> — support and variety.</li>
-  <li><strong>Neutrals</strong> — text, background, borders.</li>
-  <li><strong>Semantic</strong> — success (green), warning (yellow/orange), danger (red), info (blue).</li>
+  <li><strong>Primária</strong> — cor da marca.</li>
+  <li><strong>Secundária / acento</strong> — suporte e variedade.</li>
+  <li><strong>Neutros</strong> — texto, fundo, bordas.</li>
+  <li><strong>Semânticas</strong> — sucesso (verde), alerta (amarelo/laranja), perigo (vermelho), info (azul).</li>
 </ul>
-<h2>Dark mode</h2>
-<p>Dark backgrounds demand desaturated colors. Pure #FFFFFF text on #000000 vibrates; use soft whites and not-quite-black backgrounds. Keep brand hues the same but lower saturation.</p>`,
+<h2>Modo escuro</h2>
+<p>Fundos escuros pedem cores dessaturadas. #FFFFFF puro em #000000 puro vibra; use brancos suaves e fundos quase-pretos. Mantenha o matiz da marca, mas abaixe a saturação.</p>`,
           [
-            q("Best color model for building scales?", ["RGB", "CMYK", "HSL", "Hex"], 2, "HSL makes lightness variations intuitive."),
-            q("Pure white on pure black causes?", ["Clarity", "Visual vibration / fatigue", "Better SEO", "Speed"], 1, "Too much contrast strains eyes."),
-            q("Semantic color for destructive action?", ["Green", "Red", "Yellow", "Gray"], 1, "Red signals danger."),
+            q("Melhor modelo de cor para escalas?", ["RGB", "CMYK", "HSL", "Hex"], 2, "HSL torna variações de lightness intuitivas."),
+            q("Branco puro em preto puro causa?", ["Clareza", "Vibração / fadiga visual", "Melhor SEO", "Velocidade"], 1, "Contraste excessivo cansa os olhos."),
+            q("Cor semântica para ação destrutiva?", ["Verde", "Vermelho", "Amarelo", "Cinza"], 1, "Vermelho sinaliza perigo."),
           ]
         ),
-        L("components", "Component Systems",
-          "Design once, use everywhere.",
-          `<p>A component is a reusable UI pattern: button, input, card, modal, toast. A <strong>design system</strong> is the documented collection of all components, plus rules for how to use them.</p>
-<h2>Benefits</h2>
+        L("components", "Sistemas de componentes",
+          "Desenhe uma vez, use em todo lugar.",
+          `<p>Um componente é um padrão de UI reutilizável: botão, input, card, modal, toast. Um <strong>design system</strong> é a coleção documentada de todos os componentes, mais regras de uso.</p>
+<h2>Benefícios</h2>
 <ul>
-  <li>Consistency across the product.</li>
-  <li>Faster design and development.</li>
-  <li>Accessibility and edge cases solved once.</li>
-  <li>Easy rebranding — change tokens, not components.</li>
+  <li>Consistência em todo o produto.</li>
+  <li>Design e desenvolvimento mais rápidos.</li>
+  <li>Acessibilidade e edge cases resolvidos uma só vez.</li>
+  <li>Rebrand fácil — muda tokens, não componentes.</li>
 </ul>
-<h2>Famous examples</h2>
-<p>Shopify Polaris, IBM Carbon, Atlassian, GitHub Primer, Salesforce Lightning. Study them — they're free lessons in shipping at scale.</p>
-<h2>Levels of a system</h2>
+<h2>Exemplos famosos</h2>
+<p>Shopify Polaris, IBM Carbon, Atlassian, GitHub Primer, Salesforce Lightning. Estude — são aulas grátis sobre entregar em escala.</p>
+<h2>Camadas de um system</h2>
 <ol>
-  <li><strong>Tokens</strong> — colors, spacing, typography.</li>
-  <li><strong>Primitives</strong> — button, input, icon.</li>
-  <li><strong>Patterns</strong> — form, list, modal, page header.</li>
-  <li><strong>Templates</strong> — full layouts for common screens.</li>
+  <li><strong>Tokens</strong> — cores, espaçamento, tipografia.</li>
+  <li><strong>Primitivas</strong> — botão, input, ícone.</li>
+  <li><strong>Padrões</strong> — form, lista, modal, cabeçalho de página.</li>
+  <li><strong>Templates</strong> — layouts completos para telas comuns.</li>
 </ol>`,
           [
-            q("Design tokens are the…", ["Top layer", "Foundation layer (colors, spacing)", "Prototype", "Final app"], 1, "Tokens → components → patterns → templates."),
-            q("Why systems scale design?", ["They add features", "Consistency, speed, accessibility solved once", "They reduce files", "They look nicer"], 1, "Reuse at every level."),
-            q("Example of a public design system?", ["Polaris", "Carbon", "Material", "All of the above"], 3, "All are famous public systems."),
+            q("Design tokens são a…", ["Camada do topo", "Camada de base (cores, espaçamento)", "Protótipo", "App final"], 1, "Tokens → componentes → padrões → templates."),
+            q("Por que design systems escalam?", ["Adicionam features", "Consistência, velocidade e acessibilidade resolvidos de uma vez", "Reduzem arquivos", "Ficam mais bonitos"], 1, "Reuso em todas as camadas."),
+            q("Exemplo de design system público?", ["Polaris", "Carbon", "Material", "Todos os anteriores"], 3, "Todos são sistemas públicos famosos."),
           ]
         ),
-        L("usability", "Usability Testing",
-          "Watch people use your product. Every time.",
-          `<p>Usability testing is the single highest-ROI activity in product development. You sit a real user in front of your product and ask them to complete a task. You shut up and watch.</p>
-<h2>How to run one</h2>
+        L("usability", "Testes de usabilidade",
+          "Veja pessoas usarem seu produto. Toda vez.",
+          `<p>Teste de usabilidade é a atividade de maior ROI em produto. Você coloca uma pessoa real na frente do produto e pede para completar uma tarefa. Aí você fica em silêncio e observa.</p>
+<h2>Como rodar</h2>
 <ol>
-  <li>Define tasks matching real goals ("Sign up and complete your first lesson").</li>
-  <li>Recruit 5 users from your target audience.</li>
-  <li>Ask them to think aloud. Don't interrupt. Don't explain.</li>
-  <li>Record screen + audio if allowed.</li>
-  <li>Note every moment of hesitation, confusion, or misuse.</li>
+  <li>Defina tarefas que correspondam a objetivos reais ("Cadastre-se e complete sua primeira aula").</li>
+  <li>Recrute 5 pessoas do público-alvo.</li>
+  <li>Peça para pensarem em voz alta. Não interrompa. Não explique.</li>
+  <li>Grave tela + áudio se permitido.</li>
+  <li>Anote cada hesitação, confusão ou uso incorreto.</li>
 </ol>
-<h2>What to measure</h2>
+<h2>O que medir</h2>
 <ul>
-  <li><strong>Task success</strong> — did they finish without help?</li>
-  <li><strong>Time on task</strong> — how long?</li>
-  <li><strong>Error count</strong> — how often did they go the wrong way?</li>
-  <li><strong>Satisfaction</strong> — SUS score, or simple 1–5.</li>
+  <li><strong>Sucesso na tarefa</strong> — terminou sem ajuda?</li>
+  <li><strong>Tempo na tarefa</strong> — quanto demorou?</li>
+  <li><strong>Contagem de erros</strong> — quantas vezes seguiu o caminho errado?</li>
+  <li><strong>Satisfação</strong> — SUS score ou simples 1–5.</li>
 </ul>
-<h2>Nielsen's 10 heuristics</h2>
-<p>Quick checklist for heuristic evaluation: visibility of system status, match with real world, user control, consistency, error prevention, recognition over recall, flexibility, aesthetic and minimalist design, help users recognize errors, help and documentation.</p>`,
+<h2>As 10 heurísticas de Nielsen</h2>
+<p>Checklist rápido para avaliação heurística: visibilidade do estado, correspondência com o mundo real, controle do usuário, consistência, prevenção de erro, reconhecimento em vez de memória, flexibilidade, design estético e minimalista, ajudar a reconhecer erros, ajuda e documentação.</p>`,
           [
-            q("Most valuable user research activity?", ["Surveys", "Usability testing", "Focus groups", "Analytics"], 1, "Watching real users is unbeatable."),
-            q("During a test, the facilitator should…", ["Help them", "Stay quiet and observe", "Point at the right button", "Do it for them"], 1, "Silence reveals the truth."),
-            q("Nielsen's heuristics count?", ["5", "10", "20", "3"], 1, "Ten classic heuristics."),
+            q("Atividade mais valiosa em pesquisa?", ["Pesquisas", "Teste de usabilidade", "Focus groups", "Analytics"], 1, "Ver pessoas reais usando é imbatível."),
+            q("Durante um teste, quem facilita deve…", ["Ajudar", "Ficar quieto e observar", "Apontar o botão certo", "Fazer no lugar"], 1, "O silêncio revela a verdade."),
+            q("Quantas heurísticas de Nielsen?", ["5", "10", "20", "3"], 1, "Dez heurísticas clássicas."),
           ]
         ),
-        L("portfolio", "Building a Design Portfolio",
-          "Show the thinking, not just the pixels.",
-          `<p>A design portfolio gets you hired. But not the way most beginners build one. Recruiters don't want dribbble posters — they want case studies.</p>
-<h2>Anatomy of a case study</h2>
+        L("portfolio", "Construindo um portfólio de design",
+          "Mostre o raciocínio, não só os pixels.",
+          `<p>Um portfólio de design gera contratações. Mas não do jeito que a maioria monta. Recrutadores não querem posters de Dribbble — querem case studies.</p>
+<h2>Anatomia de um case study</h2>
 <ol>
-  <li><strong>Problem</strong> — who were you helping and what was broken?</li>
-  <li><strong>Research</strong> — what did you learn?</li>
-  <li><strong>Exploration</strong> — alternatives you considered, with sketches.</li>
-  <li><strong>Decision</strong> — what you shipped and why.</li>
-  <li><strong>Impact</strong> — metrics, before/after, user quotes.</li>
+  <li><strong>Problema</strong> — quem você estava ajudando e o que estava quebrado?</li>
+  <li><strong>Pesquisa</strong> — o que você descobriu?</li>
+  <li><strong>Exploração</strong> — alternativas consideradas, com esboços.</li>
+  <li><strong>Decisão</strong> — o que você entregou e por quê.</li>
+  <li><strong>Impacto</strong> — métricas, antes/depois, citações de usuários.</li>
 </ol>
-<h2>Quantity vs quality</h2>
-<p>Three deep case studies beat ten shallow screenshots. Hiring managers scan portfolios in under a minute — make the first 15 seconds count.</p>
-<h2>Ship real work</h2>
-<p>If you're new, design for real (small) projects: a local business, an open-source project, a weekend hackathon. Real constraints produce real portfolios.</p>
-<div class="callout"><div class="ico">🎯</div><p>You now have a full mental map of design. Pair it with a bit of front-end code and you're genuinely dangerous. Welcome to the field.</p></div>`,
+<h2>Quantidade vs qualidade</h2>
+<p>Três case studies profundos batem dez prints superficiais. Recrutadores varrem um portfólio em menos de um minuto — faça os primeiros 15 segundos valerem.</p>
+<h2>Entregue trabalho real</h2>
+<p>Se está começando, desenhe para projetos reais (pequenos): um comércio local, um projeto open source, um hackathon de fim de semana. Restrições reais produzem portfólios reais.</p>
+<div class="callout"><div class="ico">🎯</div><p>Agora você tem um mapa completo de design. Junte com um pouco de código front-end e você está de fato perigoso. Seja bem-vindo(a) à área.</p></div>`,
           [
-            q("Strongest portfolio piece?", ["Random dribbble shot", "Case study with problem → decisions → impact", "Many pretty images", "Wireframes only"], 1, "Thinking + decisions win."),
-            q("How many deep case studies are enough?", ["10+", "3 strong ones", "1", "None — just show pixels"], 1, "Three is the magic number."),
-            q("Best way to build a real portfolio as a beginner?", ["Only copy famous apps", "Design for real small projects with constraints", "Just take a course", "Wait for a job"], 1, "Real constraints produce real work."),
+            q("Peça mais forte do portfólio?", ["Shot aleatório do Dribbble", "Case study com problema → decisões → impacto", "Muitas imagens bonitas", "Só wireframes"], 1, "Raciocínio + decisões vencem."),
+            q("Quantos case studies profundos são suficientes?", ["10+", "3 fortes", "1", "Nenhum — só pixels"], 1, "Três é o número mágico."),
+            q("Melhor jeito de montar portfólio como iniciante?", ["Só copiar apps famosos", "Desenhar para projetos reais pequenos com restrições", "Só fazer curso", "Esperar emprego"], 1, "Restrições reais produzem trabalho real."),
           ]
         ),
       ],
