@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projetos · Devstart UP</title>
+  <meta name="description" content="Mostre seus projetos, inspire-se e peça ajuda na comunidade Devstart UP." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🚀%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <header class="dash-head reveal">
+      <div>
+        <h1>Projetos da Comunidade <span class="gradient-text">Devstart</span></h1>
+        <div class="sub">Publique seus projetos, descubra o que outros alunos estão construindo e converse em tempo real.</div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btn-new-project">+ Publicar projeto</button>
+      </div>
+    </header>
+
+    <!-- TABS -->
+    <nav class="tabs reveal" id="proj-tabs">
+      <button class="tab active" data-tab="showcase">🌐 Vitrine</button>
+      <button class="tab" data-tab="mine">⭐ Meus projetos</button>
+      <button class="tab" data-tab="chat">💬 Chat de ajuda</button>
+      <button class="tab" data-tab="trending">🔥 Em alta</button>
+    </nav>
+
+    <!-- SHOWCASE -->
+    <section class="panel" data-panel="showcase">
+      <div class="row between reveal mb-2" style="flex-wrap:wrap;gap:12px;">
+        <div class="row" style="gap:10px;flex-wrap:wrap;">
+          <input class="input" id="proj-search" placeholder="Buscar projetos por título, tech ou autor…" style="min-width:280px;" />
+          <select class="select" id="proj-filter-tech" style="min-width:170px;">
+            <option value="">Todas as techs</option>
+          </select>
+          <select class="select" id="proj-filter-sort" style="min-width:170px;">
+            <option value="recent">Mais recentes</option>
+            <option value="likes">Mais curtidos</option>
+            <option value="comments">Mais comentados</option>
+          </select>
+        </div>
+        <div class="text-muted small"><span id="proj-count">0</span> projetos publicados</div>
+      </div>
+      <div class="grid cols-3" id="projects-grid"></div>
+    </section>
+
+    <!-- MY PROJECTS -->
+    <section class="panel hidden" data-panel="mine">
+      <div class="card reveal mb-2" id="mine-empty-hint" style="display:none;">
+        <h3 style="margin-top:0;">Você ainda não publicou nada 🤔</h3>
+        <p>Publique seu primeiro projeto — pode ser uma página, um bot, um clone, um app de estudos. A comunidade adora ver o que está saindo.</p>
+        <button class="btn primary" data-open-new>+ Publicar meu primeiro projeto</button>
+      </div>
+      <div class="grid cols-3" id="mine-grid"></div>
+    </section>
+
+    <!-- CHAT -->
+    <section class="panel hidden" data-panel="chat">
+      <div class="row reveal" style="gap:16px;align-items:flex-start;flex-wrap:wrap;">
+        <aside class="card" style="flex:0 0 260px;min-width:240px;">
+          <h3 style="margin-top:0;">Canais</h3>
+          <div class="chat-channels" id="chat-channels"></div>
+          <div class="text-muted small mt-2">Canais são públicos para todos os alunos logados.</div>
+        </aside>
+        <div class="card" style="flex:1;min-width:300px;min-height:460px;display:flex;flex-direction:column;">
+          <div class="row between" style="border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:10px;">
+            <div>
+              <h3 id="chat-title" style="margin:0;">#geral</h3>
+              <div class="small text-muted" id="chat-desc">Converse com a comunidade sobre qualquer assunto.</div>
+            </div>
+            <button class="btn sm ghost" id="chat-clear-mine" title="Remove suas próprias mensagens do canal">Limpar minhas</button>
+          </div>
+          <div class="chat-log" id="chat-log" style="flex:1;overflow:auto;padding:8px 4px;"></div>
+          <form class="row" id="chat-form" style="margin-top:10px;gap:8px;">
+            <input class="input" id="chat-input" placeholder="Digite uma mensagem… (Enter para enviar)" required />
+            <button class="btn primary" type="submit">Enviar</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRENDING -->
+    <section class="panel hidden" data-panel="trending">
+      <div class="grid cols-2" id="trending-grid"></div>
+    </section>
+  </main>
+
+  <!-- MODAL: new project -->
+  <div class="modal-wrap hidden" id="proj-modal">
+    <div class="modal card">
+      <div class="row between">
+        <h2 style="margin:0;">Publicar novo projeto</h2>
+        <button class="icon-btn" id="proj-modal-close" aria-label="Fechar">×</button>
+      </div>
+      <form class="form mt-2" id="proj-form">
+        <label for="p-title">Título do projeto</label>
+        <input class="input" id="p-title" maxlength="80" required placeholder="Ex: Clone do Spotify em React" />
+        <label for="p-desc">Descrição (o que ele faz, tecnologias, o que você aprendeu)</label>
+        <textarea class="input" id="p-desc" rows="4" maxlength="800" required placeholder="Conte sobre o projeto, os desafios, o que aprendeu…"></textarea>
+        <div class="row" style="gap:10px;">
+          <div style="flex:1;">
+            <label for="p-tech">Stack (separe por vírgula)</label>
+            <input class="input" id="p-tech" required placeholder="React, Node, MongoDB" />
+          </div>
+          <div style="flex:1;">
+            <label for="p-cover">Emoji de capa</label>
+            <input class="input" id="p-cover" maxlength="4" value="🚀" />
+          </div>
+        </div>
+        <div class="row" style="gap:10px;">
+          <div style="flex:1;">
+            <label for="p-repo">Link do repositório (GitHub, GitLab…)</label>
+            <input class="input" id="p-repo" type="url" placeholder="https://github.com/seu-user/seu-projeto" />
+          </div>
+          <div style="flex:1;">
+            <label for="p-demo">Link da demo (opcional)</label>
+            <input class="input" id="p-demo" type="url" placeholder="https://seu-projeto.vercel.app" />
+          </div>
+        </div>
+        <label for="p-tags">Tags de busca (opcional)</label>
+        <input class="input" id="p-tags" placeholder="iniciante, fullstack, hobby…" />
+        <div class="row mt-2" style="justify-content:flex-end;gap:8px;">
+          <button class="btn ghost" type="button" id="proj-cancel">Cancelar</button>
+          <button class="btn primary" type="submit">Publicar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: project detail -->
+  <div class="modal-wrap hidden" id="detail-modal">
+    <div class="modal card" style="max-width:820px;">
+      <div class="row between">
+        <h2 style="margin:0;" id="detail-title">Projeto</h2>
+        <button class="icon-btn" id="detail-close" aria-label="Fechar">×</button>
+      </div>
+      <div id="detail-body" class="mt-2"></div>
+    </div>
+  </div>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/courses-data-3.js"></script>
+  <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/projects.js"></script>
+</body>
+</html>
