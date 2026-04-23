@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Playground · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🧪%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container">
+    <header class="dash-head reveal">
+      <div>
+        <h1>🧪 Playground interativo</h1>
+        <div class="sub">Escreva HTML, CSS e JavaScript e veja o resultado ao vivo. Salve quantos snippets quiser.</div>
+      </div>
+      <div class="row">
+        <select id="snippet-select" class="input sm" style="max-width:220px;"></select>
+        <button class="btn sm" id="new-snippet">Novo</button>
+        <button class="btn sm" id="save-snippet">Salvar</button>
+        <button class="btn sm danger" id="delete-snippet">Excluir</button>
+      </div>
+    </header>
+
+    <section class="playground-layout reveal">
+      <div class="playground-pane">
+        <div class="tabs" role="tablist">
+          <button class="active" data-tab="html" role="tab">HTML</button>
+          <button data-tab="css" role="tab">CSS</button>
+          <button data-tab="js" role="tab">JavaScript</button>
+        </div>
+        <textarea id="editor-html" spellcheck="false"></textarea>
+        <textarea id="editor-css" spellcheck="false" class="hidden"></textarea>
+        <textarea id="editor-js" spellcheck="false" class="hidden"></textarea>
+        <div class="toolbar">
+          <span class="small text-muted" id="autosave-status">Autosave ativo</span>
+          <div class="row">
+            <button class="btn sm ghost" id="format-btn" title="Remover espaços extras">Limpar</button>
+            <button class="btn sm primary" id="run-btn">▶️ Executar</button>
+          </div>
+        </div>
+      </div>
+      <div class="playground-pane">
+        <div class="tabs"><button class="active" style="flex:1;">Preview</button></div>
+        <iframe id="preview" sandbox="allow-scripts allow-forms" referrerpolicy="no-referrer"></iframe>
+        <div class="toolbar">
+          <span class="small text-muted">Ambiente isolado (sandbox).</span>
+          <button class="btn sm ghost" id="open-window">Abrir em nova aba</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card reveal mt-3">
+      <h3 style="margin-top:0;">💡 Dicas rápidas</h3>
+      <ul class="text-muted" style="margin:0;">
+        <li><kbd>Ctrl</kbd>+<kbd>Enter</kbd> executa o código.</li>
+        <li>O Playground é isolado — seu código nunca sai do navegador.</li>
+        <li>Use os snippets salvos como portfólio durante os estudos.</li>
+      </ul>
+    </section>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/courses-data-3.js"></script>
+  <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/missions.js"></script>
+  <script src="../assets/js/recommendations.js"></script>
+  <script src="../assets/js/analytics.js"></script>
+  <script src="../assets/js/notifications.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/playground.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Verificar certificado · Devstart UP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='22'%3E🔎%3C/text%3E%3C/svg%3E" />
+  <script src="../assets/js/theme.js"></script>
+</head>
+<body>
+  <div data-site-sidebar></div>
+  <div data-site-header></div>
+
+  <main class="container" style="max-width:780px;">
+    <header class="dash-head reveal">
+      <div>
+        <h1>Verificar <span class="gradient-text">certificado</span> 🔎</h1>
+        <div class="sub">Informe o código (formato <code>DSU-XXXX-XXXX-XXXX</code>) para conferir a autenticidade.</div>
+      </div>
+    </header>
+
+    <div class="card reveal">
+      <form class="form" id="verify-form" autocomplete="off">
+        <div>
+          <label for="code">Código do certificado</label>
+          <input class="input" id="code" name="code" type="text" placeholder="DSU-ABCD-1234-ABCD" required pattern="^DSU-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}$" />
+          <div class="form-hint">Você encontra o código no rodapé do certificado.</div>
+        </div>
+        <button class="btn primary lg" type="submit">Verificar</button>
+      </form>
+      <div id="verify-result" class="mt-3"></div>
+    </div>
+  </main>
+
+  <script src="../assets/js/courses-data.js"></script>
+  <script src="../assets/js/courses-data-2.js"></script>
+  <script src="../assets/js/courses-data-3.js"></script>
+  <script src="../assets/js/courses-data-4.js"></script>
+  <script src="../assets/js/courses-data-5.js"></script>
+  <script src="../assets/js/courses-data-6.js"></script>
+  <script src="../assets/js/site-config.js"></script>
+  <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/missions.js"></script>
+  <script src="../assets/js/recommendations.js"></script>
+  <script src="../assets/js/analytics.js"></script>
+  <script src="../assets/js/notifications.js"></script>
+  <script src="../assets/js/app.js"></script>
+  <script src="../assets/js/ai-assistant.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const { users, progress, escapeHtml } = window.DevstartApp;
+      const courses = window.DevstartCourses || [];
+
+      // Mesmo algoritmo de certificate.html — mantém compatibilidade.
+      function codeFor(username, cid) {
+        const seed = (username + "|" + cid).split("").reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+        const rnd = (seed % 0xffff).toString(16).toUpperCase().padStart(4, "0");
+        const rnd2 = (((seed / 7) | 0) % 0xffff).toString(16).toUpperCase().padStart(4, "0");
+        const rnd3 = (((seed / 11) | 0) % 0xffff).toString(16).toUpperCase().padStart(4, "0");
+        return `DSU-${rnd}-${rnd2}-${rnd3}`;
+      }
+
+      const form = document.getElementById("verify-form");
+      const resultEl = document.getElementById("verify-result");
+
+      const urlCode = new URLSearchParams(location.search).get("code");
+      if (urlCode) {
+        form.elements["code"].value = urlCode;
+        setTimeout(() => form.requestSubmit(), 50);
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const code = (form.elements["code"].value || "").trim().toUpperCase();
+        resultEl.innerHTML = "";
+
+        let match = null;
+        for (const u of users.getUsers()) {
+          for (const c of courses) {
+            if (codeFor(u.username, c.id) === code) {
+              match = { user: u, course: c };
+              break;
+            }
+          }
+          if (match) break;
+        }
+
+        if (!match) {
+          resultEl.innerHTML = `
+            <div class="card" style="border-color: color-mix(in srgb, var(--danger, #f87171) 40%, transparent);">
+              <strong style="color: var(--danger, #f87171);">❌ Certificado não encontrado</strong>
+              <p class="text-muted small" style="margin:6px 0 0;">O código informado não corresponde a nenhum certificado emitido pela Devstart UP.</p>
+            </div>`;
+          return;
+        }
+
+        const p = progress.getCourseProgress(match.user, match.course);
+        const completedAt = localStorage.getItem(`devstart.courseCompleted.${match.user.username}.${match.course.id}`);
+        const d = completedAt ? new Date(parseInt(completedAt, 10)) : null;
+        const isValid = p.percent === 100;
+
+        resultEl.innerHTML = `
+          <div class="card" style="border-color: color-mix(in srgb, var(--success, #34d399) 40%, transparent);">
+            <div class="row between" style="align-items:flex-start;gap:12px;flex-wrap:wrap;">
+              <div>
+                <strong style="color: ${isValid ? "var(--success, #34d399)" : "var(--warning, #fbbf24)"};">
+                  ${isValid ? "✅ Certificado autêntico" : "⚠️ Código válido, mas curso ainda em andamento"}
+                </strong>
+                <div class="small text-muted" style="margin-top:4px;">Código: <code>${escapeHtml(code)}</code></div>
+              </div>
+              <a class="btn sm ghost" href="profile.html?u=${encodeURIComponent(match.user.username)}">Ver perfil →</a>
+            </div>
+            <hr style="border:0;border-top:1px solid rgba(255,255,255,.06);margin:12px 0;" />
+            <div class="small text-muted">Aluno(a)</div>
+            <div><strong>${escapeHtml(match.user.username)}</strong>${match.user.vip ? ` <span class="badge vip">👑</span>` : ""}</div>
+            <div class="small text-muted mt-2">Curso</div>
+            <div><strong>${escapeHtml(match.course.title)}</strong></div>
+            <div class="small text-muted mt-2">Aulas concluídas</div>
+            <div>${p.completed}/${p.total} (${p.percent}%)</div>
+            ${d ? `<div class="small text-muted mt-2">Concluído em</div><div>${d.toLocaleDateString("pt-BR")}</div>` : ""}
+          </div>
+        `;
+      });
+    });
+  </script>
+</body>
+</html>

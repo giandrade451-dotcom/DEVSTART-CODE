@@ -50,10 +50,34 @@
       a: () => "Entre na aba **Trilhas** no painel. Escolha uma (Frontend, Backend, Fullstack, Python, Mobile ou Carreira VIP) e siga a sequência — o sistema acompanha seu progresso nela." },
   ];
 
+  // Regras extras habilitadas no tier Pro (usuários VIP).
+  const PRO_RULES = [
+    { re: /(explique|explica|explicar).*c[óo]digo/i,
+      a: () => "Modo **Explicar código** (Pro): cola o trecho entre crases triplas. Vou descrever: 1) o que cada linha faz, 2) efeitos colaterais, 3) pontos de atenção de performance/legibilidade e 4) uma versão refatorada sugerida." },
+    { re: /(revis[ãa]o|revis[ae])/i,
+      a: () => "Modo **Revisão de código** (Pro): mando checklist — nomeação, responsabilidade única, tratamento de erros, testes, segurança e performance. Cola o código que eu passo por cada item." },
+    { re: /(roteiro|plano).*(estudos|estudo|carreira)/i,
+      a: () => "Plano de estudos sob medida (Pro): me diga 1) seu objetivo (ex: dev frontend), 2) horas por semana e 3) nível atual. Vou sugerir 4 semanas de cursos + projetos da Devstart UP, com marcos semanais." },
+  ];
+
+  function getTier() {
+    const user = window.DevstartApp?.users.currentUser();
+    if (!user) return { id: "free", label: "v1 · Grátis" };
+    if (user.vip) return { id: "pro", label: "v2 · Pro", user };
+    return { id: "free", label: "v1 · Grátis", user };
+  }
+
   function reply(text) {
     const t = (text || "").trim();
     if (!t) return "Me conta qual é a dúvida 😉";
+    const tier = getTier();
+    if (tier.id === "pro") {
+      for (const r of PRO_RULES) if (r.re.test(t)) return r.a();
+    }
     for (const r of RULES) if (r.re.test(t)) return r.a();
+    if (tier.id === "free" && /(explique|explica|revis[ae]|roteiro.*estudos)/i.test(t)) {
+      return "Esse recurso é do tier **Pro (v2)** — disponível para membros VIP. Explicação de código, revisão e plano de estudos personalizado ficam liberados junto com os cursos VIP. Veja a página **VIP** para os detalhes.";
+    }
     return "Entendi. Não sei te responder isso diretamente (sou uma IA local simulada), mas posso te guiar: em que curso ou trecho de código você está? Cola aqui o erro, a linha do código ou o objetivo que me foco em algo útil.";
   }
 
@@ -77,8 +101,8 @@
         <div class="row" style="gap:10px;align-items:center;">
           <div class="ai-avatar">🤖</div>
           <div>
-            <div class="ai-name">Dev — Assistente IA</div>
-            <div class="ai-role">Local • simulado • pt-BR</div>
+            <div class="ai-name">Dev — Assistente IA <span class="badge ${getTier().id === "pro" ? "vip" : ""}" style="margin-left:6px;font-size:.7rem;">${getTier().label}</span></div>
+            <div class="ai-role">Local • simulado • pt-BR${getTier().id === "free" ? " — <a href='" + (window.location.pathname.includes("/pages/") ? "" : "pages/") + "vip.html' style='color:inherit;text-decoration:underline;'>upgrade para Pro</a>" : ""}</div>
           </div>
         </div>
         <button class="icon-btn" id="ai-close" aria-label="Fechar">

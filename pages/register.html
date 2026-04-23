@@ -25,6 +25,11 @@
           <div class="form-hint">Ao menos 3 caracteres. Letras, números e sublinhados.</div>
         </div>
         <div>
+          <label for="e">E-mail <span class="small text-muted">(opcional, usado para recuperar senha)</span></label>
+          <input class="input" id="e" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" />
+          <div class="form-hint">Nenhum e-mail real é enviado — é usado apenas para recuperação local de senha.</div>
+        </div>
+        <div>
           <label for="p">Senha</label>
           <input class="input" id="p" name="password" type="password" autocomplete="new-password" placeholder="••••••••" required />
           <div class="form-hint">Ao menos 4 caracteres. Guardada apenas no seu navegador — esta é uma plataforma de demonstração.</div>
@@ -48,6 +53,9 @@
   <script src="../assets/js/theme.js"></script>
   <script src="../assets/js/site-config.js"></script>
   <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/missions.js"></script>
+  <script src="../assets/js/recommendations.js"></script>
+  <script src="../assets/js/analytics.js"></script>
   <script src="../assets/js/notifications.js"></script>
   <script src="../assets/js/ai-assistant.js"></script>
   <script src="../assets/js/app.js"></script>
@@ -73,8 +81,10 @@
             users.createUser({
               username: data.get("username"),
               password: data.get("password"),
+              email: data.get("email"),
             });
-            users.login(data.get("username"), data.get("password"));
+            users.login(data.get("username"), data.get("password"), { remember: true });
+            localStorage.setItem("devstart.rememberUser", (data.get("username") || "").toString().trim());
             toast({ title: "Conta criada!", message: "Bem-vindo à Devstart UP.", type: "success" });
             setTimeout(() => { window.location.href = "dashboard.html"; }, 500);
           } catch (err) {

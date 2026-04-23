@@ -27,12 +27,19 @@
           <label for="p">Senha</label>
           <input class="input" id="p" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
         </div>
+        <label class="row" style="gap:8px;align-items:center;">
+          <input id="remember" name="remember" type="checkbox" checked />
+          <span class="small">Lembrar-me neste dispositivo</span>
+        </label>
         <button class="btn primary block lg" type="submit" id="submit-btn">
           <span id="submit-label">Entrar</span>
         </button>
       </form>
       <div class="auth-alt">
         Ainda não tem conta? <a href="register.html">Criar agora</a>
+      </div>
+      <div class="auth-alt small" style="margin-top:6px;">
+        <a href="reset.html">Esqueci minha senha</a>
       </div>
       <div class="auth-alt small" style="margin-top:8px;">
         <a href="admin.html">Entrar como admin →</a>
@@ -49,12 +56,15 @@
   <script src="../assets/js/theme.js"></script>
   <script src="../assets/js/site-config.js"></script>
   <script src="../assets/js/gamification.js"></script>
+  <script src="../assets/js/missions.js"></script>
+  <script src="../assets/js/recommendations.js"></script>
+  <script src="../assets/js/analytics.js"></script>
   <script src="../assets/js/notifications.js"></script>
   <script src="../assets/js/ai-assistant.js"></script>
   <script src="../assets/js/app.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const { users, toast, resolvePath } = window.DevstartApp;
+      const { users, toast } = window.DevstartApp;
 
       if (users.currentUser()) {
         window.location.href = "dashboard.html";
@@ -62,16 +72,22 @@
       }
 
       const form = document.getElementById("login-form");
+      const remembered = localStorage.getItem("devstart.rememberUser");
+      if (remembered) form.elements["u"].value = remembered;
+
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         const btn = document.getElementById("submit-btn");
         const label = document.getElementById("submit-label");
         const data = new FormData(form);
+        const remember = !!data.get("remember");
         btn.disabled = true;
         label.innerHTML = '<span class="spinner"></span>';
         setTimeout(() => {
           try {
-            const u = users.login(data.get("username"), data.get("password"));
+            const u = users.login(data.get("username"), data.get("password"), { remember });
+            if (remember) localStorage.setItem("devstart.rememberUser", u.username);
+            else localStorage.removeItem("devstart.rememberUser");
             toast({ title: "Bem-vindo de volta!", message: `Logado como ${u.username}`, type: "success" });
             setTimeout(() => { window.location.href = "dashboard.html"; }, 500);
           } catch (err) {

@@ -37,15 +37,25 @@
     const u = username.trim().toLowerCase();
     return getUsers().find(x => x.username.toLowerCase() === u) || null;
   }
-  function createUser({ username, password }) {
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v || "").trim()); }
+  function findByEmail(email) {
+    if (!email) return null;
+    const e = email.trim().toLowerCase();
+    return getUsers().find(u => (u.email || "").toLowerCase() === e) || null;
+  }
+  function createUser({ username, password, email }) {
     username = (username || "").trim();
+    email = (email || "").trim();
     if (!username || !password) throw new Error("Preencha todos os campos.");
     if (username.length < 3) throw new Error("O usuário precisa ter ao menos 3 caracteres.");
     if (password.length < 4) throw new Error("A senha precisa ter ao menos 4 caracteres.");
     if (findUser(username)) throw new Error("Este nome de usuário já está em uso.");
+    if (email && !isValidEmail(email)) throw new Error("E-mail inválido.");
+    if (email && findByEmail(email)) throw new Error("Este e-mail já está cadastrado.");
     const user = {
       username,
       password, // client-side demo only
+      email: email || "",
       vip: false,
       createdAt: Date.now(),
       progress: {}, // { [courseId]: { completedLessons: [lessonId], quizzes: { [lessonId]: {score, total, percent, at} } } }
@@ -55,12 +65,35 @@
     saveUsers(list);
     return user;
   }
-  function login(username, password) {
+  function login(username, password, opts) {
+    const remember = !!(opts && opts.remember);
     const user = findUser(username);
     if (!user) throw new Error("Usuário não encontrado.");
     if (user.password !== password) throw new Error("Senha incorreta.");
-    storage.set(STORAGE_KEYS.session, { username: user.username, at: Date.now() });
+    storage.set(STORAGE_KEYS.session, { username: user.username, at: Date.now(), remember });
     return user;
+  }
+  function requestPasswordReset({ username, email }) {
+    // Mock reset: verifica username + email e devolve um código simulado.
+    const user = findUser(username);
+    if (!user) throw new Error("Usuário não encontrado.");
+    if (!user.email) throw new Error("Este usuário não cadastrou e-mail. Fale com o admin no Discord.");
+    if ((user.email || "").toLowerCase() !== (email || "").trim().toLowerCase()) {
+      throw new Error("E-mail não confere com o do usuário.");
+    }
+    const code = "DSU-" + Math.random().toString(36).slice(2, 6).toUpperCase() + "-" + Math.random().toString(36).slice(2, 6).toUpperCase();
+    storage.set("devstart.resetToken." + user.username, { code, at: Date.now() });
+    return code;
+  }
+  function confirmPasswordReset({ username, code, newPassword }) {
+    const user = findUser(username);
+    if (!user) throw new Error("Usuário não encontrado.");
+    const token = storage.get("devstart.resetToken." + user.username, null);
+    if (!token || token.code !== code) throw new Error("Código inválido ou expirado.");
+    if (!newPassword || newPassword.length < 4) throw new Error("A nova senha precisa de ao menos 4 caracteres.");
+    updateUser(user.username, (u) => { u.password = newPassword; return u; });
+    storage.remove("devstart.resetToken." + user.username);
+    return true;
   }
   function logout() { storage.remove(STORAGE_KEYS.session); }
   function currentUser() {
@@ -375,6 +408,7 @@
             <a href="${prefix}pages/courses.html">Cursos</a>
             <a href="${prefix}pages/paths.html">Trilhas</a>
             <a href="${prefix}pages/projects.html">Projetos</a>
+            <a href="${prefix}pages/playground.html">Playground</a>
             <a href="${prefix}pages/forum.html">Fórum</a>
             <a href="${prefix}pages/ranking.html">Ranking</a>
             <a href="${prefix}pages/vip.html">VIP</a>
@@ -448,6 +482,7 @@
           <a href="${prefix}pages/courses.html">${icon("book")} Cursos</a>
           <a href="${prefix}pages/paths.html">${icon("path")} Trilhas</a>
           <a href="${prefix}pages/projects.html">${icon("rocket")} Projetos</a>
+          <a href="${prefix}pages/playground.html">${icon("code")} Playground</a>
           <a href="${prefix}pages/forum.html">${icon("chat")} Fórum</a>
           <a href="${prefix}pages/progress.html">${icon("chart")} Meu Progresso</a>
           <a href="${prefix}pages/dashboard.html">${icon("grid")} Painel</a>
@@ -481,6 +516,7 @@
       chat: '<path d="M21 12a8 8 0 0 1-12 6.9L3 21l2.1-6A8 8 0 1 1 21 12z"/>',
       path: '<path d="M6 4v4a4 4 0 0 0 4 4h4a4 4 0 0 1 4 4v4"/><circle cx="6" cy="4" r="2"/><circle cx="18" cy="20" r="2"/>',
       trophy: '<path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 6h3a3 3 0 0 1-3 5"/><path d="M7 6H4a3 3 0 0 0 3 5"/>',
+      code: '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
       medal: '<circle cx="12" cy="15" r="5"/><path d="M8 10l-3-7h4l3 5"/><path d="M16 10l3-7h-4l-3 5"/>',
     };
     return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths[name] || ""}</svg>`;
@@ -514,7 +550,7 @@
     storage,
     STORAGE_KEYS,
     DISCORD_URL,
-    users: { getUsers, findUser, createUser, login, logout, currentUser, updateUser },
+    users: { getUsers, findUser, findByEmail, isValidEmail, createUser, login, logout, currentUser, updateUser, requestPasswordReset, confirmPasswordReset },
     admin: { ADMIN, login: adminLogin, logout: adminLogout, isAdminSession },
     locks: { getCourseLocks, setCourseLocks, isCourseLockedForAll, toggleCourseLockForAll },
     progress: { markLessonComplete, saveQuizResult, getCourseProgress },

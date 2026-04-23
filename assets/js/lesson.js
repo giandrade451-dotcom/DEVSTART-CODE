@@ -42,6 +42,15 @@
         u.lastSeenLesson = { courseId: course.id, lessonId: lesson.id, at: Date.now() };
         return u;
       });
+      // Missões diárias: contar visita em aulas distintas (1 vez por aula por dia)
+      try {
+        const today = new Date().toISOString().slice(0, 10);
+        const visitKey = `devstart.visit.${user.username}.${today}.${course.id}.${lesson.id}`;
+        if (!localStorage.getItem(visitKey)) {
+          localStorage.setItem(visitKey, "1");
+          window.DevstartMissions?.track(user.username, "visit");
+        }
+      } catch (e) {}
     }
 
     // Speed / font-size preferences (aplica CSS ao conteúdo da aula)
@@ -199,6 +208,7 @@
         progress.markLessonComplete(course.id, lesson.id);
         if (!wasAlreadyDone) {
           try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
+          try { window.DevstartMissions?.track(user.username, "lesson"); } catch (e) {}
         }
         maybeCompleteCourse();
         toast({ title: "Aula marcada como concluída", type: "success" });
@@ -237,6 +247,7 @@
         localStorage.setItem(key, JSON.stringify(list));
         document.getElementById("comment-text").value = "";
         renderComments();
+        try { window.DevstartMissions?.track(user.username, "comment"); } catch (e) {}
         toast({ title: "Comentário publicado", type: "success" });
       });
     }
@@ -364,9 +375,14 @@
 
         if (!lessonWasDone) {
           try { window.DevstartGame?.onLessonComplete(user.username); } catch (e) {}
+          try { window.DevstartMissions?.track(user.username, "lesson"); } catch (e) {}
         }
         if (!quizAlreadyAwarded) {
           try { window.DevstartGame?.onQuizComplete(user.username, result); } catch (e) {}
+          try { window.DevstartMissions?.track(user.username, "quiz"); } catch (e) {}
+          if (result.percent === 100) {
+            try { window.DevstartMissions?.track(user.username, "perfect"); } catch (e) {}
+          }
           try { localStorage.setItem(quizAwardedKey, String(Date.now())); } catch (e) {}
         }
 
