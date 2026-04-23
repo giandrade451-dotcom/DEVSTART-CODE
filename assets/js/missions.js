@@ -54,15 +54,16 @@
     const day = todayStr();
     const lastDay = localStorage.getItem(LAST_DAY_KEY(username));
     if (lastDay && lastDay !== day) {
-      // limpa dias antigos (mantém só o atual)
-      // não é crítico — o localStorage não vai crescer muito, mas ajuda.
+      // Limpa missões de dias antigos (coleta antes de remover para não reindexar no meio do loop).
       try {
+        const stale = [];
         for (let i = 0; i < localStorage.length; i++) {
           const k = localStorage.key(i);
           if (k && k.startsWith(`devstart.missions.${username}.`) && !k.endsWith(day)) {
-            // não remove aqui para evitar reindex durante o loop
+            stale.push(k);
           }
         }
+        stale.forEach(k => localStorage.removeItem(k));
       } catch (e) {}
     }
     localStorage.setItem(LAST_DAY_KEY(username), day);

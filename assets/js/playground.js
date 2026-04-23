@@ -142,11 +142,17 @@
       refreshSelect(); loadIntoEditors(active);
     });
 
-    // Open in new tab
+    // Open in new tab — usa Blob URL para gerar origem opaca.
+    // Abrir com document.write cria a janela no mesmo origin do app, dando ao JS do snippet
+    // acesso ao localStorage (sessão, gamificação, etc). Blob URL isola isso.
     document.getElementById("open-window").addEventListener("click", () => {
       const doc = preview.srcdoc;
-      const w = window.open("", "_blank");
-      if (w) { w.document.open(); w.document.write(doc); w.document.close(); }
+      const blob = new Blob([doc], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const w = window.open(url, "_blank", "noopener,noreferrer");
+      // Libera o Blob depois que a aba carregou (5s é generoso).
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+      if (!w) App.toast({ title: "Pop-up bloqueado pelo navegador.", type: "info" });
     });
 
     // Select change

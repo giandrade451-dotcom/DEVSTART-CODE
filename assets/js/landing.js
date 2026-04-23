@@ -26,7 +26,7 @@
     const locked = lockedPreview && (!user || !user.vip);
     return `
       <a class="card course-card reveal ${delayClass} ${locked ? "locked" : ""}" href="pages/course.html?id=${encodeURIComponent(course.id)}">
-        <div class="course-cover ${course.theme}"><span>${escapeHtml(course.cover || course.emoji || "📘")}</span></div>
+        <div class="course-cover ${course.theme || ""}"><span>${escapeHtml(course.cover || course.emoji || "📘")}</span></div>
         <div class="course-head">
           <span class="badge ${course.vip ? "vip" : "free"}">${course.vip ? "VIP" : "Grátis"}</span>
           <span class="course-meta">${course.lessons.length} aulas · ${escapeHtml(course.level)}</span>
